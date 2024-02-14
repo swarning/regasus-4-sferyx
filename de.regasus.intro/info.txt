@@ -1,0 +1,1 @@
+Um das Intro zu aktivieren, muss einem Feature hinzugefügt werden, z.B. de.regasus.core.feature.

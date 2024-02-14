@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--!DOCTYPE project PUBLIC "-//ANT//DTD project//EN" "project.dtd"-->
+
+<project basedir="." default="deploy" name="remotecopy">
+	<property environment="env"/>
+	<property name="LALO_LIB" value="${env.LALO_LIB}"/>
+	
+	<property name="libName" value="serialio"/>
+	
+	<target name="deploy">
+
+		<!-- lokales Kopieren der jnlp-Datei mit Ersetzung -->
+		<copy file="${LALO_LIB}/${libName}/${libName}.template.jnlp" toFile="${libName}.jnlp">
+			<filterset>
+				<filter token="jnlp.host" value="${jnlp.host}" />
+				<filter token="customer" value="${app.customer}" />
+			</filterset>
+		</copy>		
+
+		<!-- Verzeichnisse anlegen -->
+		<sshexec 
+			host="${app.host}" 
+			port="${app.port}"
+			username="${app.user}" 
+			password="${app.password}" 
+			trust="yes" 
+			command="mkdir -p ${app.dir}/${app.customer}/${libName}"
+		/>
+		<sshexec 
+			host="${app.host}"
+			port="${app.port}"
+			username="${app.user}" 
+			password="${app.password}" 
+			trust="yes" 
+			command="mkdir -p ${app.dir}/${app.customer}/${libName}/linux"
+		/>
+		<sshexec 
+			host="${app.host}"
+			port="${app.port}"
+			username="${app.user}" 
+			password="${app.password}" 
+			trust="yes" 
+			command="mkdir -p ${app.dir}/${app.customer}/${libName}/mac"
+		/>
+		<sshexec 
+			host="${app.host}"
+			port="${app.port}"
+			username="${app.user}" 
+			password="${app.password}" 
+			trust="yes" 
+			command="mkdir -p ${app.dir}/${app.customer}/${libName}/win"
+		/>
+		
+		<!-- jnlp-Datei zum Server kopieren -->
+		<scp 
+			trust="yes" 
+			password="${app.password}" 
+			todir="${app.user}@${app.host}:${app.dir}/${app.customer}/${libName}"
+			port="${app.port}"
+		>
+			<fileset dir=".">
+				<include name="${libName}.jnlp"/>
+  			</fileset>
+		</scp>
+
+		<!-- lokale jnlp-Datei löschen -->
+		<delete file="${libName}.jnlp" />
+
+		<!-- Bibliotheksdateien kopieren -->
+		<scp 
+			trust="yes" 
+			password="${app.password}" 
+			todir="${app.user}@${app.host}:${app.dir}/${app.customer}/${libName}/linux"
+			port="${app.port}"
+		>
+			<fileset dir="${LALO_LIB}/${libName}/linux/signed">
+				<include name="*.jar" />
+  			</fileset>
+		</scp>
+		<scp 
+			trust="yes" 
+			password="${app.password}" 
+			todir="${app.user}@${app.host}:${app.dir}/${app.customer}/${libName}/mac"
+			port="${app.port}"
+		>
+			<fileset dir="${LALO_LIB}/${libName}/mac/signed">
+				<include name="*.jar" />
+  			</fileset>
+		</scp>
+		<scp 
+			trust="yes" 
+			password="${app.password}" 
+			todir="${app.user}@${app.host}:${app.dir}/${app.customer}/${libName}/win"
+			port="${app.port}"
+		>
+			<fileset dir="${LALO_LIB}/${libName}/win/signed">
+				<include name="*.jar" />
+  			</fileset>
+		</scp>
+
+	</target>	
+
+</project>

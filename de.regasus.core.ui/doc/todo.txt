@@ -1,0 +1,70 @@
++ Zentrale Fehlerbehandlung
+
++ Basis-Model um autom. entladen erweitern
+
++ Login/Logout
+	+ Initialisiereung aller Modelle
+	+ dazu müssen alle Modelle beim ServerModel lauschen
+	
++ GenerateReportAction
+
++ UserReportEditor
++ CreateUserReportAction
++ DeleteUserReportAction
++ EditUserReportAction
+
++ DownloadTemplateAction
++ UploadTemplateAction
+
++ Datenobjekt nach AbstractModel verschieben
+  + Typ als Generic
+  + unload in AbstractModel implementieren
+
++ EventsOverviewReportWizard / DefaultReportWizard
+(- OpenReportWizardAction als Alternative zur GenerateReportAction)
++ GenerateReportAction in die Wizards
+
+
++ UserReportTree: DAO, VO, Manager
++ UserReportTreeView
+	+ initialies Anzeigenn der ersten Ebene
+	+ Rename im Tree
+	+ Link zwischen Editor und Tree
+	+ Refresh optimieren
+	+ Create Dir
+		- automatische Selektion des neuen Verzeichnisses funktioniert nicht zuverlässig
+	+ Remove Dir
+		+ Selektion des Elternverzeichnisses
+		+ Löschen von Root verhindern
+	+ Sortierung der Reports in einem Verzeichnis
+	+ Drag and Drop
+		+ Verschieben von UserReport wird rückgängig gemacht, wenn der UserReport zuvor in einem Editor geöffnet wurde und danach gespeichert wird.
+		  Lösung: Separate update-Methoden für UserReportVO.userReportDirPK und den Rest.
+	- UserReport kopieren / klonen
+
+
+- AbstractModel: StateChangeSupport durch PropertyChangeSupport ersetzen
+(- Editor als SelectionProvider für GenerateReportAction)
+
++ Generierung einer Beschreibung des XML-Parameter
+	+ ebenfalls in XML speichern
+
+- Branding
+
+- I18NText-Widget
+- I18N
+
++ UserReportEditor: Download der Vorlage als Action realisieren.
+
++ Deployment realisieren: JWS oder Update-Site
+
+- OpenTemplateAction im Toolbar (für akt. Editor)
+- DownloadTemplateAction im Toolbar (für akt. Editor)
+- OpenWizardAction im Toolbar (für akt. Editor)
+
+- NewUserReportWizard
+	- Auswahl des Verzeichnisses (Vorgabe das aktuelle im TreeView)
+	- Auswahl des BaseReports
+	- Eingabe des Namens und einer Beschreibung
+	- Einbinden der WizardSeiten des gewählkten BaseReports (Wie?)
+	- Hochladen einer Vorlage

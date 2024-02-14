@@ -1,0 +1,26 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Report-UI Plug-in
+Bundle-SymbolicName: de.regasus.report.ui;singleton:=true
+Bundle-Version: 0.0.0
+Bundle-Activator: de.regasus.report.ui.Activator
+Bundle-Vendor: LambdaLogic GmbH
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ de.regasus.report.model,
+ de.regasus.core.model,
+ com.lambdalogic.util,
+ de.regasus.core.ui,
+ de.regasus.core.error,
+ com.lambdalogic.util.rcp,
+ com.lambdalogic.report,
+ de.regasus.ejb.intf,
+ de.regasus.entity,
+ org.jdom,
+ org.slf4j;bundle-version="1.7.25"
+Bundle-ActivationPolicy: lazy
+Export-Package: de.regasus.report,
+ de.regasus.report.dialog,
+ de.regasus.report.view
+Bundle-RequiredExecutionEnvironment: JavaSE-11

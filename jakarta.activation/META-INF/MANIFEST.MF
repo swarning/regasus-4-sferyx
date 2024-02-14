@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: jakarta.activation
+Bundle-SymbolicName: jakarta.activation
+Bundle-Version: 2.0.1
+Bundle-ClassPath: jakarta.activation-2.0.1.jar
+Bundle-Vendor: The Jakarta Project
+Export-Package: com.sun.activation.registries,
+ jakarta.activation
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Automatic-Module-Name: jakarta.activation
+Bundle-ActivationPolicy: lazy

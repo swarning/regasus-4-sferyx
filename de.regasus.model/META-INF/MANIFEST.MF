@@ -1,0 +1,36 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Regasus Model Plug-in
+Bundle-SymbolicName: de.regasus.model
+Bundle-Version: 0.0.0
+Bundle-Activator: de.regasus.model.Activator
+Bundle-Vendor: LambdaLogic Informationssysteme GmbH
+Require-Bundle: org.eclipse.core.runtime,
+ de.regasus.core.error,
+ de.regasus.core.model,
+ com.lambdalogic.util.rcp,
+ org.jboss,
+ com.lambdalogic.util,
+ com.lambdalogic.report,
+ org.apache.commons.logging,
+ de.regasus.auth.intf,
+ de.regasus.ejb.intf,
+ de.regasus.entity,
+ org.slf4j;bundle-version="1.7.25",
+ org.eclipse.jface;bundle-version="3.8.0",
+ de.regasus.core.ui;bundle-version="0.0.0"
+Bundle-ActivationPolicy: lazy
+Export-Package: de.regasus.common,
+ de.regasus.document,
+ de.regasus.email,
+ de.regasus.event,
+ de.regasus.finance,
+ de.regasus.hotel,
+ de.regasus.onlineform,
+ de.regasus.participant,
+ de.regasus.person,
+ de.regasus.portal,
+ de.regasus.profile,
+ de.regasus.programme,
+ de.regasus.users
+Bundle-RequiredExecutionEnvironment: JavaSE-11

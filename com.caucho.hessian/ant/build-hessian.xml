@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Hessian (com.caucho,hessian)" basedir=".." xmlns:if="ant:if">
+
+	<!-- set version -->
+	<property name="version" value="4.0.66" />
+
+	<!-- base name -->
+	<property name="base-name" value="hessian" />
+
+	<!-- name of the JAR file -->
+	<condition property="jar-name" value="${base-name}-${version}.fixed.jar" else="${base-name}.fixed.jar">
+        <isset property="version"/>
+    </condition>
+
+	<property name="jar-base-name" value="${base-name}-fixed"/>
+
+	<!--
+	<property name="replace-token" value="@RegasusAuthIntfJAR"/>
+	-->
+
+	<property name="version.file" value="com.caucho.hessian.version.txt"/>
+
+	<!--
+	<property name="main-project" location="${basedir}/../de.regasus.auth" />
+	-->
+	<!-- path to the directory where the JAR file has to be deployed -->
+	<!--
+	<property if:set="wildfly.dir" name="wildfly.deploy.dir" location="${wildfly.dir}/modules/de/regasus/auth/main" />
+	-->
+
+	<import file="standard-build.xml" />
+
+
+	<!-- classpath including libraries necessary for compilation -->
+	<path id="project.classpath">
+		<!-- third party libraries -->
+		<fileset dir="${lib}/javaee" includes="javaee-api*.jar" />
+
+		<!--
+		Do not reference the target directories of other projects, not even if they belong to the same repository.
+		The classpath for compilation should include the same JAR files that will be present at runtime.
+		-->
+
+		<!-- LaLo libraries from previous builds -->
+		<!--
+		<fileset dir="${artefacts.dir}">
+			<include name="lalo-util/*.jar" />
+		</fileset>
+		-->
+	</path>
+
+</project>

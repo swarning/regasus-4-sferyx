@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Regasus Error Handling
+Bundle-SymbolicName: de.regasus.core.error;singleton:=true
+Bundle-Version: 0.0.0
+Bundle-Vendor: LambdaLogic GmbH
+Automatic-Module-Name: de.regasus.core.error
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-ActivationPolicy: lazy
+Bundle-Activator: de.regasus.core.error.Activator
+Require-Bundle: org.eclipse.ui;bundle-version="3.119.0",
+ org.eclipse.core.runtime;bundle-version="3.20.100",
+ com.lambdalogic.util;bundle-version="0.0.0",
+ com.lambdalogic.util.rcp;bundle-version="0.0.0",
+ org.postgresql.jdbc;bundle-version="9.0.801",
+ de.regasus.auth.intf;bundle-version="0.0.0",
+ de.regasus.entity;bundle-version="0.0.0",
+ de.regasus.ejb.intf;bundle-version="0.0.0"
+Export-Package: de.regasus.core.error

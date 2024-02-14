@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension point="org.eclipse.core.runtime.preferences">
+      <initializer class="com.lambdalogic.util.rcp.html.pref.HtmlPreferenceInitializer"/>
+   </extension>
+
+	<extension point="org.eclipse.ui.preferencePages">
+		<page
+			class="com.lambdalogic.util.rcp.html.pref.HtmlPreferencePage"
+			id="com.lambdalogic.util.rcp.html.HtmlPreferencePage"
+			name="HTML">
+		</page>
+	</extension>
+
+</plugin>

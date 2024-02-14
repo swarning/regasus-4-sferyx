@@ -1,0 +1,4 @@
+This file is mentioned to document which libs are necessary for what reason.
+
+javassist-3.18.1-GA.jar
+Needed by the client to handle Hessian objects that contains proxies.

@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Jexl Plug-in
+Bundle-SymbolicName: org.apache.commons.jexl
+Bundle-Version: 1.1.0
+Bundle-ClassPath: commons-jexl-1.1.jar
+Bundle-Vendor: The Apache Software Foundation
+Export-Package: org.apache.commons.jexl,
+ org.apache.commons.jexl.context,
+ org.apache.commons.jexl.junit,
+ org.apache.commons.jexl.parser,
+ org.apache.commons.jexl.resolver,
+ org.apache.commons.jexl.util,
+ org.apache.commons.jexl.util.introspection
+Require-Bundle: org.apache.commons.logging

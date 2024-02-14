@@ -1,0 +1,21 @@
+﻿.headNavi_links {
+	text-align: right;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:13px;
+	line-height: 27px;
+	color: #00839B; 
+	padding-right: 3px;
+	display: block;
+	}
+.headNavi_links:link{
+	text-decoration:none; 
+	}
+.headNavi_links:hover{
+	color:#00839B;
+	text-decoration:none; 
+	background-color:#DEF8F5;
+	}
+.headNavi_links:visited{
+	color: #00839B;
+	text-decoration:none;
+	}

@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: IDAutomation PDF417 Plug-in
+Bundle-SymbolicName: com.idautomation.pdf417
+Bundle-Version: 4.10.0
+Bundle-ClassPath: IDAPDF417.jar
+Export-Package: com.idautomation.pdf417,
+ com.idautomation.pdf417.encoder
+Bundle-Vendor: IDAutomation.com, Inc.
+Bundle-RequiredExecutionEnvironment: JavaSE-11

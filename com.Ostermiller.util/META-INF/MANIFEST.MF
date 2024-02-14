@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: com.Ostermiller.util
+Bundle-SymbolicName: com.Ostermiller.util
+Bundle-Version: 1.8.2
+Bundle-Vendor: Ostermiller
+Export-Package: com.Ostermiller.util
+Bundle-ClassPath: ostermillerutils-1.08.02.jar

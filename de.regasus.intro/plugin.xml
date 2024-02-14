@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+    <extension
+         point="org.eclipse.ui.intro">
+      <intro
+            class="org.eclipse.ui.intro.config.CustomizableIntroPart"
+            id="de.regasus.intro"
+            icon="icon20.gif">
+      </intro>
+      <introProductBinding
+            introId="de.regasus.intro"
+            productId="de.regasus.app.main.product">
+      </introProductBinding>
+   </extension>
+   <extension
+         point="org.eclipse.ui.intro.config">
+      <config
+            introId="de.regasus.intro"
+            content="introContent.xml"
+            id="de.regasus.configId" >
+         <presentation
+               home-page-id="root" >
+            <implementation
+                  kind="html"
+                  os="win32,linux,macosx">
+            </implementation>
+         </presentation>
+      </config>
+   </extension>
+</plugin>

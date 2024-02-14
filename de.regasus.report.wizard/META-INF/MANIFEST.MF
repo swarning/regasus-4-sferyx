@@ -1,0 +1,24 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Event UI Plug-in
+Bundle-SymbolicName: de.regasus.report.wizard;singleton:=true
+Bundle-Version: 0.0.0
+Bundle-Activator: de.regasus.report.wizard.ui.Activator
+Bundle-Vendor: LambdaLogic GmbH
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ com.lambdalogic.util.rcp,
+ de.regasus.report.ui,
+ com.lambdalogic.report,
+ de.regasus.model,
+ de.regasus.ui,
+ de.regasus.core.model,
+ com.lambdalogic.util,
+ de.regasus.core.error,
+ de.regasus.core.ui,
+ org.jboss,
+ de.regasus.ejb.intf,
+ de.regasus.entity
+Bundle-ActivationPolicy: lazy
+Export-Package: de.regasus.report.wizard.common
+Bundle-RequiredExecutionEnvironment: JavaSE-11

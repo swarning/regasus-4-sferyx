@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+	<extension point="org.eclipse.ui.commands">
+		<command
+			name="%command.name"
+			id="FinanceExportCommand">
+		</command>
+	</extension>
+   
+	<extension point="org.eclipse.ui.handlers">
+		<handler
+			commandId="FinanceExportCommand"
+			class="de.regasus.finance.export.ui.FinanceExportCommandHandler">
+		</handler>
+	</extension>
+  
+	<extension point="org.eclipse.ui.menus">
+		<menuContribution locationURI="menu:System?after=FinanceExportAdditions">
+			<command commandId="FinanceExportCommand" />
+		</menuContribution>
+	</extension>
+   
+</plugin>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="de.regasus.alert.feature"
+      label="Ampel"
+      version="1.0.0.qualifier"
+      provider-name="LambdaLogic Informationssysteme GmbH">
+
+   <description url="http://www.example.com/description">
+      [Enter Feature Description here.]
+   </description>
+
+   <copyright url="http://www.example.com/copyright">
+      [Enter Copyright Description here.]
+   </copyright>
+
+   <license url="http://www.example.com/license">
+      [Enter License Description here.]
+   </license>
+
+   <requires>
+      <import feature="de.regasus.ui.feature" version="0.0.0"/>
+      <import feature="de.regasus.badge.feature" version="0.0.0"/>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="de.regasus.entity"/>
+      <import plugin="de.regasus.ejb.intf"/>
+      <import plugin="com.lambdalogic.util"/>
+      <import plugin="de.regasus.badge"/>
+      <import plugin="de.regasus.core.model"/>
+      <import plugin="com.lambdalogic.util.rcp"/>
+      <import plugin="de.regasus.core.error"/>
+      <import plugin="de.regasus.model"/>
+   </requires>
+
+   <plugin
+         id="de.regasus.alert"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

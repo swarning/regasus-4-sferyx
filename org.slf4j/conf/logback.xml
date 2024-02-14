@@ -1,0 +1,42 @@
+<configuration>
+
+	<property name="LOG_FILE" value="regasus" />
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    	<file>${user.home}/regasus-log/${LOG_FILE}.log</file>
+    	<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+	        <!-- daily rollover -->
+    	    <fileNamePattern>${user.home}/regasus-log/${LOG_FILE}.%d{yyyy-MM-dd}.gz</fileNamePattern>
+
+        	<!-- keep 30 days' worth of history capped at 3GB total size -->
+        	<maxHistory>30</maxHistory>
+        	<totalSizeCap>3GB</totalSizeCap>
+    	</rollingPolicy>
+    	<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<root level="debug">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</root>
+
+
+	<!-- Set initial log levels -->
+	<logger name="de.regasus.app.main" level="debug" />
+	<logger name="de.regasus.app.main.SelectionTracker" level="debug" />
+	<logger name="de.regasus.app.main.PartTracker" level="debug" />
+	<logger name="de.regasus.email.dispatch.command.SendEmailCommandHandler" level="debug" />
+	<logger name="de.regasus.programme.programmepoint.ProgrammePointSourceProvider" level="info" />
+
+	<!-- Suppress debug messages from Hibernate Validator -->
+	<logger name="org.hibernate.validator" level="info" />
+
+</configuration>

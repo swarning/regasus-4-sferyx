@@ -1,0 +1,13 @@
+This project contains support classes for the library com.google.zxing.
+To build the jar, run the ant script etc/build-lalo-zxing.xml.
+This project is not build with Jenkins because changes are seldom.
+If this project changes, you have to do the following steps:
+- Build a new jar.
+  This will replace the existing jar in lib/ext/lalo.
+  Because the new jar has a different name (version number has changed)
+  you have to add the old file name to the blacklist and the new one to
+  the whitelist in regasus-build/deploy/ant-deploy
+- Replace the old with the new jar in regasus-build/artefacts/lib.
+  This is done by the build script 
+  regasus-srv/com.lambdalogic.messeinfo/etc/build-regasus-srv.xml,
+  too, so you may skip this step if you run that script.

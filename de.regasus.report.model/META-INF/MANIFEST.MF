@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Report-Model Plug-in
+Bundle-SymbolicName: de.regasus.report.model;singleton:=true
+Bundle-Version: 0.0.0
+Bundle-Activator: de.regasus.report.model.Activator
+Bundle-Vendor: LambdaLogic GmbH
+Require-Bundle: org.eclipse.core.runtime,
+ de.regasus.core.model,
+ org.jboss,
+ org.eclipse.ui,
+ de.regasus.core.error,
+ com.lambdalogic.report,
+ com.lambdalogic.util.rcp,
+ com.lambdalogic.util,
+ de.regasus.auth.intf,
+ de.regasus.ejb.intf,
+ de.regasus.entity,
+ org.slf4j;bundle-version="1.7.25"
+Bundle-ActivationPolicy: lazy
+Export-Package: de.regasus.report.model
+Bundle-RequiredExecutionEnvironment: JavaSE-11

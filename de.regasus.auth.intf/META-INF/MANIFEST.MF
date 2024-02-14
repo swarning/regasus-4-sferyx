@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: de.regasus.auth.intf
+Bundle-SymbolicName: de.regasus.auth.intf
+Bundle-Version: 0.0.0
+Bundle-ClassPath: regasus-auth-intf-2024-02-14-08-41.jar
+Export-Package: de.regasus.auth,
+ de.regasus.auth.api,
+ de.regasus.auth.token
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Automatic-Module-Name: de.regasus.auth.intf
+Require-Bundle: com.lambdalogic.util,
+ org.jboss

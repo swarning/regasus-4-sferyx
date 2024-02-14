@@ -1,0 +1,6 @@
+"widget" is a contraction of "window" and "gadget": 
+invisible gadget and display which work together and act as an extension 
+to computer screens, leaving it free for information 
+
+- in sich abgeschlossene GUI-Komponenten
+- sollten mehrere JARs zusammengehören, bitte in ein gemeinsames Unterverzeichnis kopieren

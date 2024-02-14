@@ -1,0 +1,86 @@
+<project name="LaLo IDAutomation Utilities" default="build" basedir="..">
+	<property name="src" value="src"/>
+	<property name="bin" value="bin"/>
+	<property name="dist" value="dist"/>
+	<property name="version" value="1.0"/>
+	
+	<!-- default value is ok for manually build in eclipse, jenkins will override this value -->
+	<property name="lib.dir" location="../../lib/ext"/>
+
+	<property name="lalo.lib" value="${lib.dir}/lalo"/>
+	
+	<property name="version.file" location="etc/version.properties"/>
+
+	<property name="base-name" value="lalo-idautomation"/>
+
+
+	<path id="project.class.path">
+		<fileset dir="${lib.dir}">
+			<include name="idautomation/*.jar"/>
+		</fileset>
+	</path>
+
+
+	<target name="prepare">
+		<mkdir dir="${bin}"/>
+		<mkdir dir="${dist}"/>
+	</target>
+
+
+	<target name="clean">
+		<delete dir="${dist}" />
+		<delete dir="${bin}" />
+	</target>
+	
+	
+	<target name="compile">
+		<javac srcdir="${src}" destdir="${bin}"  debug="yes" includeantruntime="false">
+			<classpath refid="project.class.path"/>
+		</javac>
+	</target>
+
+		
+	<target name="increment-version">
+		<propertyfile file="${version.file}">
+			<entry key="build" type="int" default="0" operation="+"/>
+		</propertyfile>
+		
+		<!-- load the new version properties-->
+		<property file="${version.file}" />
+	</target>
+
+	
+	<target name="build" depends="clean, prepare, compile, increment-version">
+		<property name="jar-name" value="${base-name}-${main}-${major}-${minor}-${build}.jar"/>
+
+		<!-- Create temporary version file -->
+		<copy
+			file="${version.file}"
+			tofile="${bin}/com.lambdalogic.${base-name}.version.txt"
+		/>
+
+		<!-- JAR erzeugen -->
+		<jar jarfile="${dist}/${jar-name}">
+			<fileset dir="${bin}">
+				<include name="**/*"/>
+			</fileset>
+		</jar>
+
+		<!-- Delete temporary version file -->
+		<delete file="${bin}/com.lambdalogic.${base-name}.version.txt" />
+
+		<!-- Jars alter Versionen auf in ${lalo.lib} löschen -->
+		<delete>
+			<fileset dir="${lalo.lib}">
+				<include name="${base-name}*.jar"/>
+			</fileset>
+		</delete>
+
+		<!-- jar nach ${lalo.lib} kopieren -->
+		<copy todir="${lalo.lib}">
+			<fileset dir="${dist}" includes="${jar-name}"/>
+		</copy>
+		
+	</target>
+
+</project>

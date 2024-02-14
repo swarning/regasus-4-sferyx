@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="de.regasus.jre.feature"
+      label="Zulu jre 11"
+      version="11.0.14.1"
+      provider-name="LambdaLogic Informationssysteme GmbH">
+
+   <description url="http://www.example.com/description">
+      [Enter Feature Description here.]
+   </description>
+
+   <copyright url="http://www.example.com/copyright">
+      [Enter Copyright Description here.]
+   </copyright>
+
+   <license url="http://www.example.com/license">
+      [Enter License Description here.]
+   </license>
+
+   <plugin
+         id="com.azul.zulu.jre.linux.x86_64"
+         version="0.0.0"
+         optional="true"
+         os="linux"
+         arch="x86_64"
+         unpack="true"/>
+
+   <plugin
+         id="com.azul.zulu.jre.macosx.aarch64"
+         version="0.0.0"
+         optional="true"
+         os="macosx"
+         arch="aarch64"
+         unpack="true"/>
+
+   <plugin
+         id="com.azul.zulu.jre.macosx.x86_64"
+         version="0.0.0"
+         optional="true"
+         os="macosx"
+         arch="x86_64"
+         unpack="true"/>
+
+   <plugin
+         id="com.azul.zulu.jre.win32.x86_64"
+         version="0.0.0"
+         optional="true"
+         os="win32"
+         arch="x86_64"
+         unpack="true"/>
+
+</feature>

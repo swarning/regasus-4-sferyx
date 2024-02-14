@@ -1,0 +1,14 @@
+Description of the JAR files
+
+less4j-1.17.3.jar
+	Contains com.github.sommeri.less4j.LessCompiler used in de.regasus.portal.type.standard.StandardStyleComposite
+	Used to compile LESS files to CSS files.
+	We got it from here: https://github.com/SomMeri/less4j
+		- Download
+		- Extract
+		- Call "mvn package" to build a JAR
+	
+antlr-3.5.2.jar
+	necessary for less4j-1.17.3.jar
+	This is not the latest version, which is 4.
+	We got it from here: https://www.antlr3.org/download.html

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<introContent>
+    <page id="root" content="content/root.xhtml"/>
+    <page id="messeinfo" content="content/messeinfo.xhtml"/>
+    <page id="lambdalogic" content="content/lambdalogic.xhtml"/>
+</introContent>

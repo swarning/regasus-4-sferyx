@@ -1,0 +1,23 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Regasus Models
+Bundle-SymbolicName: de.regasus.core.model;singleton:=true
+Bundle-Version: 0.0.0
+Bundle-Activator: de.regasus.core.model.Activator
+Bundle-Vendor: LambdaLogic GmbH
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.jboss,
+ com.lambdalogic.util,
+ de.regasus.core.error,
+ com.lambdalogic.util.rcp,
+ de.regasus.auth.intf,
+ de.regasus.ejb.intf,
+ de.regasus.entity,
+ org.jdom,
+ org.slf4j
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Automatic-Module-Name: de.regasus.core.model
+Bundle-ActivationPolicy: lazy
+Export-Package: de.regasus.core,
+ de.regasus.core.model

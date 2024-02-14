@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde version="3.8"?>
+<target name="eclipse-rcp-2022-12">
+	<locations>
+		<location path="/Users/Alel/Documents/Arbeit/Kunden/sferyx/regasus-4-sferyx/eclipse-rcp-2022-12" type="Directory"/>
+	</locations>
+</target>

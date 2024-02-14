@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: NOA Plug-in
+Bundle-SymbolicName: ag.ion.noa;singleton:=true
+Bundle-Version: 2.2.1.1
+Bundle-ClassPath: lib/ag.ion.noa_2.2.1.jar,
+ lib/bootstrapconnector.jar,
+ lib/java_uno_accessbridge.jar,
+ lib/java_uno.jar,
+ lib/jut.jar,
+ lib/officebean.jar,
+ lib/registry-3.1.3.jar,
+ lib/sandbox.jar,
+ lib/unoloader.jar
+Export-Package: ag.ion.bion.officelayer,
+ ag.ion.bion.officelayer.application,
+ ag.ion.bion.officelayer.beans,
+ ag.ion.bion.officelayer.desktop,
+ ag.ion.bion.officelayer.document,
+ ag.ion.bion.officelayer.event,
+ ag.ion.bion.officelayer.filter,
+ ag.ion.bion.officelayer.text,
+ ag.ion.noa,
+ ag.ion.noa.frame,
+ ag.ion.noa.printing
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.openoffice

@@ -1,0 +1,1 @@
+Used in org.kit.mi.custom to communicate with the ERS Web Service.

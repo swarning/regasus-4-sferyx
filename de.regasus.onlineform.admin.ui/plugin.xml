@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+
+
+	<extension point="org.eclipse.ui.commands">
+		<command 
+			id="de.regasus.onlineform.commands.CopyRegistrationFormConfigCommand"
+			name="%CopyRegistrationFormConfigCommand.name">
+		</command>
+		<command 
+			id="de.regasus.onlineform.commands.OpenInBrowserCommand"
+			name="%OpenInBrowserCommand.name">
+		</command>
+		<command 
+			id="de.regasus.onlineform.commands.CopyURLCommand"
+			name="%CopyURLCommand.name">
+		</command>
+		<command 
+			id="de.regasus.onlineform.commands.ShowQRCodeCommand"
+			name="%ShowQRCodeCommand.name">
+		</command>
+		<command 
+			id="de.regasus.onlineform.commands.CreateWebsiteConfigCommand"
+			name="%CreateWebsiteConfigCommand.name">
+		</command>
+		<command 
+			id="de.regasus.onlineform.commands.CreateSystemEmailsCommand"
+			name="%CreateSystemMailsCommand.name">
+		</command>
+	</extension>
+
+
+	<extension point="org.eclipse.ui.commandImages">
+	    <image
+	          commandId="de.regasus.onlineform.commands.OpenInBrowserCommand"
+	          icon="icons/firefox-16.png" />
+	    <image
+	          commandId="de.regasus.onlineform.commands.ShowQRCodeCommand"
+	          icon="icons/qrcode.png" />
+	    <image
+	          commandId="de.regasus.onlineform.commands.CreateWebsiteConfigCommand"
+	          icon="icons/world_add.png" />
+	    <image
+           commandId="de.regasus.onlineform.commands.CreateSystemEmailsCommand"
+           icon="icons/email_add.png">
+		</image>
+		<image
+           commandId="de.regasus.onlineform.commands.CopyURLCommand"
+           icon="icons/copyviewtoclipboard_tsk.gif">
+		</image>
+	</extension>
+
+
+	<extension point="org.eclipse.ui.handlers">
+		<handler
+			commandId="org.eclipse.ui.edit.delete"
+			class="de.regasus.onlineform.admin.handler.DeleteRegistrationFormConfigHandler"
+		>
+			<activeWhen>
+				<and>
+					<with variable="user">
+						<equals value="admin" />
+					</with>
+					<with variable="configuration.event.formEditor">
+		           		<equals value="yes" />
+		            </with> 
+					<iterate ifEmpty="false" operator="and">
+						<instanceof value="de.regasus.event.view.RegistrationFormConfigTreeNode" />
+					</iterate>
+				</and>
+			</activeWhen>
+		</handler>
+		
+		<handler
+			commandId="de.regasus.onlineform.commands.CreateSystemEmailsCommand"
+			class="de.regasus.onlineform.admin.handler.CreateSystemEmailsCommandHandler"
+		>
+			<activeWhen>
+				<and>
+					<with variable="user">
+						<equals value="admin" />
+					</with>
+					<with variable="configuration.event.formEditor">
+		           		<equals value="yes" />
+		            </with> 
+					<iterate ifEmpty="false" operator="and">
+						<instanceof value="de.regasus.event.view.RegistrationFormConfigTreeNode" />
+					</iterate>
+				</and>
+			</activeWhen>
+		</handler>
+
+		<handler
+			commandId="de.regasus.onlineform.commands.CreateWebsiteConfigCommand"
+			class="de.regasus.onlineform.admin.handler.CreateWebsiteConfigCommandHandler"
+		>
+			<activeWhen>
+				<and>
+					<iterate ifEmpty="false" operator="or">
+						<or>
+							<instanceof value="de.regasus.event.view.RegistrationFormConfigTreeNode" />
+							<instanceof value="de.regasus.event.view.RegistrationFormConfigListTreeNode" />
+						</or>
+					</iterate>
+					<with variable="user">
+						<equals value="admin" />
+					</with>
+					<with variable="configuration.event.formEditor">
+		           		<equals value="yes" />
+		            </with> 
+				</and>
+			</activeWhen>
+		</handler>
+		
+		<handler
+			commandId="de.regasus.onlineform.commands.OpenInBrowserCommand"
+			class="de.regasus.onlineform.admin.handler.OpenBrowerForRegistrationFormConfigHandler"
+		>
+			<activeWhen>
+				<and>
+					<with variable="configuration.event.formEditor">
+		           		<equals value="yes" />
+		            </with> 
+					<iterate ifEmpty="false" operator="or">
+						<or>
+							<instanceof value="de.regasus.event.view.RegistrationFormConfigTreeNode" />
+						</or>
+					</iterate>
+				</and>
+			</activeWhen>
+		</handler>
+		
+		<handler
+			commandId="de.regasus.onlineform.commands.CopyURLCommand"
+			class="de.regasus.onlineform.admin.handler.CopyURLForRegistrationFormConfigHandler"
+		>
+			<activeWhen>
+				<and>
+					<with variable="configuration.event.formEditor">
+		           		<equals value="yes" />
+		            </with> 
+					<iterate ifEmpty="false" operator="or">
+						<or>
+							<instanceof value="de.regasus.event.view.RegistrationFormConfigTreeNode" />
+						</or>
+					</iterate>
+				</and>
+			</activeWhen>
+		</handler>
+		
+		<handler
+			commandId="de.regasus.onlineform.commands.ShowQRCodeCommand"
+			class="de.regasus.onlineform.admin.handler.ShowQRCodeForRegistrationFormConfigHandler"
+		>
+			<activeWhen>
+				<iterate ifEmpty="false" operator="or">
+					<or>
+						<instanceof value="de.regasus.event.view.RegistrationFormConfigTreeNode" />
+					</or>
+				</iterate>
+			</activeWhen>
+		</handler>
+		
+		<handler
+			commandId="de.regasus.onlineform.commands.CopyRegistrationFormConfigCommand"
+			class="de.regasus.onlineform.admin.handler.CopyRegistrationFormConfigHandler"
+		>
+			<activeWhen>
+				<and>
+					<with variable="user">
+						<equals value="admin" />
+					</with>
+					<with variable="configuration.event.formEditor">
+		           		<equals value="yes" />
+		            </with> 
+					<iterate ifEmpty="false" operator="or">
+						<or>
+							<instanceof value="de.regasus.event.view.RegistrationFormConfigTreeNode" />
+						</or>
+					</iterate>
+				</and>
+			</activeWhen>
+		</handler>
+	</extension>
+
+
+	<extension point="org.eclipse.ui.menus">
+		<menuContribution locationURI="popup:EventMasterDataView">
+			<command commandId="de.regasus.onlineform.commands.OpenInBrowserCommand">
+				<visibleWhen checkEnabled="true" />
+			</command>
+			
+			<command commandId="de.regasus.onlineform.commands.CopyURLCommand" icon="icons/copyviewtoclipboard_tsk.gif">
+				<visibleWhen checkEnabled="true" />
+			</command>
+			
+			<command commandId="de.regasus.onlineform.commands.CreateWebsiteConfigCommand">
+				<visibleWhen checkEnabled="true" />
+			</command>
+			
+			<command commandId="de.regasus.onlineform.commands.ShowQRCodeCommand">
+				<visibleWhen checkEnabled="true" />
+			</command>
+			
+			<command commandId="de.regasus.onlineform.commands.CreateSystemEmailsCommand">
+				<visibleWhen checkEnabled="true" />
+			</command>
+			
+			<command commandId="de.regasus.onlineform.commands.CopyRegistrationFormConfigCommand">
+				<visibleWhen checkEnabled="true" />
+			</command>
+			
+			<separator name="de.regasus.onlineform.separator2" visible="true" />
+		</menuContribution>
+	</extension>
+
+</plugin>

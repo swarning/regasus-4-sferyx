@@ -1,0 +1,28 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Users UI Plug-in
+Bundle-SymbolicName: de.regasus.users.ui;singleton:=true
+Bundle-Version: 0.0.0
+Bundle-Activator: de.regasus.users.ui.Activator
+Bundle-Vendor: LambdaLogic Informationssysteme GmbH
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.jboss,
+ org.eclipse.swt.nebula,
+ com.lambdalogic.util,
+ com.lambdalogic.util.rcp,
+ de.regasus.core.model,
+ de.regasus.core.ui,
+ de.regasus.core.error,
+ de.regasus.ui,
+ de.regasus.model,
+ de.regasus.report.ui,
+ de.regasus.report.model,
+ com.lambdalogic.report,
+ de.regasus.ejb.intf,
+ de.regasus.entity,
+ de.regasus.auth.intf,
+ org.slf4j
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-11

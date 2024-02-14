@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: JWT
+Bundle-SymbolicName: com.auth0.jwt
+Bundle-Version: 3.10.3
+Bundle-ClassPath: java-jwt-3.10.3.jar
+Bundle-Vendor: Auth0
+Export-Package: com.auth0.jwt,
+ com.auth0.jwt.algorithms,
+ com.auth0.jwt.exceptions,
+ com.auth0.jwt.impl,
+ com.auth0.jwt.interfaces
+Require-Bundle: com.fasterxml.jackson,
+ org.apache.commons.codec;bundle-version="1.11.0"

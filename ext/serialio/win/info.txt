@@ -1,0 +1,2 @@
+Die Datei jspWin.dll muss im Suchpfad sein.
+Wenn MI2-App über JWS gestartet wird, ist dies nicht erforderlich.

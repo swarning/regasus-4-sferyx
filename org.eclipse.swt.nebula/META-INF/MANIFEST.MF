@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Nebula Plug-in
+Bundle-SymbolicName: org.eclipse.swt.nebula
+Bundle-Version: 1.0.4
+Bundle-ClassPath: nebula.jar
+Bundle-Activator: org.eclipse.swt.nebula.Activator
+Bundle-Vendor: Eclipse Foundation
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime
+Export-Package: org.eclipse.nebula.jface.gridviewer,
+ org.eclipse.nebula.widgets.calendarcombo,
+ org.eclipse.nebula.widgets.formattedtext,
+ org.eclipse.nebula.widgets.grid,
+ org.eclipse.swt.nebula
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-11

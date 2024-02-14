@@ -1,0 +1,13 @@
+The implementation of the library hessian-4.0.60.jar contains a bug.
+The characters § and ° (and maybe more) are not serialized properly (see ).
+The reason is that the implementation uses its own implementation for BASE64 to encode the header for Basic-Auth.
+We fixed this bug in the class  com.caucho.hessian.client.HessianProxyFactory  by using the BASE64 code from Java:
+
+The implementation of  String base64(String value)  has been replaced by
+
+	private String base64(String value) {
+		return java.util.Base64.getEncoder().encodeToString( value.getBytes() );
+	}
+
+The code is available in this project.
+The resulting JAR file is hessian-4.0.66.fixed.jar.

@@ -1,0 +1,3 @@
+This plug-in (de.regasus.core.error) cannot be merged into the plug-in de.regasus.core.ui, because the plug-in
+de.regasus.core.model needs the class de.regasus.core.error.RegasusErrorHandler but it cannot depend on de.regasus.core.ui
+because de.regasus.core.ui depends already on de.regasus.core.model.

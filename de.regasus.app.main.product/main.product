@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?pde version="3.5"?>
+
+<product name="Regasus 0.0.0" uid="de.regasus.app.main.product" id="de.regasus.app.main.product" application="de.regasus.app.main.application" version="0.0.0" useFeatures="true" includeLaunchers="true">
+
+   <aboutInfo>
+      <text>
+         Regasus
+Copyright LambdaLogic Informationssysteme GmbH,
+Berlin, Germany, 2022
+      </text>
+   </aboutInfo>
+
+   <configIni use="default">
+      <solaris>/de.regasus.app.main.feature/config.ini</solaris>
+   </configIni>
+
+   <launcherArgs>
+      <vmArgsMac>-XstartOnFirstThread
+-Dorg.eclipse.swt.internal.carbon.smallFonts
+      </vmArgsMac>
+   </launcherArgs>
+
+   <windowImages i16="icons/Regasus-Logo-16.png" i32="icons/Regasus-Logo-32.png" i48="icons/Regasus-Logo-48.png" i64="icons/Regasus-Logo-64.png" i128="icons/Regasus-Logo-128.png"/>
+
+   <splash
+      location="de.regasus.app.main" />
+   <launcher name="Regasus">
+      <linux icon="icons/regasus-48x48-32.xpm"/>
+      <macosx icon="icons/regasus.icns"/>
+      <win useIco="true">
+         <ico path="icons/regasus.ico"/>
+         <bmp
+            winSmallHigh="icons/Regasus-Logo-16.bmp"
+            winSmallLow="icons/Regasus-Logo-16.bmp"
+            winMediumHigh="icons/Regasus-Logo-32.bmp"
+            winMediumLow="icons/Regasus-Logo-32.bmp"
+            winLargeHigh="icons/Regasus-Logo-48.bmp"
+            winLargeLow="icons/Regasus-Logo-48.bmp"/>
+      </win>
+   </launcher>
+
+   <vm>
+   </vm>
+
+   <plugins>
+   </plugins>
+
+   <features>
+      <feature id="org.eclipse.rcp" installMode="root"/>
+      <feature id="org.eclipse.e4.rcp" installMode="root"/>
+      <feature id="org.eclipse.emf.ecore" installMode="root"/>
+      <feature id="org.eclipse.emf.common" installMode="root"/>
+      <feature id="de.regasus.app.main.feature" installMode="root"/>
+      <feature id="de.regasus.jre.feature" installMode="root"/>
+   </features>
+
+   <configurations>
+      <plugin id="org.apache.felix.scr" autoStart="true" startLevel="2" />
+      <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="0" />
+      <plugin id="org.eclipse.equinox.common" autoStart="true" startLevel="2" />
+      <plugin id="org.eclipse.equinox.event" autoStart="true" startLevel="2" />
+      <plugin id="org.eclipse.equinox.simpleconfigurator" autoStart="true" startLevel="1" />
+      <property name="osgi.configuration.area" value="@user.home/regasus5.1/configuration" />
+      <property name="osgi.instance.area" value="@user.home/regasus5.1/instance" />
+   </configurations>
+
+   <preferencesInfo>
+      <targetfile overwrite="false"/>
+   </preferencesInfo>
+
+   <cssInfo>
+   </cssInfo>
+
+</product>

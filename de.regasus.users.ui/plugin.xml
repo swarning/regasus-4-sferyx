@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension point="org.eclipse.ui.perspectives">
+      <perspective
+            class="de.regasus.users.UsersPerspective"
+            icon="icons/usersrights.png"
+            id="com.lambdalogic.mi.users.ui.UsersPerspective"
+            name="%UsersPerspective.name">
+      </perspective>
+   </extension>
+
+
+	<extension point="org.eclipse.ui.perspectiveExtensions">
+		<perspectiveExtension targetID="*">
+			<perspectiveShortcut id="com.lambdalogic.mi.users.ui.UsersPerspective" />
+		</perspectiveExtension>
+		<perspectiveExtension targetID="com.lambdalogic.mi.users.ui.UsersPerspective">
+			<viewShortcut id="UserAccountSearchView" />
+			<viewShortcut id="GroupsView" />
+		</perspectiveExtension>
+	</extension>
+
+
+ 	<extension point="org.eclipse.ui.views">
+	    <category
+	          id="com.lambdalogic.mi.users.ui.category"
+	          name="%ViewCategory_Users">
+	    </category>
+
+	    <view
+	          id="UserAccountSearchView"
+	          class="de.regasus.users.user.view.UserAccountSearchView"
+	          category="com.lambdalogic.mi.users.ui.category"
+	          name="%Users"
+	          icon="icons/user.png"
+	          restorable="true"
+	    />
+	    <view
+	          id="GroupsView"
+	          class="de.regasus.users.group.view.GroupsView"
+	          category="com.lambdalogic.mi.users.ui.category"
+	          icon="icons/group.png"
+	          name="%Groups"
+	          restorable="true"
+		 />
+	</extension>
+
+
+	<extension point="org.eclipse.ui.commands">
+	        <command
+				id="com.lambdalogic.mi.users.ui.handler.AssignToGroupCommand"
+				description="%AssignToGroupCommand.tooltip"
+				name="%AssignToGroupCommand.name" />
+
+	        <command
+				id="com.lambdalogic.mi.users.ui.handler.RemoveFromGroupCommand"
+				description="%RemoveFromGroupCommand.tooltip"
+				name="%RemoveFromGroupCommand.name" />
+
+
+	        <command
+				id="com.lambdalogic.mi.users.ui.handler.ChangePasswordCommand"
+				description="%ChangePasswordCommand.tooltip"
+				name="%ChangePasswordCommand.name" />
+
+	        <command
+				id="com.lambdalogic.mi.users.ui.handler.RefreshUserAccountCommand"
+				description="%RefreshUserAccountCommand.tooltip"
+				name="%RefreshUserAccountCommand.name" />
+	        <command
+				id="com.lambdalogic.mi.users.ui.handler.DeleteUserAccountCommand"
+				description="%DeleteUserAccountCommand.tooltip"
+				name="%DeleteUserAccountCommand.name" />
+	        <command
+				id="com.lambdalogic.mi.users.ui.handler.EditUserAccountCommand"
+				description="%EditUserAccountCommand.tooltip"
+				name="%EditUserAccountCommand.name" />
+	        <command
+	              id="com.lambdalogic.mi.users.ui.handler.CreateUserAccountCommand"
+	              description="%CreateUserAccountCommand.tooltip"
+	              name="%CreateUserAccountCommand.name">
+	        </command>
+
+
+	        <command
+				id="com.lambdalogic.mi.users.ui.handler.CreateUserGroupCommand"
+				description="%CreateUserGroupCommand.tooltip"
+				name="%CreateUserGroupCommand.name" />
+	        <command
+				id="com.lambdalogic.mi.users.ui.handler.EditUserGroupCommand"
+				description="%EditUserGroupCommand.tooltip"
+				name="%EditUserGroupCommand.name" />
+	        <command
+				id="com.lambdalogic.mi.users.ui.handler.RefreshUserGroupCommand"
+				description="%RefreshUserGroupCommand.tooltip"
+				name="%RefreshUserGroupCommand.name" />
+	        <command
+				id="com.lambdalogic.mi.users.ui.handler.DeleteUserGroupCommand"
+				description="%DeleteUserGroupCommand.tooltip"
+				name="%DeleteUserGroupCommand.name" />
+	</extension>
+
+
+	<extension point="org.eclipse.ui.commandImages">
+ 		  <image
+			commandId="com.lambdalogic.mi.users.ui.handler.RefreshUserAccountCommand"
+			icon="icons/refresh_nav.gif" />
+ 		  <image
+			commandId="com.lambdalogic.mi.users.ui.handler.DeleteUserAccountCommand"
+			icon="icons/deleteUser.png" />
+ 		  <image
+			commandId="com.lambdalogic.mi.users.ui.handler.EditUserAccountCommand"
+			icon="icons/editUser.png" />
+    	 <image
+           commandId="com.lambdalogic.mi.users.ui.handler.CreateUserAccountCommand"
+           icon="icons/createUser.png" />
+
+ 		  <image
+			commandId="com.lambdalogic.mi.users.ui.handler.RefreshUserGroupCommand"
+			icon="icons/refresh_nav.gif" />
+ 		  <image
+			commandId="com.lambdalogic.mi.users.ui.handler.DeleteUserGroupCommand"
+			icon="icons/deleteGroup.png" />
+ 		  <image
+			commandId="com.lambdalogic.mi.users.ui.handler.EditUserGroupCommand"
+			icon="icons/editGroup.png" />
+    	 <image
+           commandId="com.lambdalogic.mi.users.ui.handler.CreateUserGroupCommand"
+           icon="icons/createGroup.png" />
+	</extension>
+
+
+	<extension point="org.eclipse.ui.handlers">
+	     <handler
+	           commandId="com.lambdalogic.mi.users.ui.handler.AssignToGroupCommand"
+	           class="de.regasus.users.user.command.AssignToGroupCommandHandler">
+	      	<activeWhen>
+				<reference definitionId="com.lambdalogic.mi.expression.selectedUserAccounts" />
+			</activeWhen>
+	     </handler>
+
+	    <handler
+	           commandId="com.lambdalogic.mi.users.ui.handler.RemoveFromGroupCommand"
+	           class="de.regasus.users.user.command.RemoveFromGroupCommandHandler">
+	      	<activeWhen>
+				<reference definitionId="com.lambdalogic.mi.expression.selectedUserAccounts" />
+			</activeWhen>
+	     </handler>
+
+
+	     <handler
+	           commandId="com.lambdalogic.mi.users.ui.handler.ChangePasswordCommand"
+	           class="de.regasus.users.user.command.ChangePasswordCommandHandler">
+	        <activeWhen>
+	        	<and>
+					<reference definitionId="com.lambdalogic.mi.expression.selectedUserAccounts" />
+					<count value="1" />
+				</and>
+			</activeWhen>
+	     </handler>
+
+	     <!-- User Account CRUD -->
+
+	     <handler
+	           commandId="com.lambdalogic.mi.users.ui.handler.CreateUserAccountCommand"
+	           class="de.regasus.users.user.command.CreateUserAccountCommandHandler"/>
+
+
+	     <handler
+	           commandId="com.lambdalogic.mi.users.ui.handler.EditUserAccountCommand"
+	           class="de.regasus.users.user.command.EditUserAccountCommandHandler">
+	      	<activeWhen>
+				<reference definitionId="com.lambdalogic.mi.expression.selectedUserAccounts" />
+			</activeWhen>
+	     </handler>
+
+	     <handler
+	           commandId="com.lambdalogic.mi.users.ui.handler.RefreshUserAccountCommand"
+	           class="de.regasus.users.user.command.RefreshUserAccountCommandHandler">
+	      	<activeWhen>
+				<reference definitionId="com.lambdalogic.mi.expression.selectedUserAccounts" />
+			</activeWhen>
+	     </handler>
+
+
+	   	<handler
+			class="de.regasus.users.user.command.DeleteUserAccountCommandHandler"
+			commandId="com.lambdalogic.mi.users.ui.handler.DeleteUserAccountCommand">
+	      	<activeWhen>
+				<reference definitionId="com.lambdalogic.mi.expression.selectedUserAccounts" />
+			</activeWhen>
+		</handler>
+
+        <!-- Group CRUD -->
+
+	     <handler
+	           commandId="com.lambdalogic.mi.users.ui.handler.CreateUserGroupCommand"
+	           class="de.regasus.users.group.command.CreateUserGroupCommandHandler"/>
+
+
+	     <handler
+	           commandId="com.lambdalogic.mi.users.ui.handler.EditUserGroupCommand"
+	           class="de.regasus.users.group.command.EditUserGroupCommandHandler">
+	      	<activeWhen>
+				<reference definitionId="com.lambdalogic.mi.expression.selectedUserGroups" />
+			</activeWhen>
+	     </handler>
+
+	     <handler
+	           commandId="com.lambdalogic.mi.users.ui.handler.RefreshUserGroupCommand"
+	           class="de.regasus.users.group.command.RefreshUserGroupCommandHandler">
+	      	<activeWhen>
+				<reference definitionId="com.lambdalogic.mi.expression.selectedUserGroups" />
+			</activeWhen>
+	     </handler>
+
+
+	   	<handler
+			class="de.regasus.users.group.command.DeleteUserGroupCommandHandler"
+			commandId="com.lambdalogic.mi.users.ui.handler.DeleteUserGroupCommand">
+	      	<activeWhen>
+				<reference definitionId="com.lambdalogic.mi.expression.selectedUserGroups" />
+			</activeWhen>
+		</handler>
+	</extension>
+
+
+	<extension point="org.eclipse.ui.menus">
+    	<menuContribution locationURI="toolbar:UserAccountSearchView">
+			<command commandId="com.lambdalogic.mi.users.ui.handler.CreateUserAccountCommand" />
+			<command commandId="com.lambdalogic.mi.users.ui.handler.EditUserAccountCommand" />
+			<command commandId="com.lambdalogic.mi.users.ui.handler.DeleteUserAccountCommand" />
+		</menuContribution>
+
+    	<menuContribution locationURI="menu:UserAccountSearchView">
+			<command commandId="com.lambdalogic.mi.users.ui.handler.CreateUserAccountCommand" />
+			<command commandId="com.lambdalogic.mi.users.ui.handler.EditUserAccountCommand" />
+			<command commandId="com.lambdalogic.mi.users.ui.handler.DeleteUserAccountCommand" />
+
+			<separator name="com.lambdalogic.mi.users.ui.separator1" visible="true" /> />
+
+			<command commandId="com.lambdalogic.mi.users.ui.handler.ChangePasswordCommand" />
+
+			<separator name="com.lambdalogic.mi.users.ui.separator2" visible="true" /> />
+
+			<command commandId="com.lambdalogic.mi.users.ui.handler.AssignToGroupCommand" />
+			<command commandId="com.lambdalogic.mi.users.ui.handler.RemoveFromGroupCommand" />
+		</menuContribution>
+
+    	<menuContribution locationURI="popup:UserAccountSearchView">
+			<command commandId="com.lambdalogic.mi.users.ui.handler.RefreshUserAccountCommand" />
+			<command commandId="com.lambdalogic.mi.users.ui.handler.EditUserAccountCommand" />
+			<command commandId="com.lambdalogic.mi.users.ui.handler.DeleteUserAccountCommand" />
+			<command commandId="com.lambdalogic.mi.users.ui.handler.CreateUserAccountCommand" />
+
+			<separator name="com.lambdalogic.mi.users.ui.separator1" visible="true" /> />
+
+			<command commandId="com.lambdalogic.mi.users.ui.handler.ChangePasswordCommand" />
+
+			<separator name="com.lambdalogic.mi.users.ui.separator2" visible="true" /> />
+
+			<command commandId="com.lambdalogic.mi.users.ui.handler.AssignToGroupCommand" />
+			<command commandId="com.lambdalogic.mi.users.ui.handler.RemoveFromGroupCommand" />
+		</menuContribution>
+
+
+    	<menuContribution locationURI="toolbar:GroupsView">
+			<command commandId="com.lambdalogic.mi.users.ui.handler.CreateUserGroupCommand" />
+			<command commandId="com.lambdalogic.mi.users.ui.handler.EditUserGroupCommand" />
+			<command commandId="com.lambdalogic.mi.users.ui.handler.DeleteUserGroupCommand" />
+		</menuContribution>
+    	<menuContribution locationURI="menu:GroupsView">
+			<command commandId="com.lambdalogic.mi.users.ui.handler.CreateUserGroupCommand" />
+			<command commandId="com.lambdalogic.mi.users.ui.handler.EditUserGroupCommand" />
+			<command commandId="com.lambdalogic.mi.users.ui.handler.DeleteUserGroupCommand" />
+		</menuContribution>
+    	<menuContribution locationURI="popup:GroupsView">
+			<command commandId="com.lambdalogic.mi.users.ui.handler.RefreshUserGroupCommand" />
+			<command commandId="com.lambdalogic.mi.users.ui.handler.EditUserGroupCommand" />
+			<command commandId="com.lambdalogic.mi.users.ui.handler.DeleteUserGroupCommand" />
+			<command commandId="com.lambdalogic.mi.users.ui.handler.CreateUserGroupCommand" />
+		</menuContribution>
+	</extension>
+
+
+	<extension point="org.eclipse.ui.editors">
+	     <editor
+	           id="UserGroupEditor"
+	           class="de.regasus.users.group.editor.UserGroupEditor"
+	           icon="icons/group.png"
+	           name="%Group">
+	     </editor>
+
+	     <editor
+	           id="UserAccountEditor"
+	           class="de.regasus.users.user.editor.UserAccountEditor"
+	           icon="icons/user.png"
+	           name="%UserAccount">
+	     </editor>
+	</extension>
+
+
+ 	<extension point="org.eclipse.core.expressions.definitions">
+		<definition id="com.lambdalogic.mi.expression.selectedUserAccounts">
+				<iterate operator="and" ifEmpty="false">
+					<instanceof
+                    value="com.lambdalogic.messeinfo.account.data.UserAccountVO" />
+				</iterate>
+		</definition>
+
+		<definition id="com.lambdalogic.mi.expression.selectedUserGroups">
+				<iterate operator="and" ifEmpty="false">
+					<instanceof
+                    value="com.lambdalogic.messeinfo.account.data.UserGroupVO" />
+				</iterate>
+		</definition>
+ 	</extension>
+
+</plugin>
+
+
+

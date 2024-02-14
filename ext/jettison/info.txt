@@ -1,0 +1,2 @@
+Jettison libraries for JSON support in web services.
+Referenced by project de.regasus.blueprint.ws.vo.

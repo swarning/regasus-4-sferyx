@@ -1,0 +1,38 @@
+<!--
+HTML-Page to start the process to get an alias.
+The user will have to enter the credit card details.
+-->
+%header%
+
+<FORM NAME="uppform" ACTION="%datatransUrl%" METHOD="post">
+
+	<!-- testOnly="no" for productive environment -->
+	<!-- testOnly="yes" for test environment -->
+	
+	<INPUT TYPE=HIDDEN NAME="testOnly" VALUE="no">
+
+	<!--
+	Set useAlias always to yes.
+	If we have an alias, it means use it.
+	If we have no alias, it means create one and put it into the response.
+	-->
+	<INPUT TYPE=HIDDEN NAME="useAlias" value="yes">
+	
+	<INPUT TYPE=HIDDEN NAME="language" VALUE="%language%">
+	<INPUT TYPE=HIDDEN NAME="successUrl" VALUE="%successUrl%">
+	<INPUT TYPE=HIDDEN NAME="errorUrl" VALUE="%errorUrl%">
+	<INPUT TYPE=HIDDEN NAME="cancelUrl" VALUE="%cancelUrl%">
+	<INPUT TYPE=HIDDEN NAME="merchantId" value="%merchantID%">
+	<INPUT TYPE=HIDDEN NAME="amount" value="%amount%">
+	<INPUT TYPE=HIDDEN NAME="currency" value="%currency%">
+	<INPUT TYPE=HIDDEN NAME="refno" value="%refno%">
+	
+	<!--
+	The request type specifies whether the transaction has to be immediately settled or authorised only. 
+	There are two request types available: “NOA” authorization only “CAA” authorization with immediate 
+	settlement in case of successful authorization.
+	-->
+	<INPUT TYPE=HIDDEN NAME="reqtype" value="NOA">
+	
+	<INPUT TYPE=SUBMIT VALUE="Mit Datatrans verbinden">
+</FORM>

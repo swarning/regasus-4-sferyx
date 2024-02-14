@@ -1,0 +1,20 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: jakarta.json
+Bundle-SymbolicName: jakarta.json
+Bundle-Version: 2.0.0
+Bundle-ClassPath: jakarta.json.bind-api-2.0.0.jar,
+ jakarta.json-api-2.0.0.jar
+Bundle-Vendor: The Jakarta Project
+Export-Package: jakarta.json,
+ jakarta.json.bind,
+ jakarta.json.bind.adapter,
+ jakarta.json.bind.annotation,
+ jakarta.json.bind.config,
+ jakarta.json.bind.serializer,
+ jakarta.json.bind.spi,
+ jakarta.json.spi,
+ jakarta.json.stream
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Automatic-Module-Name: jakarta.json
+Bundle-ActivationPolicy: lazy

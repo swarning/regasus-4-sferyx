@@ -1,0 +1,3 @@
+Referenced by com.lambdalogic.report.
+The project depends on the plug-in project com.google.zxing in report rcp-lib.
+But the Ant script uses this JAR. 

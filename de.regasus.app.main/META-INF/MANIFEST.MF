@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Regasus Application Plug-in
+Bundle-SymbolicName: de.regasus.app.main;singleton:=true
+Bundle-Version: 0.0.0
+Bundle-Activator: de.regasus.app.main.Activator
+Bundle-Vendor: LambdaLogic Informationssysteme GmbH
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ de.regasus.core.model,
+ de.regasus.core.ui,
+ org.slf4j;bundle-version="1.7.25",
+ com.lambdalogic.util;bundle-version="0.0.0",
+ com.lambdalogic.util.rcp;bundle-version="0.0.0"
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+

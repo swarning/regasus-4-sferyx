@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--!DOCTYPE project PUBLIC "-//ANT//DTD project//EN" "project.dtd"-->
+
+<project basedir="." default="deploy" name="remotecopy">
+	<property environment="env"/>
+	<property name="LALO_LIB" value="${env.LALO_LIB}"/>
+	
+	<property name="libName" value="jdbc"/>
+	
+	<target name="deploy">
+
+		<!-- kopieren und spezifizieren der jnlp-Datei -->
+		<copy file="${LALO_LIB}/${libName}/${libName}.template.jnlp" toFile="${libName}.jnlp">
+			<filterset>
+				<filter token="jnlp.host" value="${jnlp.host}" />
+				<filter token="customer" value="${app.customer}" />
+			</filterset>
+		</copy>		
+		
+		<sshexec 
+			host="${app.host}" 
+			port="${app.port}"
+			username="${app.user}" 
+			password="${app.password}" 
+			trust="yes" 
+			command="mkdir -p ${app.dir}/${app.customer}/${libName}/sybase"
+		/>
+		
+		<scp 
+			trust="yes" 
+			password="${app.password}" 
+			todir="${app.user}@${app.host}:${app.dir}/${app.customer}/${libName}"
+			port="${app.port}"
+		>
+			<fileset dir=".">
+				<include name="${libName}.jnlp"/>
+  			</fileset>
+		</scp>
+
+		<scp 
+			trust="yes" 
+			password="${app.password}" 
+			todir="${app.user}@${app.host}:${app.dir}/${app.customer}/${libName}/sybase"
+			port="${app.port}"
+		>
+			<fileset dir="${LALO_LIB}/${libName}/sybase/signed">
+				<include name="jconn3.jar" />
+  			</fileset>
+		</scp>
+
+		<delete file="${libName}.jnlp" />
+		
+	</target>	
+
+</project>

@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Standard Build" basedir="..">
+
+	<!--
+	Required properties
+	===================
+	
+	base-name: name of the module
+	The base-name is used for the name of the artefacts directory. All archive files start with base-name.
+
+	jar-name: name of the JAR file
+	The name of the JAR file starts with base-name, possibly followed by postfix and ends with ".jar".
+
+	war-name: name of the WAR file (optional)
+	The WAR archive is only built if the property "war-name" is set.
+	The name of the WAR file starts with base-name, possibly followed by postfix and ends with ".war".
+	
+	wildfly.deploy.dir: path to the directory where the JAR file has to be deployed
+	The property wildfly.deploy.dir should only be set if the property wildfly.dir which defines the root directory of a 
+	JBoss/WildFly application server.
+	E.g.: <property if:set="wildfly.dir" name="wildfly.deploy.dir" location="${wildfly.dir}/modules/de/regasus/auth/main"/>
+	
+	
+	Required pathes
+	===============
+	
+	project.classpath: classpath including libraries necessary for compilation
+	-->
+	
+	
+	<property file="ant/deploy.properties"/>
+	
+	<!-- directory of the workspace which is the parent directory of the repositories -->
+	<property name="workspace.dir" location="${basedir}/../.."/>
+
+	<!-- directory with third party libraries -->
+	<property name="lib" location="${workspace.dir}/lib/ext"/>
+	
+	
+	<!--
+	Path to the project "deploy" (repo "regasus-build") which works as repository for artefacts of all builds
+	and as a basis for deployments.
+	The default value defined here assumes that the repos "regasus-build" and "regasus-auth" are in the same 
+	directory. Jenkins might override this value.
+	-->
+	<property name="deploy.dir" location="${workspace.dir}/regasus-build/deploy"/>
+
+	<!-- artefacts directory of other builds -->
+	<property name="artefacts.dir" location="${deploy.dir}/artefacts"/>
+	<!-- target directory for artefacts created by this build -->
+	<property name="artefacts.deploy.dir" location="${artefacts.dir}/${base-name}"/>
+	
+	<property name="java_version" value="1.8"/>
+	<property name="src" location="${basedir}/src/main/java"/>
+	<property name="war" location="${basedir}/WAR"/>
+	<property name="ear" location="${basedir}/EAR"/>
+	<property name="target" location="${basedir}/target/main/bin"/>
+	<property name="dist" location="${basedir}/dist"/>
+
+	<target name="init">
+		<echo>Initialize ${ant.project.name}</echo>
+		<echoproperties>
+			<propertyset negate="yes">
+				<propertyref builtin="system"/>
+				<propertyref prefix="ant."/>
+				<propertyref prefix="eclipse."/>
+			</propertyset>
+		</echoproperties>
+
+		<mkdir dir="${target}"/>
+		<delete dir="${target}" includes="**/*" includeemptydirs="true" failonerror="no"/>
+			
+		<mkdir dir="${dist}"/>
+		<delete dir="${dist}" includes="**/*" includeemptydirs="true" failonerror="no"/>
+	</target>
+	
+	<target name="clean">
+		<delete includeemptydirs="true" failonerror="no">
+			<fileset dir="." includes="**/jacoco.exec"/>
+		</delete>
+	</target>
+
+	
+	<target name="compile" depends="init">
+		<echo>Compile ${ant.project.name}</echo>
+		
+		<!-- Compile and copy -->
+		<javac 
+			srcdir="${src}"
+			encoding="UTF-8"
+			destdir="${target}"
+			source="${java_version}" 
+			target="${java_version}" 
+			debug="yes"
+		>
+			<classpath>
+				<path refid="project.classpath"/>
+			</classpath>
+		</javac>
+		
+		<copy todir="${target}">
+			<fileset dir="${src}">
+				<include name="**/*"/>
+				<exclude name="**/*.java"/>
+				<exclude name="**/.DS_Store"/>
+			</fileset>
+        </copy>
+	</target>
+	
+
+	
+	<!-- *************************************************************************************************** -->
+	
+	
+	<target name="build.jar" description="Build JAR file" if="jar-name">
+		<echo>Build JAR of ${ant.project.name} version ${version}</echo>
+		
+		<!-- Delete JAR file from previous build in dist directory -->
+		<delete includeemptydirs="true" failonerror="no" file="${dist}/${jar-base-name}*.jar"/>
+		<delete includeemptydirs="true" failonerror="no">
+			<fileset dir="${artefacts.deploy.dir}">
+				<include name="${jar-base-name}*.jar"/>
+			</fileset>
+		</delete>
+		
+		<!-- Create temporary version file -->
+		<echo file="${version.file}">main=${version.main}
+major=${version.major}
+minor=${version.minor}
+build=${version.build}</echo>
+
+		<jar jarfile="${dist}/${jar-name}">
+			<fileset dir=".">
+				<include name="${version.file}"/>
+			</fileset>
+			<fileset dir="${target}">
+				<include name="**/*"/>
+			</fileset>
+		</jar>
+		
+		<!-- Delete temporary version file -->
+		<delete file="${version.file}"/>
+		
+		<!-- Copy JAR file to artefacts.deploy.dir -->
+		<copy todir="${artefacts.deploy.dir}">
+			<fileset dir="${dist}" includes="${jar-name}"/>
+		</copy>
+	</target>
+
+	
+	<target name="build.war" depends="build.jar" description="Build WAR file" if="war-name">
+		<echo>Build WAR of ${ant.project.name}</echo>
+		
+		<!-- Delete WAR file from previous build in dist directory -->
+		<delete includeemptydirs="true" failonerror="no" file="${dist}/${war-base-name}*"/>
+		<delete includeemptydirs="true" failonerror="no">
+			<fileset dir="${artefacts.deploy.dir}">
+				<include name="${war-base-name}*.war"/>
+			</fileset>
+		</delete>
+		
+		<!-- Create temporary version file -->
+		<echo file="${version.file}">main=${version.main}
+major=${version.major}
+minor=${version.minor}
+build=${version.build}</echo>
+
+		<!-- Initialize directory dist/war-explode -->
+		<property name="war-exploded" location="${dist}/war-exploded"/>
+    	<mkdir dir="${war-exploded}"/>
+		<delete includeemptydirs="true" failonerror="no">
+			<fileset dir="${war-exploded}" includes="**/*"/>
+		</delete>		
+
+		<!-- copy files from WAR directory to war-exploded-->
+		<copy todir="${war-exploded}">
+			<fileset dir=".">
+				<include name="${version.file}"/>
+			</fileset>
+			<fileset dir="${war}">
+				<include name="**/*"/>
+				<exclude name="**/.DS_Store"/>
+			</fileset>
+        </copy>
+		
+		<!-- Delete temporary version file -->
+		<delete file="${version.file}"/>
+
+		<!-- copy JAR file to WEB-INF/lib -->
+		<copy todir="${war-exploded}/WEB-INF/lib" file="${dist}/${jar-name}"/>
+
+		<!-- copy third party libraries -->
+		<copy todir="${war-exploded}/WEB-INF/lib">
+			<resources refid="war.libs"/>
+        </copy>
+
+		
+		<!-- build WAR file -->
+		<jar jarfile="${dist}/${war-name}">
+			<fileset dir="${war-exploded}">
+				<include name="**/*"/>
+				<exclude name="**/.DS_Store"/>
+			</fileset>
+		</jar>
+		
+		<!-- Copy WAR file to artefacts.deploy.dir -->
+		<copy todir="${artefacts.deploy.dir}">
+			<fileset dir="${dist}" includes="${war-name}" />
+		</copy>
+	</target>
+
+	
+	<!--
+	To be defined in calling script:
+	ear-name
+	ear.libs (fileset with libraries (third party and LaLo) to be copied into the EAR's lib directory)
+	ear.app.libs (fileset with application libraries (JAR and WAR) to be copied into the root directory)
+	-->
+	<target name="build.ear" description="Build EAR file" if="ear-name">
+		<echo>Build EAR of ${ant.project.name}</echo>
+		
+		
+		<!-- Delete EAR file from previous build in dist directory -->
+		<delete includeemptydirs="true" failonerror="no" file="${dist}/${ear-base-name}*"/>
+		<delete includeemptydirs="true" failonerror="no">
+			<fileset dir="${artefacts.deploy.dir}">
+				<include name="${ear-base-name}*.ear"/>
+			</fileset>
+		</delete>
+		
+		<!-- Create temporary version file -->
+		<echo file="${version.file}">main=${version.main}
+major=${version.major}
+minor=${version.minor}
+build=${version.build}</echo>
+
+		
+		<!-- Initialize directory dist/ear-explode -->
+		<property name="ear-exploded" location="${dist}/ear-exploded"/>
+    	<mkdir dir="${ear-exploded}"/>
+		<delete includeemptydirs="true" failonerror="no">
+			<fileset dir="${ear-exploded}" includes="**/*"/>
+		</delete>		
+
+		
+		<!-- copy files from EAR directory to ear-exploded-->
+		<copy todir="${ear-exploded}">
+			<fileset dir=".">
+				<include name="${version.file}"/>
+			</fileset>
+			<fileset dir="${ear}">
+				<include name="**/*"/>
+				<exclude name="**/.DS_Store"/>
+			</fileset>
+        </copy>
+		
+		<!-- Delete temporary version file -->
+		<delete file="${version.file}"/>
+		
+		<!-- copy libraries (third party and LaLo) into the lib directory -->
+		<copy todir="${ear-exploded}/lib">
+			<resources refid="ear.libs"/>
+        </copy>
+
+		
+		<!-- copy application libraries (JAR and WAR) into the root directory -->
+		<copy todir="${ear-exploded}">
+			<resources refid="ear.app.libs"/>
+        </copy>
+
+		
+		<!-- build EAR file -->
+		<jar jarfile="${dist}/${ear-name}">
+			<fileset dir="${ear-exploded}">
+				<include name="**/*"/>
+				<exclude name="**/.DS_Store"/>
+			</fileset>
+		</jar>
+		
+		
+		<!-- copy EAR file to artefacts.deploy.dir -->
+		<copy todir="${artefacts.deploy.dir}">
+			<fileset dir="${dist}" includes="${ear-name}" />
+		</copy>
+	</target>
+
+	
+	<target name="build" depends="clean, build.jar, build.war, build.ear" description="Build JAR, WAR, EAR files"/>
+
+	
+	<!-- Condition for deploying the JAR: property wildfly.deploy.dir is set, but war-name is not -->
+	<condition property="deploy-jar">
+		<and>
+			<isset property="wildfly.deploy.dir"/>
+			<isset property="jar-name"/>
+			<not>
+				<isset property="war-name"/>
+			</not>
+			<not>
+				<isset property="ear-name"/>
+			</not>
+		</and>
+	</condition>
+
+	
+	<!-- Condition for deploying the WAR: property wildfly.deploy.dir and war-name are set -->
+	<condition property="deploy-war">
+		<and>
+			<isset property="wildfly.deploy.dir"/>
+			<isset property="war-name"/>
+		</and>
+	</condition>
+
+	
+	<!-- Condition for deploying the EAR: property wildfly.deploy.dir and ear-name are set -->
+	<condition property="deploy-ear">
+		<and>
+			<isset property="wildfly.deploy.dir"/>
+			<isset property="ear-name"/>
+		</and>
+	</condition>
+
+	
+	<!-- Deploy the JAR -->
+    <target name="deploy.local.jar" if="deploy-jar">
+    	<echo>Deploy JAR of ${ant.project.name}</echo>
+    	
+    	<!-- delete old JAR file -->
+    	<delete dir="${wildfly.deploy.dir}" includes="${jar-base-name}*.jar"/>
+    	
+    	<!-- copy new JAR file -->
+    	<copy todir="${wildfly.deploy.dir}" file="${dist}/${jar-name}"/>
+    </target>
+	
+	
+	<!-- Deploy the WAR -->
+    <target name="deploy.local.war" if="deploy-war">
+    	<echo>Deploy WAR of ${ant.project.name}</echo>
+    	
+    	<!-- delete old WAR file -->
+    	<delete dir="${wildfly.deploy.dir}" includes="${war-base-name}*.war"/>
+    	<!-- delete old WAR marker file -->
+    	<delete dir="${wildfly.deploy.dir}" includes="${war-base-name}*.war.*"/>
+    	
+    	<!-- copy new WAR file -->
+    	<copy todir="${wildfly.deploy.dir}" file="${dist}/${war-name}"/>
+    </target>
+	
+	
+	<!-- Deploy the EAR -->
+    <target name="deploy.local.ear" if="deploy-ear">
+    	<echo>Deploy EAR of ${ant.project.name}</echo>
+    	
+    	<!-- delete old EAR file -->
+    	<delete dir="${wildfly.deploy.dir}" includes="${ear-base-name}*.ear"/>
+    	<!-- delete old EAR marker file -->
+    	<delete dir="${wildfly.deploy.dir}" includes="${ear-base-name}*.ear.*"/>
+    	
+    	<!-- copy new EAR file -->
+    	<copy todir="${wildfly.deploy.dir}" file="${dist}/${ear-name}"/>
+    </target>
+	
+	
+	<target name="replace.module.xml" if="replace-token">
+		<replace file="../de.regasus.auth/ant/template.xml" token="${replace-token}" value="${jar-name}"/>
+		
+		<copy file="../de.regasus.auth/ant/template.xml" tofile="${wildfly.deploy.dir}/module.xml" overwrite="true"/>
+	</target>
+	
+	
+	<!-- Deploy JAR, WAR or EAR and maybe replace module.xml
+	     Which one is actually deployed depends on the properties deploy-jar, deploy-war and deploy-ear.
+	-->
+    <target name="deploy.local" depends="deploy.local.jar, deploy.local.war, deploy.local.ear, replace.module.xml" />
+	
+</project>

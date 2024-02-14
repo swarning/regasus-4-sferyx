@@ -1,0 +1,26 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Impex Plug-in
+Bundle-SymbolicName: de.regasus.impex.ui;singleton:=true
+Bundle-Version: 0.0.0
+Bundle-Activator: de.regasus.impex.ui.Activator
+Bundle-Vendor: LambdaLogic Informationssysteme GmbH
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ de.regasus.core.error,
+ de.regasus.model,
+ de.regasus.ui,
+ com.lambdalogic.util,
+ com.lambdalogic.util.rcp,
+ org.jboss,
+ de.regasus.core.model,
+ com.lambdalogic.report,
+ org.apache.httpclient,
+ de.regasus.report.ui,
+ de.regasus.report.model,
+ de.regasus.ejb.intf,
+ de.regasus.entity,
+ de.regasus.core.ui;bundle-version="0.0.0"
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-11

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+	<extension point="org.eclipse.ui.commands">
+		<command
+			id="EventExportCommand"
+        	name="%EventExportCommand.name"
+        	description="%EventExportCommand.tooltip">
+      	</command>
+		<command
+			id="MasterDataExportCommand"
+        	name="%MasterDataExportCommand.name"
+        	description="%MasterDataExportCommand.tooltip">
+      	</command>
+      	<command id="ReportExportCommand" name="%ReportExportCommand.name" />
+		<command
+			id="ImportCommand"
+        	name="%ImportCommand.name"
+        	description="%ImportCommand.tooltip">
+      	</command>
+      	<command
+      		id="ODSParticipantImportCommand"
+      		name="%ODSParticipantImportCommand.name"
+         	description="%ODSParticipantImportCommand.tooltip">
+      	</command>
+      	<command
+      		id="ODSProfileImportCommand"
+      		name="%ODSProfileImportCommand.name"
+         	description="%ODSProfileImportCommand.tooltip">
+		</command>
+      	<command
+      		id="ScanndyDataImportCommand"
+      		name="%ScanndyDataImportCommand.name"
+         	description="%ScanndyDataImportCommand.tooltip">
+		</command>
+      	<command
+      		id="EIVFoBiExportCommand"
+      		name="%EIVFoBiExportCommand.name"
+         	description="%EIVFoBiExportCommand.tooltip">
+		</command>
+		<command
+      		id="EIVFoBiCreateCommand"
+      		name="%EIVFoBiCreateCommand.name"
+         	description="%EIVFoBiCreateCommand.tooltip">
+		</command>
+	</extension>
+
+	<extension point="org.eclipse.ui.handlers">
+		<handler
+			commandId="EventExportCommand"
+			class="de.regasus.impex.db.command.EventExportHandler" />
+		<handler
+			commandId="MasterDataExportCommand"
+			class="de.regasus.impex.db.command.MasterDataExportHandler" />
+		<handler
+			commandId="ReportExportCommand"
+			class="de.regasus.impex.db.command.ReportExportHandler" />
+		<handler
+			commandId="ImportCommand"
+			class="de.regasus.impex.db.command.ImportHandler" />
+		<handler
+			commandId="ODSParticipantImportCommand"
+			class="de.regasus.impex.ods.command.ODSParticipantImportHandler" />
+		<handler
+			commandId="ODSProfileImportCommand"
+			class="de.regasus.impex.ods.command.ODSProfileImportHandler" />
+		<handler
+			commandId="ScanndyDataImportCommand"
+			class="de.regasus.impex.scanndy.command.ScanndyDataImportHandler" />
+		<handler
+			commandId="EIVFoBiExportCommand"
+			class="de.regasus.impex.eivfobi.command.EIVFoBiExportHandler" />
+		<handler
+			commandId="EIVFoBiCreateCommand"
+			class="de.regasus.impex.eivfobi.command.EIVFoBiCreateHandler" />
+	</extension>
+
+	<extension point="org.eclipse.ui.menus">
+		<menuContribution locationURI="menu:System?after=ExportAdditions">
+			<command commandId="MasterDataExportCommand"/>
+			<command commandId="ImportCommand" />
+
+			<separator name="ODS" visible="true"/>
+			<command commandId="ODSParticipantImportCommand" />
+			<command commandId="ODSProfileImportCommand" />
+
+			<separator name="Scanndy" visible="true"/>
+			<command commandId="ScanndyDataImportCommand" />
+
+			<separator name="EIVFoBi" visible="true"/>
+			<command commandId="EIVFoBiExportCommand" />
+			<command commandId="EIVFoBiCreateCommand" />
+		</menuContribution>
+
+		<menuContribution
+			locationURI="popup:EventMasterDataView?after=ImportExportAdditions">
+
+			<!-- Der XML-Import ist nicht an eine Veranstaltung gebunden, deshalb soll das
+			     Command nicht im Kontextmenü erscheinen -->
+
+			<command commandId="EventExportCommand">
+				<visibleWhen checkEnabled="false">
+					<iterate ifEmpty="false" operator="and">
+						<or>
+							<instanceof value="de.regasus.event.view.EventGroupTreeNode"/>
+							<instanceof value="de.regasus.event.view.EventTreeNode"/>
+						</or>
+					</iterate>
+				</visibleWhen>
+			</command>
+
+			<command commandId="ODSParticipantImportCommand">
+				<visibleWhen checkEnabled="false">
+					<iterate ifEmpty="false" operator="and">
+						<or>
+							<instanceof value="de.regasus.event.view.EventGroupTreeNode"/>
+							<instanceof value="de.regasus.event.view.EventTreeNode"/>
+						</or>
+					</iterate>
+				</visibleWhen>
+			</command>
+
+			<command commandId="EIVFoBiExportCommand">
+				<visibleWhen checkEnabled="false">
+					<iterate ifEmpty="false" operator="and">
+						<or>
+							<instanceof value="de.regasus.event.view.EventGroupTreeNode"/>
+							<instanceof value="de.regasus.event.view.EventTreeNode"/>
+						</or>
+					</iterate>
+				</visibleWhen>
+			</command>
+
+			<command commandId="EIVFoBiCreateCommand">
+				<visibleWhen checkEnabled="false">
+					<iterate ifEmpty="false" operator="and">
+						<or>
+							<instanceof value="de.regasus.event.view.EventGroupTreeNode"/>
+							<instanceof value="de.regasus.event.view.EventTreeNode"/>
+						</or>
+					</iterate>
+				</visibleWhen>
+			</command>
+
+		</menuContribution>
+
+
+		<menuContribution
+			locationURI="popup:UserReportTreeView?after=additions">
+
+			<command commandId="ReportExportCommand">
+				<visibleWhen checkEnabled="false">
+					<iterate ifEmpty="false" operator="and">
+						<instanceof value="com.lambdalogic.messeinfo.report.data.UserReportDirVO"/>
+					</iterate>
+				</visibleWhen>
+			</command>
+
+		</menuContribution>
+
+	</extension>
+</plugin>

@@ -1,0 +1,35 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: RCP Utilities
+Bundle-SymbolicName: com.lambdalogic.util.rcp;singleton:=true
+Bundle-Version: 0.0.0
+Bundle-Vendor: LambdaLogic GmbH
+Automatic-Module-Name: com.lambdalogic.util.rcp
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.swt.nebula,
+ org.apache.commons.lang,
+ com.google.zxing,
+ com.lambdalogic.util,
+ de.regasus.entity,
+ de.regasus.ejb.intf,
+ com.sferyx;bundle-version="21.0.0",
+ org.slf4j;bundle-version="1.7.25"
+Bundle-Activator: com.lambdalogic.util.rcp.Activator
+Export-Package: com.lambdalogic.util.rcp,
+ com.lambdalogic.util.rcp.chunk,
+ com.lambdalogic.util.rcp.datetime,
+ com.lambdalogic.util.rcp.dialog,
+ com.lambdalogic.util.rcp.dnd,
+ com.lambdalogic.util.rcp.error,
+ com.lambdalogic.util.rcp.geo,
+ com.lambdalogic.util.rcp.html,
+ com.lambdalogic.util.rcp.i18n,
+ com.lambdalogic.util.rcp.image,
+ com.lambdalogic.util.rcp.pref,
+ com.lambdalogic.util.rcp.simpleviewer,
+ com.lambdalogic.util.rcp.tree,
+ com.lambdalogic.util.rcp.validation,
+ com.lambdalogic.util.rcp.widget

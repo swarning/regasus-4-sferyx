@@ -1,0 +1,33 @@
+﻿.columnRight_links {
+	text-align: left;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:11px;
+	line-height: 15px;
+	color:#6CC6B8;
+	text-decoration: underline;
+	padding-right: 3px;
+	}
+	.columnRight_links:link {
+	text-align: left;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:11px;
+	line-height: 15px;
+	text-decoration:underline;
+	}
+	.columnRight_links:hover {
+	color:#666666;
+	text-decoration:underline;	}
+	
+	.columnRight_links:visited {
+	color:#6CC6B8;
+	text-decoration:underline;
+	}
+.columnRight_auszeichnung {
+	text-align: left;
+	overflow: 	hidden;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:11px;
+	font-weight:bold;
+	line-height: 15px;
+	color:#6CC6B8;
+	}

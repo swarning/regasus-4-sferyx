@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+	<extension point="de.regasus.report.ui.reportWizard">
+		<wizard class="de.regasus.report.wizard.generic.GenericReportWizard" />
+		<wizard class="de.regasus.report.wizard.generic.GenericReportWizard2" />
+
+		<wizard class="de.regasus.report.wizard.country.statistics1.CountryStatisticWizard" />
+		<wizard class="de.regasus.report.wizard.country.statistics2.CountryStatistics2Wizard" />
+		<wizard	class="de.regasus.report.wizard.participant.list.ParticipantListWizard" />
+		<wizard	class="de.regasus.report.wizard.participant.list.GroupedParticipantListWizard" />
+		<wizard	class="de.regasus.report.wizard.participant.list.ParticipantCVOsWizard" />
+		<wizard	class="de.regasus.report.wizard.participant.label.ParticipantLabelWizard" />
+		<wizard	class="de.regasus.report.wizard.participant.attendance.ParticipantAttendanceListWizard" />
+		<wizard class="de.regasus.report.wizard.participant.change.ParticipantChangeWizard" />
+		<wizard	class="de.regasus.report.wizard.participant.duplicates.ParticipantDuplicatesWizard" />
+		<wizard	class="de.regasus.report.wizard.participant.lead.ParticipantLeadWizard" />
+		<wizard	class="de.regasus.report.wizard.programme.booking.crosstable.ProgrammeBookingCrossTableWizard" />
+		<wizard class="de.regasus.report.wizard.programme.point.list.ProgrammePointWizard" />
+		<wizard class="de.regasus.report.wizard.programme.point.attendance.ProgrammePointAttendanceWizard" />
+		<wizard	class="de.regasus.report.wizard.programme.point.lead.ProgrammePointLeadWizard" />
+		<wizard class="de.regasus.report.wizard.programme.point.statistics.ProgrammePointStatisticsWizard" />
+		<wizard class="de.regasus.report.wizard.programme.participant.list.ProgrammeParticipantListWizard" />
+		<wizard class="de.regasus.report.wizard.programme.registrationsPerWeek.RegistrationsPerWeekWizard" />
+		<wizard class="de.regasus.report.wizard.workgroup.participant.list.WorkGroupParticipantListWizard" />
+		<wizard class="de.regasus.report.wizard.workgroup.statistics.WorkGroupStatisticsWizard" />
+		<wizard class="de.regasus.report.wizard.programme.booking.perday.ProgrammeBookingsPerDayWizard" />
+		<wizard class="de.regasus.report.wizard.booking.list.BookingListWizard" />
+		<wizard	class="de.regasus.report.wizard.participant.list.CertificateWizard" />
+		<wizard	class="de.regasus.report.wizard.profile.list.ProfileAtEventsPerCityWizard" />
+		<wizard	class="de.regasus.report.wizard.profile.list.ProfileListWizard" />
+		<wizard	class="de.regasus.report.wizard.person.information.PersonalInformationWizard" />
+
+		<!-- Finance -->
+		<wizard class="de.regasus.report.wizard.payment.list.PaymentListWizard" />
+		<wizard class="de.regasus.report.wizard.invoice.list.InvoiceListWizard" />
+		<wizard class="de.regasus.report.wizard.invoice.position.list.InvoicePositionListWizard" />
+		<wizard class="de.regasus.report.wizard.openposition.list.OpenPositionListWizard"  />
+		<wizard class="de.regasus.report.wizard.payengine.list.PayEngineListWizard" />
+		<wizard class="de.regasus.report.wizard.payengine.list.compact.PayEngineListCompactWizard" />
+		<wizard class="de.regasus.report.wizard.datatrans.list.DatatransListWizard" />
+
+		<!-- Hotel -->
+		<wizard class="de.regasus.report.wizard.hotel.guestlist.HotelGuestListWizard" />
+		<wizard class="de.regasus.report.wizard.hotel.guestlist.HotelCommissionListWizard" />
+		<wizard class="de.regasus.report.wizard.hotel.list.HotelListWizard" />
+		<wizard class="de.regasus.report.wizard.hotel.offering.list.HotelOfferingListWizard" />
+		<wizard class="de.regasus.report.wizard.hotel.reminder.list.EventHotelReminderListWizard" />
+		<wizard class="de.regasus.report.wizard.hotel.booking.list.HotelBookingListWizard" />
+		<wizard class="de.regasus.report.wizard.hotel.room.salesstatus.HotelRoomSalesStatusReportWizard" />
+		<wizard class="de.regasus.report.wizard.hotel.room.statistics.HotelRoomStatisticsWizard" />
+		<wizard class="de.regasus.report.wizard.hotel.peaknight.PeakNightRoomStatisticsForEventWizard" />
+		<wizard class="de.regasus.report.wizard.hotel.peaknight.PeakNightRoomStatisticsForTimePeriodWizard" />
+		<wizard class="de.regasus.report.wizard.hotel.commission.HotelCommissionWizard" />
+		<wizard class="de.regasus.report.wizard.hotel.overnight.stay.sales.statistics.OvernightStaySalesWizard" />
+		<wizard class="de.regasus.report.wizard.hotel.room.credit.RoomCreditWizard" />
+		<wizard class="de.regasus.report.wizard.hotel.revenue.HotelRevenueWizard" />
+	</extension>
+
+</plugin>

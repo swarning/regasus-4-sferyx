@@ -1,0 +1,61 @@
+﻿.center_links {
+	text-align: 	left;
+	font-family:	Verdana, Arial, Helvetica, sans-serif;
+	font-size:		11px;
+	line-height: 	20px;
+	color: 			#666666;
+}
+.center_links:link{
+	text-decoration:underline; 
+}
+.center_links:hover{
+	color: #00839B;
+	text-decoration:underline;
+}
+.center_titel {
+		font-size:16px;
+	}
+.center_auszeichnung {
+	font-size:		11px;
+	line-height: 	20px;
+	font-weight:bold;
+	color:#00839B;
+	}
+.center_fett {
+	font-size:		11px;
+	line-height: 	20px;
+	color: 			#666666;
+	font-weight:bold;
+	}
+	
+.center_tabelle {
+	font-size:		11px;
+	line-height: 	20px;
+	color: 			#666666;
+	padding: 4px;
+	border-bottom:1px;
+	border-bottom-color:#CCCCCC;
+	border-bottom-style:solid;
+	}
+	
+.center_bilder {
+	adding-left: 0px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-right: 0px;
+	margin-top: 0px;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	margin-left: 0px;
+	}
+
+ul {
+	list-style-type: none;
+	list-style-position: inside;
+	padding-left: 15px;
+}
+li {
+	list-style-position: outside;
+	list-style-type: disc;
+	padding-left: 5px;
+}

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.egit.ui.internal.staging.StagingView">
+		<item key="MAIN_SASH_FORM_ORIENTATION_VERTICAL" value="false"/>
+		<item key="HORIZONTAL_SASH_FORM_WEIGHT" value="200,200"/>
+		<item key="STAGING_SASH_FORM_WEIGHT" value="200,200"/>
+		<item key="sortItemState" value="false"/>
+	</section>
+	<section name="GitCommitMessageComponent">
+		<list key="/Users/Alel/git/repository/.git">
+			<item value="true"/>
+			<item value="Alel &lt;a.el-bachir@lambdalogic.de&gt;"/>
+			<item value=""/>
+			<item value="Alel &lt;a.el-bachir@lambdalogic.de&gt;"/>
+			<item value="0000000000000000000000000000000000000000"/>
+			<item value="0"/>
+			<item value="false"/>
+			<item value=""/>
+		</list>
+		<list key="/Users/Alel/Documents/GitHub/regasus-4-sferyx/.git">
+			<item value="false"/>
+			<item value="swarning &lt;s.warning@lambdalogic.de&gt;"/>
+			<item value="Initialize Git Repository"/>
+			<item value="Alel &lt;a.el-bachir@lambdalogic.de&gt;"/>
+			<item value="a1a1d9b244cf46569af9cec53e1c71aa0411c10e"/>
+			<item value="0"/>
+			<item value="false"/>
+			<item value=""/>
+		</list>
+	</section>
+	<section name="org.eclipse.egit.ui.internal.dialogs.ResetTargetSelectionDialog.dialogBounds">
+		<item key="DIALOG_X_ORIGIN" value="607"/>
+		<item key="DIALOG_Y_ORIGIN" value="53"/>
+		<item key="DIALOG_WIDTH" value="586"/>
+		<item key="DIALOG_HEIGHT" value="727"/>
+		<item key="DIALOG_FONT_NAME" value="1|.AppleSystemUIFont|11.0|0|COCOA|1|.AppleSystemUIFont"/>
+	</section>
+</section>

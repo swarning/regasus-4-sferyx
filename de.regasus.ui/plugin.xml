@@ -1,0 +1,4732 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+
+	<extension point="org.eclipse.e4.workbench.model" id="de.regasus.ui.fragment">
+		<fragment uri="fragment.e4xmi" apply="always"/>
+	</extension>
+
+
+	<extension point="de.regasus.core.model.statusChecker">
+		<statusChecker class="de.regasus.hotel.eventhotelinfo.editor.EventHotelReminderStatusChecker"/>
+	</extension>
+
+
+	<extension point="org.eclipse.ui.services">
+		<sourceProvider provider="de.regasus.event.ConfigSetSourceProvider">
+			<variable priorityLevel="workbench" name="configuration.allowCustomerConfig"/>
+			<variable priorityLevel="workbench" name="configuration.event"/>
+			<variable priorityLevel="workbench" name="configuration.event.invoice"/>
+			<variable priorityLevel="workbench" name="configuration.event.programme"/>
+			<variable priorityLevel="workbench" name="configuration.event.hotel"/>
+			<variable priorityLevel="workbench" name="configuration.event.exhibitor"/>
+			<variable priorityLevel="workbench" name="configuration.event.formEditor"/>
+			<variable priorityLevel="workbench" name="configuration.event.portal"/>
+			<variable priorityLevel="workbench" name="configuration.event.participant.customField"/>
+			<variable priorityLevel="workbench" name="configuration.event.participant.simpleCustomField"/>
+			<variable priorityLevel="workbench" name="configuration.profile"/>
+			<variable priorityLevel="workbench" name="configuration.profile.customField"/>
+			<variable priorityLevel="workbench" name="configuration.profileRelation"/>
+			<variable priorityLevel="workbench" name="configuration.badge"/>
+			<variable priorityLevel="workbench" name="configuration.lead"/>
+			<variable priorityLevel="workbench" name="configuration.registerDate"/>
+			<variable priorityLevel="workbench" name="configuration.certificatePrint"/>
+			<variable priorityLevel="workbench" name="configuration.programmeNoteTime"/>
+			<variable priorityLevel="workbench" name="configuration.hotelNoteTime"/>
+			<variable priorityLevel="workbench" name="configuration.event.location"/>
+			<variable priorityLevel="workbench" name="configuration.onsiteWorkflow"/>
+		</sourceProvider>
+		<sourceProvider provider="de.regasus.participant.ParticipantSelectionSourceProvider">
+			<variable priorityLevel="workbench" name="de.regasus.event.participantSelectionState"/>
+			<variable priorityLevel="workbench" name="de.regasus.event.groupMemberSelectionState"/>
+			<variable priorityLevel="workbench" name="de.regasus.event.groupManagerSelectionState"/>
+			<variable priorityLevel="workbench" name="de.regasus.event.companionSelectionState"/>
+			<variable priorityLevel="workbench" name="de.regasus.event.personLinkSelectionState"/>
+		</sourceProvider>
+		<sourceProvider provider="de.regasus.finance.FinanceSourceProvider">
+			<variable priorityLevel="workbench" name="de.regasus.event.finance.isEnabledClearInvoicePositions"/>
+			<variable priorityLevel="workbench" name="de.regasus.event.finance.isEnabledPrintInvoice"/>
+			<variable priorityLevel="workbench" name="de.regasus.event.finance.isEnabledGenerateSampleInvoice"/>
+			<variable priorityLevel="workbench" name="de.regasus.event.finance.isEnabledCloseInvoice"/>
+			<variable priorityLevel="workbench" name="de.regasus.event.finance.isEnabledRefreshAddress"/>
+			<variable priorityLevel="workbench" name="de.regasus.event.finance.isEnabledCancelPayment"/>
+			<variable priorityLevel="workbench" name="de.regasus.event.finance.isEnabledPayEngineHistory"/>
+			<variable priorityLevel="workbench" name="de.regasus.event.finance.isEnabledEasyCheckoutHistory"/>
+			<variable priorityLevel="workbench" name="de.regasus.event.finance.isEnabledCancelClearing"/>
+			<variable priorityLevel="workbench" name="de.regasus.event.finance.isEnabledIncreaseReminderLevel"/>
+			<variable priorityLevel="workbench" name="de.regasus.event.finance.isEnabledShowReminder"/>
+			<variable priorityLevel="workbench" name="de.regasus.event.finance.isEnabledStopReminder"/>
+			<variable priorityLevel="workbench" name="de.regasus.event.finance.isEnabledRestartReminder"/>
+			<variable priorityLevel="workbench" name="de.regasus.event.finance.isEnabledShowPaymentReceipt"/>
+			<variable priorityLevel="workbench" name="de.regasus.event.finance.isEnabledShowRefundReceipt"/>
+		</sourceProvider>
+		<sourceProvider provider="de.regasus.participant.ParticipantEditorSourceProvider">
+			<variable priorityLevel="workbench" name="de.regasus.participant.editor.isOneBadgeSelected"/>
+			<variable priorityLevel="workbench" name="de.regasus.participant.editor.isOnsiteWorkflowAvailable"/>
+		</sourceProvider>
+		<sourceProvider provider="de.regasus.event.EventSourceProvider">
+			<variable priorityLevel="workbench" name="event.selection"/>
+			<variable priorityLevel="workbench" name="event.closed"/>
+		</sourceProvider>
+		<sourceProvider provider="de.regasus.programme.programmepoint.ProgrammePointSourceProvider">
+			<variable priorityLevel="workbench" name="programmePoint.event.selection"/>
+			<variable priorityLevel="workbench" name="programmePoint.selection"/>
+			<variable priorityLevel="workbench" name="programmePoint.cancelled"/>
+		</sourceProvider>
+		<sourceProvider provider="de.regasus.programme.workgroup.WorkGroupSourceProvider">
+			<variable name="workGroup.selection" priorityLevel="workbench"/>
+			<variable name="workGroup.cancelled" priorityLevel="workbench"/>
+		</sourceProvider>
+		<sourceProvider provider="de.regasus.programme.offering.ProgrammeOfferingSourceProvider">
+			<variable priorityLevel="workbench" name="programmeOffering.selection"/>
+			<variable priorityLevel="workbench" name="programmeOffering.cancelled"/>
+		</sourceProvider>
+		<sourceProvider provider="de.regasus.programme.cancelterm.ProgrammeCancelationTermSourceProvider">
+			<variable priorityLevel="workbench" name="programmeCancelationTerm.selection"/>
+			<variable priorityLevel="workbench" name="programmeCancelationTerm.cancelled"/>
+		</sourceProvider>
+	</extension>
+
+
+	<extension point="org.eclipse.core.expressions.definitions">
+
+		<definition id="com.lambdalogic.mi.expression.selectedProfiles">
+			<or>
+				<with variable="activePart">
+					<instanceof value="de.regasus.profile.ProfileProvider"/>
+				</with>
+				<iterate ifEmpty="false" operator="and">
+					<instanceof value="com.lambdalogic.messeinfo.profile.Profile"/>
+				</iterate>
+			</or>
+		</definition>
+
+		<definition id="com.lambdalogic.mi.expression.oneSelectedProfile">
+			<or>
+				<with variable="activePart">
+					<instanceof value="de.regasus.profile.ProfileProvider"/>
+				</with>
+				<and>
+					<count value="1"/>
+					<iterate ifEmpty="false">
+						<instanceof value="com.lambdalogic.messeinfo.profile.Profile"/>
+					</iterate>
+				</and>
+			</or>
+		</definition>
+
+		<definition id="com.lambdalogic.mi.expression.selectedParticipants">
+			<not>
+				<with variable="de.regasus.event.participantSelectionState">
+					<equals value="none"/>
+				</with>
+			</not>
+		</definition>
+
+		<definition id="com.lambdalogic.mi.expression.oneSelectedParticipant">
+			<with variable="de.regasus.event.participantSelectionState">
+				<equals value="one"/>
+			</with>
+		</definition>
+
+		<definition id="com.lambdalogic.mi.expression.oneSelectedProfileOrParticipantAndActiveEmailTemplateEditor">
+			<and>
+				<with variable="activeEditor">
+					<instanceof value="de.regasus.email.template.editor.EmailTemplateEditor"/>
+				</with>
+				<or>
+					<and>
+						<count value="1"/>
+						<iterate operator="and" ifEmpty="false">
+							<instanceof value="com.lambdalogic.messeinfo.profile.Profile"/>
+						</iterate>
+					</and>
+					<and>
+						<count value="1"/>
+						<iterate operator="and" ifEmpty="false">
+							<instanceof value="com.lambdalogic.messeinfo.participant.data.IParticipant"/>
+						</iterate>
+					</and>
+				</or>
+			</and>
+		</definition>
+
+		<definition id="com.lambdalogic.mi.expression.selectedProfilesOrParticipantsAndActiveEmailTemplateEditor">
+			<and>
+				<with variable="activeEditor">
+					<instanceof value="de.regasus.email.template.editor.EmailTemplateEditor"/>
+				</with>
+				<or>
+					<iterate operator="and" ifEmpty="false">
+						<instanceof value="com.lambdalogic.messeinfo.profile.Profile"/>
+					</iterate>
+					<iterate operator="and" ifEmpty="false">
+						<instanceof value="com.lambdalogic.messeinfo.participant.data.IParticipant"/>
+					</iterate>
+				</or>
+			</and>
+		</definition>
+
+	</extension>
+
+
+	<extension point="org.eclipse.ui.views">
+		<category id="de.regasus.event" name="%ViewCategory_Events"/>
+		<view
+			id="EventView"
+			class="de.regasus.event.view.EventView"
+			category="de.regasus.event"
+			name="%EventView.name"
+			icon="icons/md_event.png"
+			restorable="true"
+		/>
+		<view
+			id="ParticipantSearchView"
+			class="de.regasus.participant.view.ParticipantSearchView"
+			category="de.regasus.event"
+			name="%ParticipantSearchView.name"
+			icon="icons/participant_search.png"
+		/>
+		<view
+			id="ParticipantToProfileView"
+			class="de.regasus.participant.view.ParticipantToProfileView"
+			category="de.regasus.event"
+			name="%ParticipantToProfileView.name"
+		/>
+		<view
+			id="ParticipantTreeView"
+			class="de.regasus.participant.view.ParticipantTreeView"
+			category="de.regasus.event"
+			name="%ParticipantTreeView.name"
+			icon="icons/participant_tree.png"
+		/>
+		<view
+			id="ProfileSearchView"
+			class="de.regasus.profile.search.ProfileSearchView"
+			category="de.regasus.event"
+			name="%ProfileSearchView.name"
+			icon="icons/profile_search.png"
+		/>
+		<view
+			id="ProfileRoleView"
+			class="de.regasus.profile.role.view.ProfileRoleView"
+			category="de.regasus.event"
+			name="%ProfileRoleView.name"
+			restorable="true"
+		/>
+		<view
+			id="ProfileRelationView"
+			class="de.regasus.profile.relation.view.ProfileRelationView"
+			category="de.regasus.event"
+			name="%ProfileRelationView.name"
+			icon="icons/profile_relation.png"
+			restorable="true"
+		/>
+		<view
+			id="ProfileRelationTypeView"
+			class="de.regasus.profile.relationtype.view.ProfileRelationTypeView"
+			name="%ProfileRelationTypeView.name"
+			category="de.regasus.event"
+			restorable="true"
+		/>
+		<view
+			id="ProfileCustomFieldTreeView"
+			class="de.regasus.profile.customfield.view.ProfileCustomFieldTreeView"
+			category="de.regasus.event"
+			name="%ProfileCustomFieldView.name"
+			icon="icons/customfield.png"
+			restorable="true"
+		/>
+		<view
+			id="PortalView"
+			class="de.regasus.portal.portal.view.PortalView"
+			category="de.regasus.event"
+			name="%PortalView.name"
+			icon="icons/portal-16.png"
+		/>
+		<view
+			id="GroovyConsoleView"
+			class="de.regasus.view.GroovyConsoleView"
+			name="Groovy Test Console"
+		/>
+
+		<category id="de.regasus.ui.masterdata" name="%ViewCategory_MasterData"/>
+		<view
+			id="EventMasterDataView"
+			class="de.regasus.event.view.EventMasterDataView"
+			category="de.regasus.event"
+			name="%EventMasterDataView.name"
+			icon="icons/event_group.png"
+		/>
+		<view
+			id="ParticipantTypeView"
+			class="de.regasus.participant.type.view.ParticipantTypeView"
+			name="%ParticipantTypeView.name"
+			icon="icons/participanttype.png"
+		/>
+		<view
+			id="ProgrammePointTypeView"
+			class="de.regasus.programme.programmepointtype.view.ProgrammePointTypeView"
+			name="%ProgrammePointTypeView.name"
+		/>
+		<view
+			id="LanguageView"
+			class="de.regasus.common.language.view.LanguageView"
+			name="%LanguageView.name"
+			icon="icons/languages.png"
+		/>
+		<view
+			id="CountryView"
+			class="de.regasus.common.country.view.CountryView"
+			name="%CountryView.name"
+			icon="icons/world.png"
+		/>
+		<view
+			id="HotelChainView"
+			class="de.regasus.hotel.chain.view.HotelChainView"
+			name="%HotelChainView.name"
+			icon="icons/hotelChain.png"
+		/>
+		<view
+			id="HotelTreeView"
+			class="de.regasus.hotel.view.tree.HotelTreeView"
+			name="%HotelView.name"
+			icon="icons/hotels.png"
+		/>
+		<view
+			id="HotelSearchView"
+			class="de.regasus.hotel.view.search.HotelSearchView"
+			name="%HotelSearch.name"
+			icon="icons/hotel_search.png"
+		/>
+		<view
+			id="HotelContingentSearchView"
+			class="de.regasus.hotel.contingent.view.HotelContingentSearchView"
+			name="%HotelContingentSearch.name"
+			icon="icons/hotelContingent_search.png"
+		/>
+		<view
+			id="ParticipantStateView"
+			class="de.regasus.participant.state.view.ParticipantStateView"
+			name="%ParticipantStateView.name"
+			icon="icons/participantstate.png"
+		/>
+		<view
+			id="GateDeviceView"
+			class="de.regasus.common.gatedevice.view.GateDeviceView"
+			name="%GateDeviceView.name"
+		/>
+
+		<category id="de.regasus.finance" name="%Accountancy"/>
+		<view
+			id="InvoiceSearchView"
+			class="de.regasus.finance.invoice.view.InvoiceSearchView"
+			category="de.regasus.finance"
+			name="%InvoiceSearchView.name"
+			icon="icons/invoice_search.png"
+			restorable="true"
+		/>
+		<view
+			id="CurrenciesView"
+			class="de.regasus.finance.currency.view.CurrenciesView"
+			category="de.regasus.finance"
+			name="%Currencies"
+			icon="icons/currencies.png"
+			restorable="true"
+		/>
+		<view
+			id="CustomerAccountView"
+			class="de.regasus.finance.customeraccount.view.CustomerAccountView"
+			category="de.regasus.finance"
+			name="%CustomerAccounts"
+			icon="icons/salesaccount_blue.png"
+			restorable="true"
+		/>
+		<view
+			id="ImpersonalAccountView"
+			class="de.regasus.finance.impersonalaccount.view.ImpersonalAccountView"
+			category="de.regasus.finance"
+			name="%ImpersonalAccounts"
+			icon="icons/salesaccount_green.png"
+			restorable="true"
+		/>
+		<view
+			id="CostCenterView"
+			class="de.regasus.finance.costcenter.view.CostCenterView"
+			category="de.regasus.finance"
+			name="%CostCenters"
+			icon="icons/salesaccount_orange.png"
+			restorable="true"
+		/>
+		<view
+			id="CostUnitView"
+			class="de.regasus.finance.datatrans.dialog.CostUnitView"
+			category="de.regasus.finance"
+			name="%CostUnits"
+			icon="icons/salesaccount_orange.png"
+			restorable="true"
+		/>
+		<view
+			id="CreditCardTypeView"
+			class="de.regasus.finance.creditcardtype.view.CreditCardTypeView"
+			category="de.regasus.finance"
+			name="%CreditCardTypes"
+			icon="icons/creditcards.png"
+			restorable="true"
+		/>
+		<view
+			id="PaymentSystemSetupView"
+			class="de.regasus.finance.paymentsystem.view.PaymentSystemSetupView"
+			category="de.regasus.finance"
+			name="%PaymentSystemSetups"
+			icon="icons/payment_system.png"
+			restorable="true"
+		/>
+
+		<category id="de.regasus.email" name="%Emails"/>
+		<view
+			id="EmailTemplateSearchView"
+			class="de.regasus.email.template.search.view.EmailTemplateSearchView"
+			category="de.regasus.email"
+			name="%EmailTemplates"
+			icon="icons/email.png"
+		/>
+		<view
+			id="EmailDispatchOrderView"
+			class="de.regasus.email.dispatchorder.view.EmailDispatchOrderView"
+			category="de.regasus.email"
+			name="%EmailDispatchOrders"
+			icon="icons/email_go.png"
+		/>
+		<view
+			id="EmailVariablesView"
+			class="de.regasus.email.template.variables.view.EmailVariablesView"
+			category="de.regasus.email"
+			name="%Variables"
+			icon="icons/variables.png"
+			restorable="true"
+		/>
+	</extension>
+
+
+	<extension point="org.eclipse.ui.perspectives">
+		<perspective
+			class="de.regasus.finance.AccountancyPerspective"
+			icon="icons/salesaccount_blank.png"
+			id="de.regasus.finance.AccountancyPerspective"
+			name="%Accountancy"/>
+		<perspective
+			id="de.regasus.ParticipantPerspective"
+			class="de.regasus.participant.ParticipantPerspective"
+			icon="icons/participant.gif"
+			name="%ParticipantPerspective.name"/>
+		<perspective
+			id="de.regasus.PortalPerspective"
+			class="de.regasus.portal.PortalPerspective"
+			icon="icons/portal-16.png"
+			name="%PortalPerspective.name"/>
+		<perspective
+			id="de.regasus.ProfilePerspective"
+			class="de.regasus.profile.ProfilePerspective"
+			icon="icons/profile.png"
+			name="%ProfilePerspective.name"/>
+		<perspective
+			id="de.regasus.ProfileMasterDataPerspective"
+			class="de.regasus.profile.ProfileMasterDataPerspective"
+			icon="icons/profile.png"
+			name="%ProfileMasterDataPerspective.name"/>
+		<perspective
+			id="de.regasus.EventsPerspective"
+			class="de.regasus.event.EventsPerspective"
+			name="%EventsPerspective.name"
+			icon="icons/event.png"/>
+		<perspective
+			id="de.regasus.MasterDataPerspective"
+			class="de.regasus.common.MasterDataPerspective"
+			name="%MasterDataPerspective.name"
+			icon="icons/languages.png"/>
+		<perspective
+			id="de.regasus.HotelsPerspective"
+			class="de.regasus.hotel.HotelsPerspective"
+			icon="icons/hotels.png"
+			name="%HotelsPerspective.name"/>
+		<perspective
+			id="de.regasus.EmailPerspective"
+			class="de.regasus.email.EmailPerspective"
+			icon="icons/email.png"
+			name="%Emails"/>
+	</extension>
+
+
+	<extension point="org.eclipse.ui.perspectiveExtensions">
+		<perspectiveExtension targetID="*">
+			<perspectiveShortcut id="de.regasus.finance.AccountancyPerspective"/>
+			<perspectiveShortcut id="de.regasus.EmailPerspective"/>
+			<perspectiveShortcut id="de.regasus.EventsPerspective"/>
+			<perspectiveShortcut id="de.regasus.HotelsPerspective"/>
+			<perspectiveShortcut id="de.regasus.MasterDataPerspective"/>
+			<perspectiveShortcut id="de.regasus.ParticipantPerspective"/>
+			<perspectiveShortcut id="de.regasus.PortalPerspective"/>
+			<perspectiveShortcut id="de.regasus.ProfilePerspective"/>
+			<perspectiveShortcut id="de.regasus.ProfileMasterDataPerspective"/>
+
+			<viewShortcut id="CountryView"/>
+			<viewShortcut id="EmailDispatchOrderView"/>
+			<viewShortcut id="EmailTemplateSearchView"/>
+			<viewShortcut id="EmailVariablesView"/>
+			<viewShortcut id="EventMasterDataView"/>
+			<viewShortcut id="EventView"/>
+			<viewShortcut id="HotelTreeView"/>
+			<viewShortcut id="HotelSearchView"/>
+			<viewShortcut id="HotelChainView"/>
+			<viewShortcut id="HotelContingentSearchView"/>
+			<viewShortcut id="InvoiceSearchView"/>
+			<viewShortcut id="LanguageView"/>
+			<viewShortcut id="ParticipantSearchView"/>
+			<viewShortcut id="ParticipantStateView"/>
+			<viewShortcut id="ParticipantToProfileView"/>
+			<viewShortcut id="ParticipantTreeView"/>
+			<viewShortcut id="ParticipantTypeView"/>
+			<viewShortcut id="PortalView"/>
+			<viewShortcut id="ProfileCustomFieldTreeView"/>
+			<viewShortcut id="ProfileRelationTypeView"/>
+			<viewShortcut id="ProfileRelationView"/>
+			<viewShortcut id="ProfileRoleView"/>
+			<viewShortcut id="ProfileSearchView"/>
+			<viewShortcut id="ProgrammePointTypeView"/>
+			<viewShortcut id="CurrenciesView"/>
+			<viewShortcut id="CustomerAccountView"/>
+			<viewShortcut id="ImpersonalAccountView"/>
+			<viewShortcut id="CostCenterView"/>
+			<viewShortcut id="CostUnitView"/>
+			<viewShortcut id="CreditCardTypeView"/>
+			<viewShortcut id="PaymentSystemSetupView"/>
+		</perspectiveExtension>
+	</extension>
+
+
+	<extension point="org.eclipse.core.runtime.preferences">
+		<initializer class="de.regasus.participant.badge.pref.BadgePrintPreferenceInitializer"/>
+		<initializer class="de.regasus.email.dispatch.pref.EmailDispatchPreferenceInitializer"/>
+	</extension>
+
+
+	<extension point="org.eclipse.ui.preferencePages">
+		<page
+			class="de.regasus.participant.badge.pref.BadgePrintPreferencePage"
+			id="com.lambdalogic.mi.event.ui.preferences.BadgePrintPreferencePage"
+			name="%BadgePrintPreferencePage.name"
+		/>
+		<page
+			class="de.regasus.email.dispatch.pref.EmailDispatchPreferencePage"
+			id="com.lambdalogic.mi.email.ui.preferences.DispatchModePreferencePage"
+			name="%DispatchModePreferencePage.Name"
+		/>
+	</extension>
+
+
+	<extension point="org.eclipse.ui.editors">
+		<editor
+			id="EditPushSettingsEditor"
+			class="de.regasus.push.editor.EditPushSettingsEditor"
+			name="%EditPushSettingsEditor.name"/>
+		<editor
+			id="ParticipantEditor"
+			class="de.regasus.participant.editor.ParticipantEditor"
+			icon="icons/participant.gif"
+			name="%ParticipantEditor.name"/>
+
+		<editor
+			id="ProfileEditor"
+			class="de.regasus.profile.editor.ProfileEditor"
+			icon="icons/profile.png"
+			name="%ProfileEditor.name"/>
+
+		<editor
+			id="ProfileRelationTypeEditor"
+			class="de.regasus.profile.relationtype.editor.ProfileRelationTypeEditor"
+			name="%ProfileRelationTypeEditor.name"/>
+
+		<editor
+			id="ProfileRoleEditor"
+			class="de.regasus.profile.role.editor.ProfileRoleEditor"
+			name="%ProfileRoleEditor.name"/>
+
+		<editor
+			id="HotelContingentEditor"
+			class="de.regasus.hotel.contingent.editor.HotelContingentEditor"
+			icon="icons/contingent.png"
+			name="%HotelContingentEditor.name"/>
+
+		<editor
+			id="HotelOfferingEditor"
+			class="de.regasus.hotel.offering.editor.HotelOfferingEditor"
+			icon="icons/euro.png"
+			name="%HotelOfferingEditor.name"/>
+
+		<editor
+			id="GlobalImprintEditor"
+			class="de.regasus.common.document.editor.GlobalImprintEditor"
+			name="%GlobalImprintEditor.name"/>
+
+		<editor
+			id="GlobalPrivacyPolicyEditor"
+			class="de.regasus.common.document.editor.GlobalPrivacyPolicyEditor"
+			name="%GlobalPrivacyPolicyEditor.name"/>
+
+		<editor
+			id="GlobalTermsAndConditionsEditor"
+			class="de.regasus.common.document.editor.GlobalTermsAndConditionsEditor"
+			name="%GlobalTermsAndConditionsEditor.name"/>
+
+		<editor
+			id="RoomDefinitionEditor"
+			class="de.regasus.hotel.roomdefinition.editor.RoomDefinitionEditor"
+			icon="icons/room.png"
+			name="%RoomDefinitionEditor.name"/>
+
+		<editor
+			id="WaitListEditor"
+			class="de.regasus.programme.waitlist.editor.WaitlistEditor"
+			icon="icons/WaitList.png"
+			name="%WaitListEditor.name"/>
+
+		<editor
+			id="WorkGroupEditor"
+			class="de.regasus.programme.workgroup.editor.WorkGroupEditor"
+			icon="icons/participanttype.png"
+			name="%WorkGroupEditor.name"/>
+
+		<editor
+			id="InvoiceNoRangeEditor"
+			class="de.regasus.finance.invoicenumberrange.editor.InvoiceNoRangeEditor"
+			icon="icons/invoicerange.png"
+			name="%InvoiceNumberRangeEditor.name"/>
+
+		<editor
+			id="HotelCancelationTermEditor"
+			class="de.regasus.hotel.cancelterm.editor.HotelCancelationTermEditor"
+			icon="icons/hotel_cancelation_term.png"
+			name="%HotelCancelationTermEditor.name"/>
+
+		<editor
+			id="HotelChainEditor"
+			class="de.regasus.hotel.chain.editor.HotelChainEditor"
+			icon="icons/hotelChain.png"
+			name="%HotelChainEditor.name"/>
+
+		<editor
+			id="HotelEditor"
+			class="de.regasus.hotel.editor.HotelEditor"
+			icon="icons/hotel.png"
+			name="%HotelEditor.name"/>
+
+		<editor
+			id="OptionalHotelBookingOverviewEditor"
+			class="de.regasus.hotel.contingent.editor.OptionalHotelBookingOverviewEditor"
+			name="%OptionalHotelBookingOverviewEditor.name"/>
+
+		<editor
+			id="ProgrammeCancelationTermEditor"
+			class="de.regasus.programme.cancelterm.editor.ProgrammeCancelationTermEditor"
+			icon="icons/ProgrammeCancelationTerm.png"
+			name="%ProgrammeCancelationTermEditor.name"/>
+
+		<editor
+			id="LanguageEditor"
+			class="de.regasus.common.language.editor.LanguageEditor"
+			icon="icons/languages.png"
+			name="%LanguageEditor.name"/>
+
+		<editor
+			id="CountryEditor"
+			class="de.regasus.common.country.editor.CountryEditor"
+			icon="icons/world_edit.png"
+			name="%CountryEditor.name"/>
+
+		<editor
+			id="EventGroupEditor"
+			class="de.regasus.eventgroup.editor.EventGroupEditor"
+			icon="icons/event_group.png"
+			name="%EventGroupEditor.name"/>
+
+		<editor
+			id="EventEditor"
+			class="de.regasus.event.editor.EventEditor"
+			icon="icons/event.png"
+			name="%EventEditor.name"/>
+
+		<editor
+			id="ParticipantTypeEditor"
+			class="de.regasus.participant.type.editor.ParticipantTypeEditor"
+			icon="icons/participanttype.png"
+			name="%ParticipantTypeEditor.name"/>
+
+		<editor
+			id="ProgrammePointTypeEditor"
+			class="de.regasus.programme.programmepointtype.editor.ProgrammePointTypeEditor"
+			name="%ProgrammePointTypeEditor.name"/>
+
+		<editor
+			id="ProgrammePointEditor"
+			class="de.regasus.programme.programmepoint.editor.ProgrammePointEditor"
+			icon="icons/ProgrammePoint.png"
+			name="%ProgrammePointEditor.name"/>
+
+		<editor
+			id="ProgrammeOfferingEditor"
+			class="de.regasus.programme.offering.editor.ProgrammeOfferingEditor"
+			icon="icons/ProgrammeOffering.png"
+			name="%ProgrammeOfferingEditor.name"/>
+
+		<editor
+			id="EventHotelInfoEditor"
+			class="de.regasus.hotel.eventhotelinfo.editor.EventHotelInfoEditor"
+			icon="icons/hotel_event.png"
+			name="EventHotelEditor.name"/>
+
+		<editor
+			id="ParticipantCustomFieldGroupEditor"
+			class="de.regasus.event.customfield.editor.ParticipantCustomFieldGroupEditor"
+			icon="icons/customfield_group.png"
+			name="%ParticipantCustomFieldGroupEditor.name"/>
+
+		<editor
+			id="ParticipantCustomFieldEditor"
+			class="de.regasus.event.customfield.editor.ParticipantCustomFieldEditor"
+			icon="icons/customfield.png"
+			name="%ParticipantCustomFieldEditor.name"/>
+
+		<editor
+			id="ParticipantStateEditor"
+			class="de.regasus.participant.state.editor.ParticipantStateEditor"
+			default="false"
+			icon="icons/participantstate.png"
+			name="%ParticipantStateEditor.name"/>
+
+		<editor
+			id="ProfileCustomFieldGroupEditor"
+			class="de.regasus.profile.customfield.editor.ProfileCustomFieldGroupEditor"
+			icon="icons/customfield_group.png"
+			name="%ProfileCustomFieldGroupEditor.name"/>
+
+		<editor
+			id="ProfileCustomFieldEditor"
+			class="de.regasus.profile.customfield.editor.ProfileCustomFieldEditor"
+			icon="icons/customfield.png"
+			name="%ProfileCustomFieldEditor.name"/>
+
+		<editor
+			id="LocationEditor"
+			class="de.regasus.event.location.editor.LocationEditor"
+			icon="icons/location.png"
+			name="%LocationEditor.name"/>
+
+		<editor
+			id="GateEditor"
+			class="de.regasus.event.gate.editor.GateEditor"
+			icon="icons/gate.png"
+			name="%GateEditor.name"/>
+
+		<editor
+			id="GateDeviceEditor"
+			class="de.regasus.common.gatedevice.editor.GateDeviceEditor"
+			name="%GateDeviceEditor.name"/>
+
+		<editor
+			id="PortalEditor"
+			class="de.regasus.portal.portal.editor.PortalEditor"
+			icon="icons/portal-16.png"
+			name="%PortalEditor.name"/>
+
+		<editor
+			id="PageLayoutEditor"
+			class="de.regasus.portal.pagelayout.editor.PageLayoutEditor"
+			icon="icons/page-layout-16.png"
+			name="%PageLayoutEditor.name"/>
+
+		<editor
+			id="PageEditor"
+			class="de.regasus.portal.page.editor.PageEditor"
+			icon="icons/page-16.png"
+			name="%PageEditor.name"/>
+
+		<editor
+			id="EmailTemplateEditor"
+			class="de.regasus.email.template.editor.EmailTemplateEditor"
+			icon="icons/email.png"
+			name="EmailTemplateEditor"/>
+
+		<editor
+			id="RegistrationFormConfigEditor"
+			class="de.regasus.onlineform.editor.RegistrationFormConfigEditor"
+			icon="icons/world_edit.png"
+			name="%RegistrationFormConfigEditor.name"/>
+
+		<editor
+			id="CurrencyEditor"
+			class="de.regasus.finance.currency.editor.CurrencyEditor"
+			name="%Currency"
+			icon="icons/currencies.png"/>
+
+		<editor
+			id="CustomerAccountEditor"
+			class="de.regasus.finance.customeraccount.editor.CustomerAccountEditor"
+			icon="icons/salesaccount_blue.png"
+			name="%CustomerAccount"/>
+
+		<editor
+			id="ImpersonalAccountEditor"
+			class="de.regasus.finance.impersonalaccount.editor.ImpersonalAccountEditor"
+			icon="icons/salesaccount_green.png"
+			name="%ImpersonalAccount"/>
+
+		<editor
+			id="CostCenterEditor"
+			class="de.regasus.finance.costcenter.editor.CostCenterEditor"
+			icon="icons/salesaccount_orange.png"
+			name="%CostCenter"/>
+
+		<editor
+			id="CostUnitEditor"
+			class="de.regasus.finance.costunit.editor.CostUnitEditor"
+			icon="icons/salesaccount_orange.png"
+			name="%CostUnit"/>
+
+		<editor
+			id="CreditCardTypeEditor"
+			class="de.regasus.finance.creditcardtype.editor.CreditCardTypeEditor"
+			icon="icons/creditcards.png"
+			name="%CreditCardType"/>
+
+		<editor
+			id="PaymentSystemSetupEditor"
+			class="de.regasus.finance.paymentsystem.editor.PaymentSystemSetupEditor"
+			icon="icons/payment_system.png"
+			name="%PaymentSystemSetup"/>
+
+		<editor
+			id="PaymentReceiptTemplateEditor"
+			class="de.regasus.finance.payment.editor.PaymentReceiptTemplateEditor"
+			name="%PaymentReceiptTemplates"/>
+
+	</extension>
+
+
+	<extension point="org.eclipse.ui.commands">
+
+		<command
+			id="RefreshTreeNodeCommand"
+			name="%RefreshTreeNodeCommand.name"
+		/>
+
+		<command
+			id="EditPushSettingsCommand"
+			name="%EditPushSettingsCommand.name"
+		/>
+
+		<command
+			id="EditEventAdminConfigCommand"
+			name="%EditEventAdminConfigCommand.name"
+		/>
+
+		<command
+			id="EditEventCustomerConfigCommand"
+			name="%EditEventCustomerConfigCommand.name"
+		/>
+
+		<command
+			id="SetInvoicePositionsOffAgainstEachOtherCommand"
+			name="%SetInvoicePositionsOffAgainstEachOtherCommand.name"
+			description="%SetInvoicePositionsOffAgainstEachOtherCommand.tooltip"
+		/>
+
+		<command
+			id="ShowInvoiceCommand"
+			name="%ShowInvoiceCommand.name"
+			description="%ShowInvoiceCommand.tooltip"
+		/>
+
+		<command
+			id="ShowSampleInvoiceCommand"
+			name="%ShowSampleInvoiceCommand.name"
+			description="%ShowSampleInvoiceCommand.tooltip"
+		/>
+
+		<command
+			id="CloseInvoiceCommand"
+			name="%CloseInvoiceCommand.name"
+			description="%CloseInvoiceCommand.tooltip"
+		/>
+
+		<command
+			id="RefreshAddressCommand"
+			name="%RefreshAddressCommand.name"
+			description="%RefreshAddressCommand.tooltip"
+		/>
+
+		<command
+			id="CreatePaymentCommand"
+			name="%CreatePaymentCommand.name"
+			description="%CreatePaymentCommand.tooltip"
+		/>
+
+		<command
+			id="ChargePaymentCommand"
+			name="%ChargePaymentCommand.name"
+			description="%ChargePaymentCommand.tooltip"
+		/>
+
+		<command
+			id="EditPaymentCommand"
+			name="%EditPaymentCommand.name"
+			description="%EditPaymentCommand.tooltip"
+		/>
+
+		<command
+			id="CancelPaymentCommand"
+			name="%CancelPaymentCommand.name"
+			description="%CancelPaymentCommand.tooltip"
+		/>
+
+		<command
+			id="PayEngineRefundCommand"
+			name="%PayEngineRefundCommand.name"
+			description="%PayEngineRefundCommand.tooltip"
+		/>
+
+		<command
+			id="PayEngineHistoryCommand"
+			name="%PayEngineHistoryCommand.name"
+			description="%PayEngineHistoryCommand.tooltip"
+		/>
+
+		<command
+			id="EasyCheckoutHistoryCommand"
+			name="%EasyCheckoutHistoryCommand.name"
+			description="%EasyCheckoutHistoryCommand.tooltip"
+		/>
+
+		<command
+			id="CreateAutomaticClearingCommand"
+			name="%CreateAutomaticClearingCommand.name"
+			description="%CreateAutomaticClearingCommand.tooltip"
+		/>
+
+		<command
+			id="CancelClearingCommand"
+			name="%CancelClearingCommand.name"
+			description="%CancelClearingCommand.tooltip"
+		/>
+
+		<command
+			id="IncreaseReminderLevelCommand"
+			name="%IncreaseReminderLevelCommand.name"
+			description="%IncreaseReminderLevelCommand.tooltip"
+		/>
+
+		<command
+			id="ShowReminderCommand"
+			name="%ShowReminderCommand.name"
+			description="%ShowReminderCommand.tooltip"
+		/>
+
+		<command
+			id="StopReminderCommand"
+			name="%StopReminderCommand.name"
+			description="%StopReminderCommand.tooltip"
+		/>
+
+		<command
+			id="RestartReminderCommand"
+			name="%RestartReminderCommand.name"
+			description="%RestartReminderCommand.tooltip"
+		/>
+
+		<command
+			id="ShowPaymentReceiptCommand"
+			name="%ShowPaymentReceiptCommand.name"
+			description="%ShowPaymentReceiptCommand.tooltip"
+		/>
+
+		<command
+			id="SendPaymentConfirmationEmailCommand"
+			name="%SendPaymentConfirmationEmailCommand.name"
+			description="%SendPaymentConfirmationEmailCommand.tooltip"
+		/>
+
+		<command
+			id="SendPaymentLinkEmailCommand"
+			name="%SendPaymentLinkEmailCommand.name"
+			description="%SendPaymentLinkEmailCommand.tooltip"
+		/>
+
+		<command
+			id="OpenPaymentReceiptTemplateEditorCommand"
+			name="%PaymentReceiptTemplates"
+		/>
+
+		<command
+			id="de.regasus.profile.CreateProfileCommand"
+			name="%CreateProfileCommand.name"
+			description="%CreateProfileCommand.tooltip"
+		/>
+
+		<command
+			id="de.regasus.profile.EditProfileCommand"
+			name="%EditProfileCommand.name"
+			description="%EditProfileCommand.tooltip"
+		/>
+
+		<command
+			id="de.regasus.profile.DeleteProfileCommand"
+			name="%DeleteProfileCommand.name"
+			description="%DeleteProfileCommand.tooltip"
+		/>
+
+		<command
+			id="de.regasus.participant.CreateParticipantsFromProfilesCommand"
+			name="%CreateParticipantsFromProfilesCommand.name"
+			description="%CreateParticipantsFromProfilesCommand.tooltip"
+		/>
+
+		<command
+			id="de.regasus.profile.AssignProfileToParticipantCommand"
+			name="%AssignProfileToParticipantCommand.name"
+			description="%AssignProfileToParticipantCommand.tooltip"
+		/>
+
+		<command
+			id="de.regasus.profile.UnlinkProfileCommand"
+			name="%UnlinkProfileCommand.name"
+			description="%UnlinkProfileCommand.tooltip"
+		/>
+
+		<command
+			id="de.regasus.profile.relation.DeleteProfileRelationCommand"
+			name="%DeleteProfileRelationCommand.name"
+			description="%DeleteProfileRelationCommand.tooltip"
+		/>
+
+		<command
+			id="de.regasus.profile.CopyProfileCommand"
+			name="%CopyProfileCommand.name"
+			description="%CopyProfileCommand.tooltip"
+		/>
+
+		<command
+			id="de.regasus.participant.command.AutoCorrectionCommand"
+			name="%AutoCorrectionCommand.name"
+			description="%AutoCorrectionCommand.tooltip"
+		/>
+
+		<command
+			id="de.regasus.profile.relation.CreateProfileRelationCommand"
+			name="%CreateProfileRelationCommand.name"
+			description="%CreateProfileRelationCommand.tooltip"
+		/>
+
+		<command
+			id="de.regasus.profile.customfield.CollectiveChangeProfileCustomFieldsCommand"
+			description="%CollectiveChangeProfileCustomFields.tooltip"
+			name="%CollectiveChangeProfileCustomFields.name"
+		/>
+
+		<command
+			id="de.regasus.profile.role.CollectiveChangeProfileRolesCommand"
+			description="%CollectiveChangeProfileRoles.tooltip"
+			name="%CollectiveChangeProfileRoles.name"
+		/>
+
+		<command
+			id="de.regasus.participant.command.CollectiveChangeParticipantStateCommand"
+			name="%CollectiveChangeParticipantState.name"
+			description="%CollectiveChangeParticipantState.tooltip"
+		/>
+
+		<command
+			id="de.regasus.participant.command.CollectiveChangeParticipantTypeCommand"
+			name="%CollectiveChangeParticipantType.name"
+			description="%CollectiveChangeParticipantType.tooltip"
+		/>
+
+		<command
+			id="de.regasus.participant.command.CollectiveChangeRegistrationDateCommand"
+			name="%CollectiveChangeRegistrationDate.name"
+			description="%CollectiveChangeRegistrationDate.tooltip"
+		/>
+
+		<command
+			id="de.regasus.participant.command.CollectiveChangeCertificatePrintCommand"
+			name="%CollectiveChangeCertificationPrint.name"
+			description="%CollectiveChangeCertificationPrint.tooltip"
+		/>
+
+		<command
+			id="de.regasus.participant.command.CollectiveChangeNotificationTimesCommand"
+			name="%CollectiveChangeNotificationTimes.name"
+			description="%CollectiveChangeNotificationTimes.tooltip"
+		/>
+
+		<command
+			id="de.regasus.participant.command.CollectiveChangeParticipantCustomFieldsCommand"
+			name="%CollectiveChangeParticipantCustomFields.name"
+			description="%CollectiveChangeParticipantCustomFields.tooltip"
+		/>
+
+		<command
+			id="de.regasus.participant.command.CollectiveChangeCustomFieldsCommand"
+			name="%CollectiveChangeCustomFields.name"
+			description="%CollectiveChangeCustomFields.tooltip"
+		/>
+
+		<command
+			id="de.regasus.participant.command.CopyParticipantsCommand"
+			name="%CopyParticipantsCommand.name"
+			description="%CopyParticipantsCommand.tooltip"
+		/>
+
+		<command
+			id="de.regasus.participant.command.CreateProfileFromParticipantCommand"
+			name="%CreateProfileFromParticipantCommand.name"
+			description="%CreateProfileFromParticipantCommand.tooltip"
+		/>
+
+		<command
+			id="de.regasus.participant.command.AssignParticipantToProfileCommand"
+			name="%ProfileParticipantAssignCommand.name"
+			description="%ProfileParticipantAssignCommand.tooltip"
+		/>
+
+		<command
+			id="de.regasus.participant.command.UnlinkParticipantCommand"
+			name="%UnlinkParticipantCommand.name"
+			description="%UnlinkParticipantCommand.tooltip"
+		/>
+
+		<command
+			id="de.regasus.participant.command.ParticipantCopyFromProfileCommand"
+			name="%ParticipantCopyFromProfileCommand.name"
+			description="%ParticipantCopyFromProfileCommand.tooltip"
+		/>
+
+		<command
+			id="de.regasus.participant.command.ParticipantCopyToProfileCommand"
+			name="%ParticipantCopyToProfileCommand.name"
+			description="%ParticipantCopyToProfileCommand.tooltip"
+		/>
+
+		<command
+			id="de.regasus.participant.command.CreateProgrammeBookingsCommand"
+			name="%CreateProgrammeBookingsCommand.name"
+			description="%CreateProgrammeBookingsCommand.tooltip"
+		/>
+
+		<command
+			id="de.regasus.participant.command.CreateHotelBookingsCommand"
+			name="%CreateHotelBookingsCommand.name"
+			description="%CreateHotelBookingsCommand.tooltip"
+		/>
+
+		<command
+			id="de.regasus.participant.command.DeleteParticipantCommand"
+			name="%DeleteParticipantCommand.name"
+			description="%DeleteParticipantCommand.tooltip"
+		/>
+
+		<command
+			id="de.regasus.participant.command.CancelParticipantByParticipantCommand"
+			name="%CancelParticipantByParticipantCommand.name"
+			description="%CancelParticipantByParticipantCommand.tooltip"
+		/>
+
+		<command
+			id="de.regasus.participant.command.CancelParticipantByOrganiserCommand"
+			name="%CancelParticipantByOrganiserCommand.name"
+			description="%CancelParticipantByOrganiserCommand.tooltip"
+		/>
+
+		<command
+			id="de.regasus.participant.command.CreateParticipantCommand"
+			name="%CreateParticipantCommand.name"
+			description="%CreateParticipantCommand.tooltip"
+		>
+			<commandParameter
+				id="withEventSelection"
+				name="Event Selection"
+			/>
+		</command>
+
+		<command
+			id="de.regasus.participant.command.CreateGroupManagerCommand"
+			name="%CreateGroupManagerCommand.name"
+			description="%CreateGroupManagerCommand.tooltip"
+		>
+			<commandParameter
+				id="withEventSelection"
+				name="Event Selection"
+			/>
+		</command>
+
+		<command
+			id="de.regasus.participant.command.EditParticipantCommand"
+			name="%EditParticipantCommand.name"
+			description="%EditParticipantCommand.tooltip"
+		/>
+
+		<command
+			id="de.regasus.participant.command.PrintNotificationsCommand"
+			name="%PrintNotificationsCommand.name"
+			description="%PrintNotificationsCommand.tooltip"
+		/>
+
+		<command
+			id="de.regasus.participant.command.PrintCertificateCommand"
+			name="%PrintCertificateCommand.name"
+			description="%PrintCertificateCommand.tooltip"
+		/>
+
+		<command
+			id="de.regasus.participant.command.OpenCertificateCommand"
+			name="%OpenCertificateCommand.name"
+			description="%OpenCertificateCommand.tooltip"
+		/>
+
+		<command
+			id="de.regasus.participant.command.PrintBadgeCommand"
+			name="%PrintBadgeCommand.name"
+			description="%PrintBadgeCommand.tooltip"
+		/>
+
+		<command
+			id="de.regasus.participant.command.OpenBadgeCommand"
+			name="%OpenBadgeCommand.name"
+			description="%OpenBadgeCommand.tooltip"
+		/>
+
+		<command
+			id="de.regasus.participant.command.ShowParticipantBarcodesCommand"
+			name="%ShowParticipantBarcodesCommand.name"
+			description="%ShowParticipantBarcodesCommand.tooltip"
+		/>
+
+		<command
+			id="ShowParticipantWebTokenCommand"
+			name="%ShowParticipantWebTokenCommand.name"
+		/>
+
+		<command
+			id="de.regasus.participant.command.CreateGroupMemberCommand"
+			name="%CreateGroupMemberCommand.name"
+			description="%CreateGroupMemberCommand.tooltip"
+		/>
+
+		<command
+			id="de.regasus.participant.command.CreateAnonymousParticipantCommand"
+			name="%CreateAnonymousParticipantCommand.name"
+			description="%CreateAnonymousParticipantCommand.tooltip"
+		/>
+
+		<command
+			id="de.regasus.participant.command.MakeGroupManagerCommand"
+			name="%MakeGroupManagerCommand.name"
+			description="%MakeGroupManagerCommand.tooltip"
+		/>
+
+		<command
+			id="de.regasus.participant.command.UngroupCommand"
+			name="%UngroupCommand.name"
+			description="%UngroupCommand.tooltip"
+		/>
+
+		<command
+			id="de.regasus.participant.command.AssignGroupManagerCommand"
+			name="%AssignGroupManagerCommand.name"
+			description="%AssignGroupManagerCommand.tooltip"
+		/>
+
+		<command
+			id="de.regasus.participant.command.AssignGroupMemberCommand"
+			name="%AssignGroupMemberCommand.name"
+			description="%AssignGroupMemberCommand.tooltip"
+		/>
+
+		<command
+			id="de.regasus.participant.command.RemoveFromGroupCommand"
+			name="%RemoveFromGroupCommand.name"
+			description="%RemoveFromGroupCommand.tooltip"
+		/>
+
+		<command
+			id="de.regasus.participant.command.CreateCompanionCommand"
+			name="%CreateCompanionCommand.name"
+			description="%CreateCompanionCommand.tooltip"
+		/>
+
+		<command
+			id="de.regasus.participant.command.AssignCompanionsCommand"
+			name="%AssignCompanionsCommand.name"
+			description="%AssignCompanionsCommand.tooltip"
+		/>
+
+		<command
+			id="de.regasus.participant.command.UncompanionCommand"
+			name="%UncompanionCommand.name"
+			description="%UncompanionCommand.tooltip"
+		/>
+
+		<command
+			id="de.regasus.participant.command.AutoCorrectionCommand"
+			name="%AutoCorrectionCommand.name"
+			description="%AutoCorrectionCommand.tooltip"
+		/>
+
+		<command
+			id="de.regasus.participant.command.ForceExitForParticipantCommand"
+			name="%ForceExitForParticipantCommand.name"
+			description="%ForceExitForParticipantCommand.tooltip"
+		/>
+
+		<command
+			id="de.regasus.participant.command.DownloadPrintDocumentsCommand"
+			name="%DownloadPrintDocumentsCommand.name"
+			description="%DownloadPrintDocumentsCommand.tooltip"
+		/>
+
+		<command
+			id="de.regasus.participant.badge.EnableDisableBadgeCommand"
+			name="%EnableDisableBadgeCommand.name"
+			description="%EnableDisableBadgeCommand.tooltip"
+		/>
+
+		<command
+			id="de.regasus.participant.badge.AssignBadgeCommand"
+			name="%AssignBadgeCommand.name"
+			description="%AssignBadgeCommand.tooltip"
+		/>
+
+		<command
+			id="NextParticipantCommand"
+			name="%NavNextParticipantCommand.name"
+			description="%NavNextParticipantCommand.tooltip"
+		/>
+
+		<command
+			id="PreviousParticipantCommand"
+			name="%NavPreviousParticipantCommand.name"
+			description="%NavPreviousParticipantCommand.tooltip"
+		/>
+
+		<command
+			id="FirstParticipantCommand"
+			name="%NavFirstParticipantCommand.name"
+			description="%NavFirstParticipantCommand.tooltip"
+		/>
+
+		<command
+			id="LastParticipantCommand"
+			name="%NavLastParticipantCommand.name"
+			description="%NavLastParticipantCommand.tooltip"
+		/>
+
+		<command
+			id="de.regasus.exhib.CreateExhibitorCommand"
+			name="%CreateExhibitorCommand.name"
+		/>
+
+		<command
+			id="de.regasus.exhib.EditExhibitorCommand"
+			name="%EditExhibitorCommand.name"
+			description="%EditExhibitorCommand.tooltip"
+		/>
+
+		<command
+			id="de.regasus.workflow.StartOnsiteWorkflowCommand"
+			name="%StartOnsiteWorkflowCommand.name"
+			description="%StartOnsiteWorkflowCommand.tooltip"
+		/>
+
+		<command
+			id="AnonymizeHandler"
+			name="%AnonymizeHandler.name"
+		/>
+
+		<command
+			id="de.regasus.common.document.command.GlobalImprintCommand"
+			name="%GlobalImprintCommand.name"
+		/>
+
+		<command
+			id="de.regasus.common.document.command.GlobalPrivacyPolicyCommand"
+			name="%GlobalPrivacyPolicyCommand.name"
+		/>
+
+		<command
+			id="de.regasus.common.document.command.GlobalTermsAndConditionsCommand"
+			name="%GlobalTermsAndConditionsCommand.name"
+		/>
+
+		<command
+			id="CreateHotelCancelationTerm"
+			name="%CreateHotelCancelationTerm.name"
+		/>
+
+		<command
+			id="CreateHotelOffering"
+			name="%CreateHotelOffering.name"
+		/>
+
+		<command
+			id="CreateHotelContingent"
+			name="%CreateHotelContingent.name"
+		/>
+
+		<command
+			id="ShowOptionalHotelBookingOverviewHandler"
+			name="%ShowOptionalHotelBookingOverviewHandler.name"
+		/>
+
+		<command
+			id="CreateEventGroupCommand"
+			name="%CreateEventGroupCommand.name"
+		/>
+
+		<command
+			id="CreateEventCommand"
+			name="%CreateEventCommand.name"
+		/>
+
+		<command
+			id="AssignEventGroupCommand"
+			name="%AssignEventGroupCommand.name"
+		/>
+
+		<command
+			id="CopyEventCommand"
+			name="%CopyEventCommand.name"
+		/>
+
+		<command
+			id="OpenEventCommand"
+			name="%OpenEventCommand.name"
+		/>
+
+		<command
+			id="CloseEventCommand"
+			name="%CloseEventCommand.name"
+		/>
+
+		<command
+			id="ResetEventCommand"
+			name="%ResetEventCommand.name"
+		/>
+
+		<command
+			id="ShowClosedEventsCommand"
+			name="%ShowClosedEventsCommand.name"
+		>
+			<state
+				class="org.eclipse.jface.commands.ToggleState"
+				id="STYLE"
+			/>
+		</command>
+
+		<command
+			id="ForceExitForEventCommand"
+			name="%ForceExitForEventCommand.name"
+		/>
+
+		<command
+			id="CreateInvoiceNoRangeCommand"
+			name="%CreateInvoiceNoRangeCommand.name"
+		/>
+
+		<command
+			id="CreateProgrammePointCommand"
+			name="%CreateProgrammePointCommand.name"
+		/>
+
+		<command
+			id="CreateWorkGroupCommand"
+			name="%CreateWorkGroupCommand.name"
+		/>
+
+		<command
+			id="CreateProgrammeOfferingCommand"
+			name="%CreateProgrammeOfferingCommand.name"
+		/>
+
+		<command
+			id="CreateProgrammeCancelationTermCommand"
+			name="%CreateProgrammeCancelationTermCommand.name"
+		/>
+
+		<command
+			id="CancelProgrammePointCommand"
+			name="%CancelProgrammePointCommand.name"
+		/>
+
+		<command
+			id="AssignWorkGroupCommand"
+			name="%AssignWorkGroupCommand.name"
+		/>
+
+		<command
+			id="RemoveWorkGroupAssociationCommand"
+			name="%RemoveWorkGroupAssociationCommand.name"
+		/>
+
+		<command
+			id="FixWorkGroupCommand"
+			name="%FixWorkGroupCommand.name"
+		/>
+
+		<command
+			id="UnfixWorkGroupCommand"
+			name="%UnfixWorkGroupCommand.name"
+		/>
+
+		<command
+			id="CreateParticipantCustomFieldGroupCommand"
+			name="%CreateParticipantCustomFieldGroupCommand.name"
+		/>
+
+		<command
+			id="CreateParticipantCustomFieldCommand"
+			name="%CreateParticipantCustomFieldCommand.name"
+		/>
+
+		<command
+			id="CreateLocationCommand"
+			name="%CreateLocationCommand.name"
+		/>
+
+		<command
+			id="CreateGateCommand"
+			name="%CreateGateCommand.name"
+		/>
+
+		<command
+			id="OpenPortalCommand"
+			name="%OpenPortalCommand.name"
+		/>
+
+		<command
+			id="CopyPortalUrlCommand"
+			name="%CopyPortalUrlCommand.name"
+		/>
+
+		<command
+			id="CopyPortalCommand"
+			name="%CopyPortalCommand.name"
+		/>
+
+		<command
+			id="CreatePortalCommand"
+			name="%CreatePortalCommand.name"
+		/>
+
+		<command
+			id="EditPortalCommand"
+			name="%EditPortalCommand.name"
+		/>
+
+		<command
+			id="CreatePageLayoutCommand"
+			name="%CreatePageLayoutCommand.name"
+		/>
+
+		<command
+			id="EditPageCommand"
+			name="%EditPageCommand.name"
+		/>
+
+		<command
+			id="EditPageLayoutCommand"
+			name="%EditPageLayoutCommand.name"
+		/>
+
+		<command
+			id="SendEmailCommand"
+			name="%UseToDispatchMailCommand.name"
+			description="%UseToDispatchMailCommand.description"
+		/>
+
+	</extension>
+
+
+	<extension point="org.eclipse.ui.commandImages">
+		<image commandId="EditEventAdminConfigCommand" icon="icons/cog_edit.png" />
+		<image commandId="EditEventCustomerConfigCommand" icon="icons/cog_edit.png" />
+
+		<image commandId="RefreshTreeNodeCommand" icon="icons/refresh_nav.gif"/>
+		<image commandId="NextParticipantCommand" icon="icons/resultset_next.png"/>
+		<image commandId="PreviousParticipantCommand" icon="icons/resultset_previous.png"/>
+		<image commandId="FirstParticipantCommand" icon="icons/resultset_first.png"/>
+		<image commandId="LastParticipantCommand" icon="icons/resultset_last.png"/>
+		<image commandId="de.regasus.participant.command.PrintCertificateCommand" icon="icons/certificate.png"/>
+		<image commandId="de.regasus.participant.command.OpenCertificateCommand" icon="icons/certificate.png"/>
+		<image commandId="de.regasus.participant.command.PrintBadgeCommand" icon="icons/card2.png"/>
+		<image commandId="de.regasus.participant.command.OpenBadgeCommand" icon="icons/card2.png"/>
+		<image commandId="de.regasus.profile.CreateProfileCommand" icon="icons/profile_create.png"/>
+		<image commandId="de.regasus.profile.EditProfileCommand" icon="icons/profile_edit.png"/>
+		<image commandId="de.regasus.profile.DeleteProfileCommand" icon="icons/profile_delete.png"/>
+		<image commandId="de.regasus.participant.CreateParticipantsFromProfilesCommand" icon="icons/create_participants_from_profiles.png"/>
+		<image commandId="de.regasus.profile.AssignProfileToParticipantCommand" icon="icons/assign_participant.png"/>
+		<image commandId="de.regasus.profile.relation.CreateProfileRelationCommand" icon="icons/profile_relation_add.png"/>
+		<image commandId="de.regasus.profile.CopyProfileCommand" icon="icons/copy_profile.png"/>
+		<image commandId="de.regasus.profile.relation.DeleteProfileRelationCommand" icon="icons/profile_relation_delete.png"/>
+		<image commandId="de.regasus.participant.command.CopyParticipantsCommand" icon="icons/create_participants_from_participants.png"/>
+		<image commandId="de.regasus.participant.command.CreateParticipantCommand" icon="icons/participant_create.png"/>
+		<image commandId="de.regasus.participant.command.CreateGroupManagerCommand" icon="icons/groupman_create.png"/>
+		<image commandId="de.regasus.participant.command.CreateGroupMemberCommand" icon="icons/groupparticipant_create.png"/>
+		<image commandId="de.regasus.participant.command.EditParticipantCommand" icon="icons/participant_edit.png"/>
+		<image commandId="de.regasus.participant.command.DeleteParticipantCommand" icon="icons/participant_delete.png"/>
+		<image commandId="de.regasus.participant.command.CreateProgrammeBookingsCommand" icon="icons/billet.png"/>
+		<image commandId="de.regasus.participant.command.CreateHotelBookingsCommand" icon="icons/hotel.png"/>
+		<image commandId="de.regasus.participant.command.CreateProfileFromParticipantCommand" icon="icons/create_profiles_from_participants.png"/>
+		<image commandId="de.regasus.participant.command.AssignParticipantToProfileCommand" icon="icons/assign_profile.png"/>
+		<image commandId="de.regasus.exhib.CreateExhibitorCommand" icon="icons/create_exhibitor.png"/>
+		<image commandId="de.regasus.exhib.EditExhibitorCommand" icon="icons/edit_exhibitor.png"/>
+		<image commandId="de.regasus.participant.command.ShowParticipantBarcodesCommand" icon="icons/barcode.png"/>
+		<image commandId="ShowParticipantWebTokenCommand" icon="icons/jwt16.png"/>
+		<image commandId="de.regasus.workflow.StartOnsiteWorkflowCommand" icon="icons/cog_go.png"/>
+		<image commandId="CloseEventCommand" icon="icons/event_closed.png"/>
+		<image commandId="OpenEventCommand" icon="icons/open_event.png"/>
+		<image commandId="CreateEventGroupCommand" icon="icons/event_group.png"/>
+		<image commandId="CreateEventCommand" icon="icons/event.png"/>
+<!--		<image commandId="AssignEventGroupCommand" icon="icons/event.png"/>-->
+		<image commandId="CreateProgrammePointCommand" icon="icons/ProgrammePoint.png"/>
+		<image commandId="CreateWorkGroupCommand" icon="icons/participanttype.png"/>
+		<image commandId="CreateProgrammeOfferingCommand" icon="icons/ProgrammeOffering.png"/>
+		<image commandId="CreateHotelContingent" icon="icons/contingent.png"/>
+		<image commandId="CreateHotelOffering" icon="icons/euro.png"/>
+		<image commandId="CreateHotelCancelationTerm" icon="icons/hotel_cancelation_term.png"/>
+		<image commandId="CreateProgrammeCancelationTermCommand" icon="icons/ProgrammeCancelationTerm.png"/>
+		<image commandId="CreateInvoiceNoRangeCommand" icon="icons/invoicerange.png"/>
+		<image commandId="CreateParticipantCustomFieldCommand" icon="icons/customfield_add.png"/>
+		<image commandId="CreateParticipantCustomFieldGroupCommand" icon="icons/customfield_group_add.png"/>
+		<image commandId="CreateLocationCommand" icon="icons/location.png"/>
+		<image commandId="CreateGateCommand" icon="icons/gate.png"/>
+
+		<image commandId="CreatePortalCommand"     icon="icons/add.png"/>
+		<image commandId="CreatePageLayoutCommand" icon="icons/add.png"/>
+		<image commandId="EditPortalCommand"       icon="icons/edit.png"/>
+		<image commandId="EditPageCommand"         icon="icons/edit.png"/>
+		<image commandId="EditPageLayoutCommand"   icon="icons/edit.png"/>
+	</extension>
+
+
+	<extension point="org.eclipse.ui.handlers">
+
+		<handler commandId="RefreshTreeNodeCommand" class="com.lambdalogic.util.rcp.tree.RefreshTreeNodeHandler">
+			<activeWhen>
+				<iterate ifEmpty="false" operator="and">
+					<instanceof value="com.lambdalogic.util.rcp.tree.TreeNode" />
+				</iterate>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="EditPushSettingsCommand" class="de.regasus.push.command.EditPushSettingsHandler"/>
+
+		<handler commandId="NextParticipantCommand" class="de.regasus.participant.command.navigation.NextParticipantCommandHandler">
+			<activeWhen>
+				<with variable="activePart">
+					<instanceof value="de.regasus.participant.editor.ParticipantEditor"/>
+				</with>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="PreviousParticipantCommand" class="de.regasus.participant.command.navigation.PreviousParticipantCommandHandler">
+			<activeWhen>
+				<with variable="activePart">
+					<instanceof value="de.regasus.participant.editor.ParticipantEditor"/>
+				</with>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="LastParticipantCommand" class="de.regasus.participant.command.navigation.LastParticipantCommandHandler">
+			<activeWhen>
+				<with variable="activePart">
+					<instanceof value="de.regasus.participant.editor.ParticipantEditor"/>
+				</with>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="FirstParticipantCommand" class="de.regasus.participant.command.navigation.FirstParticipantCommandHandler">
+			<activeWhen>
+				<with variable="activePart">
+					<instanceof value="de.regasus.participant.editor.ParticipantEditor"/>
+				</with>
+			</activeWhen>
+		</handler>
+
+
+		<handler commandId="ShowInvoiceCommand" class="de.regasus.finance.invoice.command.ShowInvoiceCommandHandler">
+			<activeWhen>
+				<with variable="configuration.event.invoice">
+					<equals value="yes"/>
+				</with>
+			</activeWhen>
+			<enabledWhen>
+				<with variable="de.regasus.event.finance.isEnabledPrintInvoice">
+					<equals value="yes"/>
+				</with>
+			</enabledWhen>
+		</handler>
+
+		<handler commandId="ShowSampleInvoiceCommand" class="de.regasus.finance.invoice.command.ShowSampleInvoiceCommandHandler">
+			<activeWhen>
+				<with variable="configuration.event.invoice">
+					<equals value="yes"/>
+				</with>
+			</activeWhen>
+			<enabledWhen>
+				<with variable="de.regasus.event.finance.isEnabledGenerateSampleInvoice">
+					<equals value="yes"/>
+				</with>
+			</enabledWhen>
+		</handler>
+
+		<handler commandId="CloseInvoiceCommand" class="de.regasus.finance.invoice.command.CloseInvoiceCommandHandler">
+			<activeWhen>
+				<with variable="configuration.event.invoice">
+					<equals value="yes"/>
+				</with>
+			</activeWhen>
+			<enabledWhen>
+				<with variable="de.regasus.event.finance.isEnabledCloseInvoice">
+					<equals value="yes"/>
+				</with>
+			</enabledWhen>
+		</handler>
+
+		<handler commandId="RefreshAddressCommand" class="de.regasus.finance.invoice.command.RefreshAddressCommandHandler">
+			<activeWhen>
+				<with variable="configuration.event.invoice">
+					<equals value="yes"/>
+				</with>
+			</activeWhen>
+			<enabledWhen>
+				<with variable="de.regasus.event.finance.isEnabledRefreshAddress">
+					<equals value="yes"/>
+				</with>
+			</enabledWhen>
+		</handler>
+
+		<handler commandId="CreatePaymentCommand" class="de.regasus.finance.payment.command.CreatePaymentCommandHandler">
+			<activeWhen>
+				<with variable="configuration.event.invoice">
+					<equals value="yes"/>
+				</with>
+			</activeWhen>
+			<enabledWhen>
+				<reference definitionId="com.lambdalogic.mi.expression.oneSelectedParticipant"/>
+			</enabledWhen>
+		</handler>
+
+		<handler commandId="ChargePaymentCommand" class="de.regasus.finance.payment.command.ChargePaymentCommandHandler">
+			<activeWhen>
+				<with variable="configuration.event.invoice">
+					<equals value="yes"/>
+				</with>
+			</activeWhen>
+			<enabledWhen>
+				<reference definitionId="com.lambdalogic.mi.expression.oneSelectedParticipant"/>
+			</enabledWhen>
+		</handler>
+
+		<handler commandId="EditPaymentCommand" class="de.regasus.finance.payment.command.EditPaymentCommandHandler">
+			<activeWhen>
+				<with variable="configuration.event.invoice">
+					<equals value="yes"/>
+				</with>
+			</activeWhen>
+			<enabledWhen>
+				<with variable="de.regasus.event.finance.isEnabledEditPayment">
+					<equals value="yes"/>
+				</with>
+			</enabledWhen>
+		</handler>
+
+		<handler commandId="CancelPaymentCommand" class="de.regasus.finance.payment.command.CancelPaymentCommandHandler">
+			<activeWhen>
+				<with variable="configuration.event.invoice">
+					<equals value="yes"/>
+				</with>
+			</activeWhen>
+			<enabledWhen>
+					<with variable="de.regasus.event.finance.isEnabledCancelPayment">
+						<equals value="yes"/>
+					</with>
+			</enabledWhen>
+		</handler>
+
+		<handler commandId="PayEngineHistoryCommand" class="de.regasus.finance.paymentsystem.command.PayEngineHistoryCommandHandler">
+			<activeWhen>
+				<with variable="configuration.event.invoice">
+					<equals value="yes"/>
+				</with>
+			</activeWhen>
+			<enabledWhen>
+				<with variable="de.regasus.event.finance.isEnabledPayEngineHistory">
+					<equals value="yes"/>
+				</with>
+			</enabledWhen>
+		</handler>
+
+		<handler commandId="EasyCheckoutHistoryCommand" class="de.regasus.finance.paymentsystem.command.EasyCheckoutHistoryCommandHandler">
+			<activeWhen>
+				<with variable="configuration.event.invoice">
+					<equals value="yes"/>
+				</with>
+			</activeWhen>
+			<enabledWhen>
+				<with variable="de.regasus.event.finance.isEnabledEasyCheckoutHistory">
+					<equals value="yes"/>
+				</with>
+			</enabledWhen>
+		</handler>
+
+		<handler commandId="CancelClearingCommand" class="de.regasus.finance.payment.command.CancelClearingCommandHandler">
+			<activeWhen>
+				<with variable="configuration.event.invoice">
+					<equals value="yes"/>
+				</with>
+			</activeWhen>
+			<enabledWhen>
+				<with variable="de.regasus.event.finance.isEnabledCancelClearing">
+					<equals value="yes"/>
+				</with>
+			</enabledWhen>
+		</handler>
+
+		<handler commandId="CreateAutomaticClearingCommand" class="de.regasus.finance.payment.command.CreateAutomaticClearingCommandHandler">
+			<activeWhen>
+				<with variable="configuration.event.invoice">
+					<equals value="yes"/>
+				</with>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="PayEngineRefundCommand" class="de.regasus.finance.paymentsystem.command.PayEngineRefundCommandHandler">
+			<activeWhen>
+				<and>
+					<with variable="configuration.event.invoice">
+						<equals value="yes"/>
+					</with>
+					<with variable="user">
+						<equals value="admin"/>
+					</with>
+				</and>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="SetInvoicePositionsOffAgainstEachOtherCommand" class="de.regasus.finance.payment.command.SetInvoicePositionsOffAgainstEachOtherCommandHandler">
+			<activeWhen>
+				<with variable="configuration.event.invoice">
+					<equals value="yes"/>
+				</with>
+			</activeWhen>
+			<enabledWhen>
+				<with variable="de.regasus.event.finance.isEnabledClearInvoicePositions">
+					<equals value="yes"/>
+				</with>
+			</enabledWhen>
+		</handler>
+
+		<handler commandId="IncreaseReminderLevelCommand" class="de.regasus.finance.invoice.command.IncreaseReminderLevelCommandHandler">
+			<activeWhen>
+				<with variable="configuration.event.invoice">
+					<equals value="yes"/>
+				</with>
+			</activeWhen>
+			<enabledWhen>
+				<with variable="de.regasus.event.finance.isEnabledIncreaseReminderLevel">
+					<equals value="yes"/>
+				</with>
+			</enabledWhen>
+		</handler>
+
+		<handler commandId="ShowReminderCommand" class="de.regasus.finance.invoice.command.ShowReminderCommandHandler">
+			<activeWhen>
+				<with variable="configuration.event.invoice">
+					<equals value="yes"/>
+				</with>
+			</activeWhen>
+			<enabledWhen>
+				<with variable="de.regasus.event.finance.isEnabledShowReminder">
+					<equals value="yes"/>
+				</with>
+			</enabledWhen>
+		</handler>
+
+		<handler commandId="StopReminderCommand" class="de.regasus.finance.invoice.command.StopReminderCommandHandler">
+			<activeWhen>
+				<with variable="configuration.event.invoice">
+					<equals value="yes"/>
+				</with>
+			</activeWhen>
+			<enabledWhen>
+				<with variable="de.regasus.event.finance.isEnabledStopReminder">
+					<equals value="yes"/>
+				</with>
+			</enabledWhen>
+		</handler>
+
+		<handler commandId="RestartReminderCommand" class="de.regasus.finance.invoice.command.RestartReminderCommandHandler">
+			<activeWhen>
+				<with variable="configuration.event.invoice">
+					<equals value="yes"/>
+				</with>
+			</activeWhen>
+			<enabledWhen>
+				<with variable="de.regasus.event.finance.isEnabledRestartReminder">
+					<equals value="yes"/>
+				</with>
+			</enabledWhen>
+		</handler>
+
+		<handler commandId="ShowPaymentReceiptCommand" class="de.regasus.finance.payment.command.ShowPaymentReceiptCommandHandler">
+			<activeWhen>
+				<with variable="configuration.event.invoice">
+					<equals value="yes"/>
+				</with>
+			</activeWhen>
+			<enabledWhen>
+				<or>
+					<with variable="de.regasus.event.finance.isEnabledShowPaymentReceipt">
+						<equals value="yes"/>
+					</with>
+					<with variable="de.regasus.event.finance.isEnabledShowRefundReceipt">
+						<equals value="yes"/>
+					</with>
+				</or>
+			</enabledWhen>
+		</handler>
+
+		<handler commandId="SendPaymentConfirmationEmailCommand" class="de.regasus.finance.payment.command.SendPaymentConfirmationEmailHandler">
+			<activeWhen>
+				<with variable="configuration.event.invoice">
+					<equals value="yes"/>
+				</with>
+			</activeWhen>
+			<enabledWhen>
+				<or>
+					<with variable="de.regasus.event.finance.isEnabledShowPaymentReceipt">
+						<equals value="yes"/>
+					</with>
+					<with variable="de.regasus.event.finance.isEnabledShowRefundReceipt">
+						<equals value="yes"/>
+					</with>
+				</or>
+			</enabledWhen>
+		</handler>
+
+		<handler commandId="SendPaymentLinkEmailCommand" class="de.regasus.finance.payment.command.SendPaymentLinkEmailHandler"/>
+		<handler commandId="OpenPaymentReceiptTemplateEditorCommand" class="de.regasus.finance.payment.command.OpenPaymentReceiptTemplateEditorCommandHandler"/>
+
+
+
+
+		<handler commandId="de.regasus.profile.CreateProfileCommand"
+			class="de.regasus.profile.command.CreateProfileCommandHandler"
+		>
+			<activeWhen>
+				<with variable="configuration.profile">
+					<equals value="yes"/>
+				</with>
+			</activeWhen>
+		</handler>
+		<handler commandId="de.regasus.profile.EditProfileCommand"
+			class="de.regasus.profile.command.EditProfileCommandHandler"
+		>
+			<activeWhen>
+				<reference definitionId="com.lambdalogic.mi.expression.selectedProfiles"/>
+			</activeWhen>
+		</handler>
+		<handler commandId="de.regasus.profile.DeleteProfileCommand"
+			class="de.regasus.profile.command.DeleteProfileCommandHandler"
+		>
+			<activeWhen>
+				<reference definitionId="com.lambdalogic.mi.expression.selectedProfiles"/>
+			</activeWhen>
+		</handler>
+		<handler commandId="de.regasus.participant.CreateParticipantsFromProfilesCommand"
+			class="de.regasus.participant.CreateParticipantsFromProfilesCommandHandler"
+		>
+			<activeWhen>
+				<reference definitionId="com.lambdalogic.mi.expression.selectedProfiles"/>
+			</activeWhen>
+		</handler>
+		<handler commandId="de.regasus.profile.AssignProfileToParticipantCommand"
+			class="de.regasus.profile.command.AssignProfileToParticipantCommandHandler"
+		>
+			<activeWhen>
+				<and>
+					<with variable="configuration.event">
+						<equals value="yes"/>
+					</with>
+					<reference definitionId="com.lambdalogic.mi.expression.oneSelectedProfile">
+					</reference>
+				</and>
+			</activeWhen>
+		</handler>
+		<handler commandId="de.regasus.profile.UnlinkProfileCommand"
+			class="de.regasus.profile.command.UnlinkProfileCommandHandler"
+		>
+			<activeWhen>
+				<reference definitionId="com.lambdalogic.mi.expression.oneSelectedProfile">
+				</reference>
+			</activeWhen>
+		</handler>
+		<handler commandId="de.regasus.profile.CopyProfileCommand"
+			class="de.regasus.profile.command.CopyProfileCommandHandler"
+		>
+			<activeWhen>
+				<reference definitionId="com.lambdalogic.mi.expression.oneSelectedProfile">
+				</reference>
+			</activeWhen>
+		</handler>
+		<handler commandId="de.regasus.participant.command.AutoCorrectionCommand"
+			class="de.regasus.participant.command.AutoCorrectionCommandHandler"
+		>
+			<activeWhen>
+				<with variable="activeEditor">
+					<or>
+						<instanceof value="de.regasus.participant.editor.ParticipantEditor">
+						</instanceof>
+						<instanceof value="de.regasus.profile.editor.ProfileEditor">
+						</instanceof>
+					</or>
+				</with>
+			</activeWhen>
+		</handler>
+		<handler commandId="de.regasus.profile.relation.CreateProfileRelationCommand"
+			class="de.regasus.profile.command.CreateProfileRelationCommandHandler"
+		>
+			<activeWhen>
+				<and>
+					<with variable="configuration.profileRelation">
+						<equals value="yes"/>
+					</with>
+					<reference definitionId="com.lambdalogic.mi.expression.oneSelectedProfile">
+					</reference>
+				</and>
+			</activeWhen>
+		</handler>
+		<handler commandId="de.regasus.profile.relation.DeleteProfileRelationCommand"
+			class="de.regasus.profile.command.DeleteProfileRelationCommandHandler"
+		>
+			<activeWhen>
+				<iterate ifEmpty="false" operator="and">
+					<instanceof value="com.lambdalogic.messeinfo.profile.ProfileRelation"/>
+				</iterate>
+			</activeWhen>
+		</handler>
+		<handler class="de.regasus.profile.command.CollectiveChangeProfileCustomFieldsCommandHandler"
+			commandId="de.regasus.profile.customfield.CollectiveChangeProfileCustomFieldsCommand"
+		>
+			<activeWhen>
+				<reference definitionId="com.lambdalogic.mi.expression.selectedProfiles"/>
+			</activeWhen>
+		</handler>
+		<handler class="de.regasus.profile.command.CollectiveChangeProfileRolesCommandHandler"
+			commandId="de.regasus.profile.role.CollectiveChangeProfileRolesCommand"
+		>
+			<activeWhen>
+				<reference definitionId="com.lambdalogic.mi.expression.selectedProfiles"/>
+			</activeWhen>
+		</handler>
+		<handler commandId="de.regasus.participant.command.CopyParticipantsCommand"
+			class="de.regasus.participant.command.CopyParticipantsCommandHandler"
+		>
+			<activeWhen>
+				<reference definitionId="com.lambdalogic.mi.expression.selectedParticipants">
+				</reference>
+			</activeWhen>
+		</handler>
+		<handler commandId="de.regasus.participant.command.CreateProfileFromParticipantCommand"
+			class="de.regasus.profile.command.CreateProfileFromParticipantCommandHandler"
+		>
+			<activeWhen>
+				<and>
+					<with variable="configuration.profile">
+						<equals value="yes"/>
+					</with>
+					<reference definitionId="com.lambdalogic.mi.expression.selectedParticipants">
+					</reference>
+				</and>
+			</activeWhen>
+		</handler>
+		<handler commandId="de.regasus.participant.command.AssignParticipantToProfileCommand"
+			class="de.regasus.participant.command.AssignParticipantToProfileCommandHandler"
+		>
+			<activeWhen>
+				<and>
+					<with variable="configuration.profile">
+						<equals value="yes"/>
+					</with>
+					<reference definitionId="com.lambdalogic.mi.expression.oneSelectedParticipant"/>
+				</and>
+			</activeWhen>
+		</handler>
+		<handler commandId="de.regasus.participant.command.UnlinkParticipantCommand"
+			class="de.regasus.participant.command.UnlinkParticipantCommandHandler"
+		>
+			<activeWhen>
+				<and>
+					<with variable="configuration.profile">
+						<equals value="yes"/>
+					</with>
+					<reference definitionId="com.lambdalogic.mi.expression.oneSelectedParticipant"/>
+					<with variable="de.regasus.event.personLinkSelectionState">
+						<equals value="all"/>
+					</with>
+				</and>
+			</activeWhen>
+		</handler>
+		<handler commandId="de.regasus.participant.command.ParticipantCopyFromProfileCommand"
+			class="de.regasus.participant.command.ParticipantCopyFromProfileCommandHandler"
+		>
+			<activeWhen>
+				<and>
+					<with variable="configuration.profile">
+						<equals value="yes"/>
+					</with>
+					<reference definitionId="com.lambdalogic.mi.expression.selectedParticipants"/>
+				</and>
+			</activeWhen>
+		</handler>
+		<handler commandId="de.regasus.participant.command.ParticipantCopyToProfileCommand"
+			class="de.regasus.participant.command.ParticipantCopyToProfileCommandHandler"
+		>
+			<activeWhen>
+				<and>
+					<with variable="configuration.profile">
+						<equals value="yes"/>
+					</with>
+					<reference definitionId="com.lambdalogic.mi.expression.selectedParticipants"/>
+				</and>
+			</activeWhen>
+		</handler>
+		<handler commandId="de.regasus.participant.command.CreateProgrammeBookingsCommand"
+			class="de.regasus.programme.booking.command.CreateProgrammeBookingsCommandHandler"
+		>
+			<activeWhen>
+				<and>
+					<with variable="configuration.event.programme">
+						<equals value="yes"/>
+					</with>
+					<reference definitionId="com.lambdalogic.mi.expression.selectedParticipants"/>
+				</and>
+			</activeWhen>
+		</handler>
+		<handler commandId="de.regasus.participant.command.CreateHotelBookingsCommand"
+			class="de.regasus.hotel.booking.command.CreateHotelBookingsCommandHandler"
+		>
+			<activeWhen>
+				<and>
+					<with variable="configuration.event.hotel">
+						<equals value="yes"/>
+					</with>
+					<reference definitionId="com.lambdalogic.mi.expression.selectedParticipants"/>
+				</and>
+			</activeWhen>
+		</handler>
+		<handler commandId="de.regasus.participant.command.DeleteParticipantCommand"
+			class="de.regasus.participant.command.DeleteParticipantCommandHandler"
+		>
+			<activeWhen>
+				<reference definitionId="com.lambdalogic.mi.expression.selectedParticipants"/>
+			</activeWhen>
+		</handler>
+		<handler commandId="de.regasus.participant.command.CancelParticipantByParticipantCommand"
+			class="de.regasus.participant.command.CancelParticipantByParticipantCommandHandler"
+		>
+			<activeWhen>
+				<reference definitionId="com.lambdalogic.mi.expression.selectedParticipants"/>
+			</activeWhen>
+		</handler>
+		<handler commandId="de.regasus.participant.command.CancelParticipantByOrganiserCommand"
+			class="de.regasus.participant.command.CancelParticipantByOrganiserCommandHandler"
+		>
+			<activeWhen>
+				<reference definitionId="com.lambdalogic.mi.expression.selectedParticipants"/>
+			</activeWhen>
+		</handler>
+		<handler commandId="de.regasus.participant.command.CreateParticipantCommand"
+			class="de.regasus.participant.command.CreateParticipantCommandHandler"
+		>
+			<activeWhen>
+				<with variable="configuration.event">
+					<equals value="yes"/>
+				</with>
+			</activeWhen>
+		</handler>
+		<handler commandId="de.regasus.participant.command.CreateGroupManagerCommand"
+			class="de.regasus.participant.command.CreateGroupManagerCommandHandler"
+		>
+			<activeWhen>
+				<with variable="configuration.event">
+					<equals value="yes"/>
+				</with>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="de.regasus.participant.command.EditParticipantCommand" class="de.regasus.participant.command.EditParticipantCommandHandler">
+			<activeWhen>
+				<reference definitionId="com.lambdalogic.mi.expression.selectedParticipants"/>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="de.regasus.participant.command.PrintNotificationsCommand" class="de.regasus.participant.command.PrintNotificationsCommandHandler">
+			<activeWhen>
+				<reference definitionId="com.lambdalogic.mi.expression.selectedParticipants"/>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="de.regasus.participant.command.PrintCertificateCommand" class="de.regasus.participant.command.PrintCertificateCommandHandler">
+			<activeWhen>
+				<and>
+					<with variable="configuration.certificatePrint">
+						<equals value="yes"/>
+					</with>
+					<reference definitionId="com.lambdalogic.mi.expression.selectedParticipants"/>
+				</and>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="de.regasus.participant.command.OpenCertificateCommand" class="de.regasus.participant.command.OpenCertificateCommandHandler">
+			<activeWhen>
+				<and>
+					<with variable="configuration.certificatePrint">
+						<equals value="yes"/>
+					</with>
+					<reference definitionId="com.lambdalogic.mi.expression.selectedParticipants"/>
+				</and>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="de.regasus.participant.command.PrintBadgeCommand"
+			class="de.regasus.participant.badge.command.PrintBadgeCommandHandler"
+		>
+			<activeWhen>
+				<and>
+					<with variable="configuration.badge">
+						<equals value="yes"/>
+					</with>
+					<reference definitionId="com.lambdalogic.mi.expression.selectedParticipants"/>
+				</and>
+			</activeWhen>
+		</handler>
+		<handler commandId="de.regasus.participant.command.OpenBadgeCommand"
+			class="de.regasus.participant.badge.command.OpenBadgeCommandHandler"
+		>
+			<activeWhen>
+				<and>
+					<with variable="configuration.badge">
+						<equals value="yes"/>
+					</with>
+					<reference definitionId="com.lambdalogic.mi.expression.selectedParticipants"/>
+				</and>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="de.regasus.participant.command.ShowParticipantBarcodesCommand"
+			class="de.regasus.participant.command.ShowParticipantBarcodesCommandHandler"
+		>
+			<activeWhen>
+				<reference definitionId="com.lambdalogic.mi.expression.oneSelectedParticipant"/>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="ShowParticipantWebTokenCommand"
+			class="de.regasus.participant.command.ShowParticipantWebTokenCommandHandler"
+		>
+			<activeWhen>
+				<reference definitionId="com.lambdalogic.mi.expression.oneSelectedParticipant"/>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="de.regasus.participant.command.CreateGroupMemberCommand"
+			class="de.regasus.participant.command.CreateGroupMemberCommandHandler"
+		>
+			<activeWhen>
+				<and>
+					<with variable="de.regasus.event.participantSelectionState">
+						<equals value="one"/>
+					</with>
+					<with variable="de.regasus.event.groupMemberSelectionState">
+						<equals value="all"/>
+					</with>
+				</and>
+			</activeWhen>
+		</handler>
+		<handler commandId="de.regasus.participant.command.CreateAnonymousParticipantCommand"
+			class="de.regasus.participant.command.CreateAnonymousParticipantCommandHandler"
+		>
+			<activeWhen>
+				<and>
+					<with variable="de.regasus.event.participantSelectionState">
+						<equals value="one"/>
+					</with>
+					<with variable="de.regasus.event.groupManagerSelectionState">
+						<equals value="all"/>
+					</with>
+				</and>
+			</activeWhen>
+		</handler>
+		<handler commandId="de.regasus.participant.command.MakeGroupManagerCommand"
+			class="de.regasus.participant.command.MakeGroupManagerCommandHandler"
+		>
+			<activeWhen>
+				<and>
+					<with variable="de.regasus.event.groupMemberSelectionState">
+						<equals value="none"/>
+					</with>
+					<with variable="de.regasus.event.companionSelectionState">
+						<equals value="none"/>
+					</with>
+				</and>
+			</activeWhen>
+		</handler>
+		<handler commandId="de.regasus.participant.command.UngroupCommand"
+			class="de.regasus.participant.command.UngroupCommandHandler"
+		>
+			<activeWhen>
+				<and>
+					<with variable="de.regasus.event.participantSelectionState">
+						<equals value="one"/>
+					</with>
+					<with variable="de.regasus.event.groupManagerSelectionState">
+						<equals value="all"/>
+					</with>
+				</and>
+			</activeWhen>
+		</handler>
+		<handler commandId="de.regasus.participant.command.AssignGroupManagerCommand"
+			class="de.regasus.participant.command.AssignGroupManagerCommandHandler"
+		>
+			<activeWhen>
+				<and>
+					<with variable="de.regasus.event.groupManagerSelectionState">
+						<equals value="none"/>
+					</with>
+					<with variable="de.regasus.event.companionSelectionState">
+						<equals value="none"/>
+					</with>
+				</and>
+			</activeWhen>
+		</handler>
+		<handler commandId="de.regasus.participant.command.AssignGroupMemberCommand"
+			class="de.regasus.participant.command.AssignGroupMemberCommandHandler"
+		>
+			<activeWhen>
+				<and>
+					<with variable="de.regasus.event.participantSelectionState">
+						<equals value="one">
+						</equals>
+					</with>
+					<with variable="de.regasus.event.groupManagerSelectionState">
+						<equals value="all">
+						</equals>
+					</with>
+				</and>
+			</activeWhen>
+		</handler>
+		<handler commandId="de.regasus.participant.command.RemoveFromGroupCommand"
+			class="de.regasus.participant.command.RemoveFromGroupCommandHandler"
+		>
+			<activeWhen>
+				<and>
+					<with variable="de.regasus.event.groupMemberSelectionState">
+						<equals value="all">
+						</equals>
+					</with>
+					<with variable="de.regasus.event.groupManagerSelectionState">
+						<equals value="none">
+						</equals>
+					</with>
+				</and>
+			</activeWhen>
+		</handler>
+		<handler commandId="de.regasus.participant.command.CreateCompanionCommand"
+			class="de.regasus.participant.command.CreateCompanionCommandHandler"
+		>
+			<activeWhen>
+				<and>
+					<with variable="de.regasus.event.participantSelectionState">
+						<equals value="one">
+						</equals>
+					</with>
+					<with variable="de.regasus.event.companionSelectionState">
+						<equals value="none">
+						</equals>
+					</with>
+				</and>
+			</activeWhen>
+		</handler>
+		<handler commandId="de.regasus.participant.command.AssignCompanionsCommand"
+			class="de.regasus.participant.command.AssignCompanionsCommandHandler"
+		>
+			<activeWhen>
+				<and>
+					<with variable="de.regasus.event.participantSelectionState">
+						<equals value="one">
+						</equals>
+					</with>
+					<with variable="de.regasus.event.companionSelectionState">
+						<equals value="none">
+						</equals>
+					</with>
+				</and>
+			</activeWhen>
+		</handler>
+		<handler commandId="de.regasus.participant.command.UncompanionCommand"
+			class="de.regasus.participant.command.UncompanionCommandHandler"
+		>
+			<activeWhen>
+				<with variable="de.regasus.event.companionSelectionState">
+					<equals value="all">
+					</equals>
+				</with>
+			</activeWhen>
+		</handler>
+		<handler commandId="de.regasus.participant.command.AutoCorrectionCommand"
+			class="de.regasus.participant.command.AutoCorrectionCommandHandler"
+		>
+			<activeWhen>
+				<or>
+					<reference definitionId="com.lambdalogic.mi.expression.oneSelectedParticipant">
+					</reference>
+					<reference definitionId="com.lambdalogic.mi.expression.oneSelectedProfile">
+					</reference>
+				</or>
+			</activeWhen>
+		</handler>
+		<handler commandId="de.regasus.participant.command.DownloadPrintDocumentsCommand"
+			class="de.regasus.participant.command.download.DownloadPrintParticipantFilesCommandHandler"
+		>
+			<activeWhen>
+				<reference definitionId="com.lambdalogic.mi.expression.selectedParticipants">
+				</reference>
+			</activeWhen>
+		</handler>
+		<handler commandId="de.regasus.participant.command.CollectiveChangeParticipantStateCommand"
+			class="de.regasus.participant.collectivechange.command.CollectiveChangeParticipantStateCommandHandler"
+		>
+			<activeWhen>
+				<reference definitionId="com.lambdalogic.mi.expression.selectedParticipants">
+				</reference>
+			</activeWhen>
+		</handler>
+		<handler commandId="de.regasus.participant.command.CollectiveChangeParticipantTypeCommand"
+			class="de.regasus.participant.collectivechange.command.CollectiveChangeParticipantTypeCommandHandler"
+		>
+			<activeWhen>
+				<reference definitionId="com.lambdalogic.mi.expression.selectedParticipants">
+				</reference>
+			</activeWhen>
+		</handler>
+		<handler commandId="de.regasus.participant.command.CollectiveChangeRegistrationDateCommand"
+			class="de.regasus.participant.collectivechange.command.CollectiveChangeRegistrationDateCommandHandler"
+		>
+			<activeWhen>
+				<reference definitionId="com.lambdalogic.mi.expression.selectedParticipants">
+				</reference>
+			</activeWhen>
+		</handler>
+		<handler commandId="de.regasus.participant.command.CollectiveChangeCertificatePrintCommand"
+			class="de.regasus.participant.collectivechange.command.CollectiveChangeCertificatePrintCommandHandler"
+		>
+			<activeWhen>
+				<reference definitionId="com.lambdalogic.mi.expression.selectedParticipants">
+				</reference>
+			</activeWhen>
+		</handler>
+		<handler commandId="de.regasus.participant.command.CollectiveChangeNotificationTimesCommand"
+			class="de.regasus.participant.collectivechange.command.CollectiveChangeNotificationTimesCommandHandler"
+		>
+			<activeWhen>
+				<reference definitionId="com.lambdalogic.mi.expression.selectedParticipants">
+				</reference>
+			</activeWhen>
+		</handler>
+		<handler commandId="de.regasus.participant.command.CollectiveChangeParticipantCustomFieldsCommand"
+			class="de.regasus.participant.collectivechange.command.CollectiveChangeParticipantCustomFieldsCommandHandler"
+		>
+			<activeWhen>
+				<and>
+					<with variable="configuration.event.participant.customField">
+						<equals value="yes">
+						</equals>
+					</with>
+					<reference definitionId="com.lambdalogic.mi.expression.selectedParticipants">
+					</reference>
+				</and>
+			</activeWhen>
+		</handler>
+		<handler commandId="de.regasus.participant.command.CollectiveChangeCustomFieldsCommand"
+			class="de.regasus.participant.collectivechange.command.CollectiveChangeCustomFieldsCommandHandler"
+		>
+			<activeWhen>
+				<and>
+					<with variable="configuration.event.participant.simpleCustomField">
+						<equals value="yes">
+						</equals>
+					</with>
+					<reference definitionId="com.lambdalogic.mi.expression.selectedParticipants">
+					</reference>
+				</and>
+			</activeWhen>
+		</handler>
+		<handler commandId="de.regasus.participant.command.ForceExitForParticipantCommand"
+			class="de.regasus.participant.command.ForceExitForParticipantCommandHandler"
+		>
+			<activeWhen>
+				<reference definitionId="com.lambdalogic.mi.expression.selectedParticipants">
+				</reference>
+			</activeWhen>
+		</handler>
+		<handler commandId="de.regasus.participant.badge.EnableDisableBadgeCommand"
+			class="de.regasus.participant.badge.command.EnableDisableBadgeCommandHandler"
+		>
+			<activeWhen>
+				<with variable="de.regasus.participant.editor.isOneBadgeSelected">
+					<equals value="yes">
+					</equals>
+				</with>
+			</activeWhen>
+		</handler>
+		<handler commandId="de.regasus.participant.badge.AssignBadgeCommand"
+			class="de.regasus.participant.badge.command.AssignBadgeCommandHandler"
+		>
+			<activeWhen>
+				<with variable="de.regasus.participant.editor.isOneBadgeSelected">
+					<equals value="yes">
+					</equals>
+				</with>
+			</activeWhen>
+		</handler>
+		<handler commandId="de.regasus.workflow.StartOnsiteWorkflowCommand"
+			class="de.regasus.workflow.StartOnsiteWorkflowCommandHandler"
+		>
+			<activeWhen>
+				<and>
+					<with variable="configuration.onsiteWorkflow">
+						<equals value="yes">
+						</equals>
+					</with>
+					<with variable="activeEditorId">
+						<equals value="ParticipantEditor">
+						</equals>
+					</with>
+					<with variable="de.regasus.participant.editor.isOnsiteWorkflowAvailable">
+						<equals value="yes">
+						</equals>
+					</with>
+				</and>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="AnonymizeHandler" class="de.regasus.anonymize.command.AnonymizeHandler"/>
+		<handler commandId="de.regasus.common.document.command.GlobalImprintCommand"
+			class="de.regasus.common.document.command.GlobalImprintCommandHandler"/>
+		<handler commandId="de.regasus.common.document.command.GlobalPrivacyPolicyCommand"
+			class="de.regasus.common.document.command.GlobalPrivacyPolicyCommandHandler"/>
+		<handler commandId="de.regasus.common.document.command.GlobalTermsAndConditionsCommand"
+			class="de.regasus.common.document.command.GlobalTermsAndConditionsCommandHandler"/>
+
+		<handler commandId="CreateEventGroupCommand" class="de.regasus.eventgroup.command.CreateEventGroupHandler">
+			<activeWhen>
+				<iterate ifEmpty="false" operator="and">
+					<instanceof value="de.regasus.event.view.EventGroupListTreeNode"/>
+				</iterate>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="CreateEventCommand" class="de.regasus.event.command.CreateEventHandler">
+			<activeWhen>
+				<iterate ifEmpty="false" operator="and">
+					<instanceof value="de.regasus.event.view.EventGroupTreeNode"/>
+				</iterate>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="AssignEventGroupCommand" class="de.regasus.eventgroup.command.AssignEventGroupHandler">
+			<activeWhen>
+				<iterate ifEmpty="false" operator="and">
+					<instanceof value="de.regasus.event.view.EventGroupTreeNode"/>
+				</iterate>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="org.eclipse.ui.edit.copy" class="de.regasus.event.command.copypaste.CopyCommandHandler">
+			<activeWhen>
+				<!-- The elements <with> and <count> are necessary because for unknown reasons this handler becomes active even if the
+					current selection is empty. -->
+				<with variable="selection">
+					<count value="1"/>
+
+					<iterate ifEmpty="false">
+						<or>
+							<instanceof value="de.regasus.event.view.EventTreeNode"/>
+							<instanceof value="de.regasus.event.view.ProgrammePointTreeNode"/>
+							<instanceof value="de.regasus.event.view.WorkGroupTreeNode"/>
+							<instanceof value="de.regasus.event.view.LocationTreeNode"/>
+							<instanceof value="de.regasus.event.view.ProgrammeOfferingTreeNode"/>
+							<instanceof value="de.regasus.event.view.ProgrammeCancelationTermTreeNode"/>
+
+							<instanceof value="de.regasus.event.view.HotelContingentTreeNode"/>
+							<instanceof value="de.regasus.event.view.HotelOfferingTreeNode"/>
+							<instanceof value="de.regasus.event.view.HotelCancelationTermTreeNode"/>
+
+							<instanceof value="de.regasus.event.view.InvoiceNoRangeTreeNode"/>
+
+							<instanceof value="de.regasus.event.view.ParticipantCustomFieldGroupTreeNode"/>
+							<instanceof value="de.regasus.event.view.ParticipantCustomFieldTreeNode"/>
+
+							<instanceof value="de.regasus.event.view.PortalTreeNode"/>
+							<instanceof value="de.regasus.event.view.PageTreeNode"/>
+							<instanceof value="de.regasus.event.view.PageLayoutTreeNode"/>
+
+							<instanceof value="de.regasus.profile.customfield.view.ProfileCustomFieldGroupTreeNode"/>
+							<instanceof value="de.regasus.profile.customfield.view.ProfileCustomFieldTreeNode"/>
+
+							<instanceof value="de.regasus.hotel.view.tree.HotelTreeNode"/>
+							<instanceof value="de.regasus.hotel.view.tree.RoomDefinitionTreeNode"/>
+						</or>
+					</iterate>
+
+				</with>
+
+			</activeWhen>
+		</handler>
+
+
+		<handler commandId="org.eclipse.ui.edit.paste" class="de.regasus.event.command.copypaste.PasteCommandHandler">
+			<activeWhen>
+				<with variable="activePart">
+					<or>
+						<instanceof value="de.regasus.event.view.EventMasterDataView"/>
+						<instanceof value="de.regasus.hotel.view.tree.HotelTreeView"/>
+						<instanceof value="de.regasus.profile.customfield.view.ProfileCustomFieldTreeView"/>
+					</or>
+				</with>
+			</activeWhen>
+		</handler>
+
+
+		<!-- org.eclipse.ui.edit.delete -->
+
+		<handler commandId="org.eclipse.ui.edit.delete" class="de.regasus.eventgroup.command.DeleteEventGroupHandler">
+			<activeWhen>
+				<iterate ifEmpty="false">
+					<instanceof value="de.regasus.event.view.EventGroupTreeNode"/>
+				</iterate>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="org.eclipse.ui.edit.delete" class="de.regasus.event.command.DeleteEventHandler">
+			<activeWhen>
+				<iterate ifEmpty="false">
+					<instanceof value="de.regasus.event.view.EventTreeNode"/>
+				</iterate>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="org.eclipse.ui.edit.delete"
+			class="de.regasus.hotel.contingent.command.DeleteHotelContingentHandler"
+		>
+			<activeWhen>
+				<iterate ifEmpty="false">
+					<instanceof value="de.regasus.event.view.HotelContingentTreeNode"/>
+				</iterate>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="org.eclipse.ui.edit.delete"
+			class="de.regasus.hotel.cancelterm.command.DeleteHotelCancelationTermHandler"
+		>
+			<activeWhen>
+				<iterate ifEmpty="false">
+					<instanceof value="de.regasus.event.view.HotelCancelationTermTreeNode"/>
+				</iterate>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="org.eclipse.ui.edit.delete"
+			class="de.regasus.hotel.offering.command.DeleteHotelOfferingHandler"
+		>
+			<activeWhen>
+				<iterate ifEmpty="false">
+					<instanceof value="de.regasus.event.view.HotelOfferingTreeNode"/>
+				</iterate>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="org.eclipse.ui.edit.delete"
+			class="de.regasus.finance.invoicenumberrange.command.DeleteInvoiceNoRangeHandler"
+		>
+			<activeWhen>
+				<iterate ifEmpty="false">
+					<instanceof value="de.regasus.event.view.InvoiceNoRangeTreeNode"/>
+				</iterate>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="org.eclipse.ui.edit.delete"
+			class="de.regasus.programme.programmepoint.command.DeleteProgrammePointHandler"
+		>
+			<activeWhen>
+				<iterate ifEmpty="false">
+					<instanceof value="de.regasus.event.view.ProgrammePointTreeNode"/>
+				</iterate>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="org.eclipse.ui.edit.delete"
+			class="de.regasus.programme.workgroup.command.DeleteWorkGroupHandler"
+		>
+			<activeWhen>
+				<iterate ifEmpty="false">
+					<instanceof value="de.regasus.event.view.WorkGroupTreeNode"/>
+				</iterate>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="org.eclipse.ui.edit.delete"
+			class="de.regasus.programme.offering.command.DeleteProgrammeOfferingHandler"
+		>
+			<activeWhen>
+				<iterate ifEmpty="false">
+					<instanceof value="de.regasus.event.view.ProgrammeOfferingTreeNode"/>
+				</iterate>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="org.eclipse.ui.edit.delete"
+			class="de.regasus.programme.cancelterm.command.DeleteProgrammeCancelationTermHandler"
+		>
+			<activeWhen>
+				<iterate ifEmpty="false">
+					<instanceof value="de.regasus.event.view.ProgrammeCancelationTermTreeNode"/>
+				</iterate>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="org.eclipse.ui.edit.delete"
+			class="de.regasus.event.customfield.command.DeleteParticipantCustomFieldGroupHandler"
+		>
+			<activeWhen>
+				<iterate ifEmpty="false">
+					<instanceof value="de.regasus.event.view.ParticipantCustomFieldGroupTreeNode"/>
+				</iterate>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="org.eclipse.ui.edit.delete"
+			class="de.regasus.event.customfield.command.DeleteParticipantCustomFieldHandler"
+		>
+			<activeWhen>
+				<iterate ifEmpty="false">
+					<instanceof value="de.regasus.event.view.ParticipantCustomFieldTreeNode"/>
+				</iterate>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="org.eclipse.ui.edit.delete"
+			class="de.regasus.event.location.command.DeleteLocationHandler"
+		>
+			<activeWhen>
+				<iterate ifEmpty="false">
+					<instanceof value="de.regasus.event.view.LocationTreeNode"/>
+				</iterate>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="org.eclipse.ui.edit.delete" class="de.regasus.event.gate.command.DeleteGateHandler">
+			<activeWhen>
+				<iterate ifEmpty="false">
+					<instanceof value="de.regasus.event.view.GateTreeNode"/>
+				</iterate>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="org.eclipse.ui.edit.delete" class="de.regasus.portal.command.DeletePortalHandler">
+			<activeWhen>
+				<iterate ifEmpty="false">
+					<or>
+						<instanceof value="de.regasus.portal.Portal"/>
+						<instanceof value="de.regasus.event.view.PortalTreeNode"/>
+					</or>
+				</iterate>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="org.eclipse.ui.edit.delete"
+			class="de.regasus.portal.pagelayout.command.DeletePageLayoutHandler"
+		>
+			<activeWhen>
+				<iterate ifEmpty="false">
+					<instanceof value="de.regasus.event.view.PageLayoutTreeNode"/>
+				</iterate>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="org.eclipse.ui.edit.delete"
+			class="de.regasus.profile.customfield.command.DeleteProfileCustomFieldGroupHandler"
+		>
+			<activeWhen>
+				<iterate ifEmpty="false">
+					<instanceof value="de.regasus.profile.customfield.view.ProfileCustomFieldGroupTreeNode"/>
+				</iterate>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="org.eclipse.ui.edit.delete"
+			class="de.regasus.profile.customfield.command.DeleteProfileCustomFieldHandler"
+		>
+			<activeWhen>
+				<iterate ifEmpty="false">
+					<instanceof value="de.regasus.profile.customfield.view.ProfileCustomFieldTreeNode"/>
+				</iterate>
+			</activeWhen>
+		</handler>
+
+
+
+		<handler commandId="CopyEventCommand" class="de.regasus.event.command.CopyEventHandler">
+			<activeWhen>
+				<with variable="event.selection">
+					<equals value="one">
+					</equals>
+				</with>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="CloseEventCommand" class="de.regasus.event.command.CloseEventHandler">
+			<activeWhen>
+				<and>
+					<with variable="event.selection">
+						<equals value="one">
+						</equals>
+					</with>
+					<with variable="event.closed">
+						<equals value="none">
+						</equals>
+					</with>
+				</and>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="OpenEventCommand" class="de.regasus.event.command.OpenEventHandler">
+			<activeWhen>
+				<and>
+					<with variable="event.selection">
+						<equals value="one">
+						</equals>
+					</with>
+					<with variable="event.closed">
+						<equals value="all">
+						</equals>
+					</with>
+				</and>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="ShowClosedEventsCommand" class="de.regasus.event.command.ShowClosedEventsHandler">
+			<activeWhen>
+				<iterate ifEmpty="false" operator="and">
+					<instanceof value="de.regasus.event.view.EventGroupListTreeNode">
+					</instanceof>
+				</iterate>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="ResetEventCommand" class="de.regasus.event.command.ResetEventHandler">
+			<activeWhen>
+				<and>
+					<with variable="user">
+						<equals value="admin">
+						</equals>
+					</with>
+					<with variable="event.selection">
+						<equals value="one">
+						</equals>
+					</with>
+				</and>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="ForceExitForEventCommand" class="de.regasus.event.command.ForceExitForEventCommandHandler">
+			<activeWhen>
+				<with variable="event.selection">
+					<equals value="one">
+					</equals>
+				</with>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="CreateHotelContingent"
+			class="de.regasus.hotel.contingent.command.CreateHotelContingentHandler"
+		>
+			<activeWhen>
+				<iterate ifEmpty="false" operator="and">
+					<or>
+						<instanceof value="de.regasus.event.view.EventHotelInfoListTreeNode">
+						</instanceof>
+						<instanceof value="de.regasus.event.view.EventHotelInfoTreeNode">
+						</instanceof>
+					</or>
+				</iterate>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="ShowOptionalHotelBookingOverviewHandler"
+			class="de.regasus.hotel.contingent.command.ShowOptionalHotelBookingOverviewHandler"
+		>
+			<activeWhen>
+				<iterate ifEmpty="false" operator="and">
+					<or>
+						<instanceof value="de.regasus.event.view.EventHotelInfoListTreeNode">
+						</instanceof>
+						<instanceof value="de.regasus.event.view.EventHotelInfoTreeNode">
+						</instanceof>
+					</or>
+				</iterate>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="CreateHotelOffering" class="de.regasus.hotel.offering.command.CreateHotelOfferingHandler">
+			<activeWhen>
+				<iterate ifEmpty="false" operator="and">
+					<instanceof value="de.regasus.event.view.HotelContingentTreeNode">
+					</instanceof>
+				</iterate>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="CreateHotelCancelationTerm"
+			class="de.regasus.hotel.cancelterm.command.CreateHotelCancelationTermHandler"
+		>
+			<activeWhen>
+				<iterate ifEmpty="false" operator="and">
+					<or>
+						<instanceof value="de.regasus.event.view.EventHotelInfoListTreeNode"/>
+						<instanceof value="de.regasus.event.view.EventHotelInfoTreeNode"/>
+						<instanceof value="de.regasus.event.view.HotelContingentTreeNode"/>
+						<instanceof value="de.regasus.event.view.HotelOfferingTreeNode"/>
+					</or>
+				</iterate>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="CreateInvoiceNoRangeCommand"
+			class="de.regasus.finance.invoicenumberrange.command.CreateInvoiceNoRangeHandler"
+		>
+			<activeWhen>
+				<iterate ifEmpty="false" operator="and">
+					<instanceof value="de.regasus.event.view.InvoiceNoRangeListTreeNode"/>
+				</iterate>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="CreateProgrammePointCommand"
+			class="de.regasus.programme.programmepoint.command.CreateProgrammePointHandler"
+		>
+			<activeWhen>
+				<with variable="programmePoint.event.selection">
+					<equals value="one"/>
+				</with>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="CancelProgrammePointCommand"
+			class="de.regasus.programme.programmepoint.command.CancelProgrammePointHandler"
+		>
+			<activeWhen>
+				<with variable="programmePoint.selection">
+					<equals value="one">
+					</equals>
+				</with>
+			</activeWhen>
+			<enabledWhen>
+				<with variable="programmePoint.cancelled">
+					<equals value="none">
+					</equals>
+				</with>
+			</enabledWhen>
+		</handler>
+		<handler commandId="CreateWorkGroupCommand"
+			class="de.regasus.programme.workgroup.command.CreateWorkGroupHandler"
+		>
+			<activeWhen>
+				<with variable="programmePoint.selection">
+					<equals value="one">
+					</equals>
+				</with>
+			</activeWhen>
+			<enabledWhen>
+				<with variable="programmePoint.cancelled">
+					<equals value="none">
+					</equals>
+				</with>
+			</enabledWhen>
+		</handler>
+		<handler commandId="AssignWorkGroupCommand"
+			class="de.regasus.programme.workgroup.command.AssignWorkGroupHandler"
+		>
+			<activeWhen>
+				<or>
+					<with variable="programmePoint.event.selection">
+						<equals value="one">
+						</equals>
+					</with>
+					<with variable="programmePoint.selection">
+						<equals value="one">
+						</equals>
+					</with>
+				</or>
+			</activeWhen>
+			<enabledWhen>
+				<not>
+					<with variable="programmePoint.cancelled">
+						<equals value="all">
+						</equals>
+					</with>
+				</not>
+			</enabledWhen>
+		</handler>
+		<handler commandId="RemoveWorkGroupAssociationCommand"
+			class="de.regasus.programme.workgroup.command.RemoveWorkGroupAssociationHandler"
+		>
+			<activeWhen>
+				<or>
+					<with variable="programmePoint.event.selection">
+						<equals value="one">
+						</equals>
+					</with>
+					<with variable="programmePoint.selection">
+						<equals value="one">
+						</equals>
+					</with>
+				</or>
+			</activeWhen>
+			<enabledWhen>
+				<not>
+					<with variable="programmePoint.cancelled">
+						<equals value="all">
+						</equals>
+					</with>
+				</not>
+			</enabledWhen>
+		</handler>
+		<handler commandId="FixWorkGroupCommand" class="de.regasus.programme.workgroup.command.FixWorkGroupHandler">
+			<activeWhen>
+				<or>
+					<with variable="programmePoint.event.selection">
+						<equals value="one">
+						</equals>
+					</with>
+					<with variable="programmePoint.selection">
+						<equals value="one">
+						</equals>
+					</with>
+				</or>
+			</activeWhen>
+			<enabledWhen>
+				<not>
+					<with variable="programmePoint.cancelled">
+						<equals value="all">
+						</equals>
+					</with>
+				</not>
+			</enabledWhen>
+		</handler>
+		<handler commandId="UnfixWorkGroupCommand"
+			class="de.regasus.programme.workgroup.command.UnfixWorkGroupHandler"
+		>
+			<activeWhen>
+				<or>
+					<with variable="programmePoint.event.selection">
+						<equals value="one">
+						</equals>
+					</with>
+					<with variable="programmePoint.selection">
+						<equals value="one">
+						</equals>
+					</with>
+				</or>
+			</activeWhen>
+			<enabledWhen>
+				<not>
+					<with variable="programmePoint.cancelled">
+						<equals value="all">
+						</equals>
+					</with>
+				</not>
+			</enabledWhen>
+		</handler>
+		<handler commandId="CreateProgrammeOfferingCommand"
+			class="de.regasus.programme.offering.command.CreateProgrammeOfferingHandler"
+		>
+			<activeWhen>
+				<with variable="programmePoint.selection">
+					<equals value="one">
+					</equals>
+				</with>
+			</activeWhen>
+			<enabledWhen>
+				<with variable="programmePoint.cancelled">
+					<equals value="none">
+					</equals>
+				</with>
+			</enabledWhen>
+		</handler>
+		<handler commandId="CreateProgrammeCancelationTermCommand"
+			class="de.regasus.programme.cancelterm.command.CreateProgrammeCancelationTermHandler"
+		>
+			<activeWhen>
+				<or>
+					<with variable="programmePoint.event.selection">
+						<equals value="one">
+						</equals>
+					</with>
+					<with variable="programmePoint.selection">
+						<equals value="one">
+						</equals>
+					</with>
+					<with variable="programmeOffering.selection">
+						<equals value="one">
+						</equals>
+					</with>
+				</or>
+			</activeWhen>
+			<enabledWhen>
+				<or>
+					<and>
+						<with variable="programmePoint.event.selection">
+							<equals value="one">
+							</equals>
+						</with>
+						<not>
+							<with variable="programmePoint.cancelled">
+								<equals value="all">
+								</equals>
+							</with>
+						</not>
+					</and>
+					<and>
+						<with variable="programmePoint.selection">
+							<equals value="one">
+							</equals>
+						</with>
+						<not>
+							<with variable="programmePoint.cancelled">
+								<equals value="all">
+								</equals>
+							</with>
+						</not>
+					</and>
+					<and>
+						<with variable="programmeOffering.selection">
+							<equals value="one">
+							</equals>
+						</with>
+						<not>
+							<with variable="programmeOffering.cancelled">
+								<equals value="all">
+								</equals>
+							</with>
+						</not>
+					</and>
+				</or>
+			</enabledWhen>
+		</handler>
+		<handler commandId="CreateParticipantCustomFieldGroupCommand"
+			class="de.regasus.event.customfield.command.CreateParticipantCustomFieldGroupHandler"
+		>
+			<activeWhen>
+				<and>
+					<with variable="configuration.event.participant.customField">
+						<equals value="yes">
+						</equals>
+					</with>
+					<iterate ifEmpty="false" operator="and">
+						<instanceof value="de.regasus.event.view.ParticipantCustomFieldGroupLocationTreeNode">
+						</instanceof>
+					</iterate>
+				</and>
+			</activeWhen>
+		</handler>
+		<handler commandId="CreateParticipantCustomFieldCommand"
+			class="de.regasus.event.customfield.command.CreateParticipantCustomFieldHandler"
+		>
+			<activeWhen>
+				<iterate ifEmpty="false" operator="and">
+					<instanceof value="de.regasus.event.view.ParticipantCustomFieldGroupTreeNode">
+					</instanceof>
+				</iterate>
+			</activeWhen>
+		</handler>
+		<handler commandId="CreateLocationCommand" class="de.regasus.event.location.command.CreateLocationHandler">
+			<activeWhen>
+				<iterate ifEmpty="false" operator="and">
+					<instanceof value="de.regasus.event.view.LocationListTreeNode">
+					</instanceof>
+				</iterate>
+			</activeWhen>
+		</handler>
+		<handler commandId="CreateGateCommand" class="de.regasus.event.gate.command.CreateGateHandler">
+			<activeWhen>
+				<iterate ifEmpty="false" operator="and">
+					<instanceof value="de.regasus.event.view.LocationTreeNode">
+					</instanceof>
+				</iterate>
+			</activeWhen>
+		</handler>
+		<handler commandId="OpenPortalCommand" class="de.regasus.portal.command.OpenPortalHandler">
+			<activeWhen>
+				<or>
+					<iterate ifEmpty="false" operator="and">
+						<instanceof value="de.regasus.portal.Portal" />
+					</iterate>
+					<iterate ifEmpty="false" operator="and">
+						<instanceof value="de.regasus.event.view.PortalTreeNode" />
+					</iterate>
+				</or>
+			</activeWhen>
+		</handler>
+		<handler commandId="CopyPortalUrlCommand" class="de.regasus.portal.command.CopyPortalUrlHandler">
+			<activeWhen>
+				<or>
+					<iterate ifEmpty="false" operator="and">
+						<instanceof value="de.regasus.portal.Portal" />
+					</iterate>
+					<iterate ifEmpty="false" operator="and">
+						<instanceof value="de.regasus.event.view.PortalTreeNode" />
+					</iterate>
+				</or>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="CopyPortalCommand" class="de.regasus.portal.command.CopyPortalHandler">
+			<activeWhen>
+				<and>
+					<or>
+						<iterate ifEmpty="false" operator="and">
+							<instanceof value="de.regasus.portal.Portal" />
+						</iterate>
+						<iterate ifEmpty="false" operator="and">
+							<instanceof value="de.regasus.event.view.PortalTreeNode" />
+						</iterate>
+					</or>
+					<or>
+						<with variable="user">
+							<equals value="admin"/>
+						</with>
+						<with variable="configuration.event.portal.create">
+							<equals value="yes"/>
+						</with>
+					</or>
+				</and>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="CreatePortalCommand" class="de.regasus.portal.command.CreatePortalHandler">
+			<activeWhen>
+				<and>
+					<iterate ifEmpty="false" operator="and">
+						<instanceof value="de.regasus.event.view.PortalListTreeNode" />
+					</iterate>
+					<or>
+						<with variable="user">
+							<equals value="admin" />
+						</with>
+						<with variable="configuration.event.portal.create">
+							<equals value="yes" />
+						</with>
+					</or>
+				</and>
+			</activeWhen>
+		</handler>
+
+		<handler commandId="EditPortalCommand" class="de.regasus.portal.command.EditPortalHandler">
+			<activeWhen>
+				<or>
+					<iterate ifEmpty="false" operator="and">
+						<instanceof value="de.regasus.portal.Portal" />
+					</iterate>
+					<iterate ifEmpty="false" operator="and">
+						<instanceof value="de.regasus.event.view.PortalTreeNode" />
+					</iterate>
+				</or>
+			</activeWhen>
+		</handler>
+
+
+		<handler commandId="EditPageCommand" class="de.regasus.portal.page.command.EditPageHandler">
+			<activeWhen>
+				<or>
+					<iterate ifEmpty="false" operator="and">
+						<instanceof value="de.regasus.portal.Page" />
+					</iterate>
+					<iterate ifEmpty="false" operator="and">
+						<instanceof value="de.regasus.event.view.PageTreeNode" />
+					</iterate>
+				</or>
+			</activeWhen>
+		</handler>
+
+
+		<handler commandId="CreatePageLayoutCommand" class="de.regasus.portal.pagelayout.command.CreatePageLayoutHandler">
+			<activeWhen>
+				<iterate ifEmpty="false" operator="and">
+					<instanceof value="de.regasus.event.view.PageLayoutListTreeNode"/>
+				</iterate>
+			</activeWhen>
+		</handler>
+
+
+		<handler commandId="EditPageLayoutCommand" class="de.regasus.portal.pagelayout.command.EditPageLayoutHandler">
+			<activeWhen>
+				<or>
+					<iterate ifEmpty="false" operator="and">
+						<instanceof value="de.regasus.portal.PageLayout" />
+					</iterate>
+					<iterate ifEmpty="false" operator="and">
+						<instanceof value="de.regasus.event.view.PageLayoutTreeNode" />
+					</iterate>
+				</or>
+			</activeWhen>
+		</handler>
+
+
+		<handler commandId="EditEventAdminConfigCommand"
+			class="de.regasus.common.config.command.EditEventAdminConfigHandler"
+		>
+			<activeWhen>
+				<and>
+					<iterate ifEmpty="false" operator="and">
+						<instanceof value="de.regasus.event.view.EventTreeNode">
+						</instanceof>
+					</iterate>
+					<with variable="user">
+						<equals value="admin">
+						</equals>
+					</with>
+				</and>
+			</activeWhen>
+		</handler>
+		<handler commandId="EditEventCustomerConfigCommand"
+			class="de.regasus.common.config.command.EditEventCustomerConfigHandler"
+		>
+			<activeWhen>
+				<and>
+					<iterate ifEmpty="false" operator="and">
+						<instanceof value="de.regasus.event.view.EventTreeNode">
+						</instanceof>
+					</iterate>
+					<with variable="configuration.allowCustomerConfig">
+						<equals value="yes">
+						</equals>
+					</with>
+				</and>
+			</activeWhen>
+		</handler>
+		<handler commandId="SendEmailCommand" class="de.regasus.email.dispatch.command.SendEmailCommandHandler">
+			<activeWhen>
+				<or>
+					<with variable="activePart">
+						<instanceof value="de.regasus.participant.ParticipantProvider">
+						</instanceof>
+					</with>
+					<with variable="activePart">
+						<instanceof value="de.regasus.profile.editor.ProfileEditor">
+						</instanceof>
+					</with>
+					<and>
+						<count value="1">
+						</count>
+						<iterate operator="and" ifEmpty="false">
+							<instanceof value="com.lambdalogic.messeinfo.email.EmailTemplate">
+							</instanceof>
+						</iterate>
+					</and>
+					<iterate operator="and" ifEmpty="false">
+						<instanceof value="com.lambdalogic.messeinfo.participant.data.IParticipant">
+						</instanceof>
+					</iterate>
+					<iterate operator="and" ifEmpty="false">
+						<instanceof value="de.regasus.participant.ParticipantProvider">
+						</instanceof>
+					</iterate>
+					<iterate operator="and" ifEmpty="false">
+						<instanceof value="com.lambdalogic.messeinfo.profile.Profile">
+						</instanceof>
+					</iterate>
+				</or>
+			</activeWhen>
+		</handler>
+	</extension>
+
+
+	<extension point="org.eclipse.ui.menus">
+
+		<menuContribution locationURI="toolbar:org.eclipse.ui.main.toolbar">
+			<toolbar id="de.regasus.event.toolbar">
+				<command commandId="de.regasus.participant.command.PrintCertificateCommand">
+					<visibleWhen>
+						<with variable="configuration.certificatePrint">
+							<equals value="yes">
+							</equals>
+						</with>
+					</visibleWhen>
+				</command>
+				<command commandId="de.regasus.participant.command.PrintBadgeCommand">
+					<visibleWhen>
+						<with variable="configuration.badge">
+							<equals value="yes">
+							</equals>
+						</with>
+					</visibleWhen>
+				</command>
+				<command commandId="de.regasus.workflow.StartOnsiteWorkflowCommand">
+					<visibleWhen>
+						<with variable="configuration.onsiteWorkflow">
+							<equals value="yes">
+							</equals>
+						</with>
+					</visibleWhen>
+				</command>
+				<command commandId="FirstParticipantCommand">
+				</command>
+				<command commandId="PreviousParticipantCommand">
+				</command>
+				<command commandId="NextParticipantCommand">
+				</command>
+				<command commandId="LastParticipantCommand">
+				</command>
+			</toolbar>
+		</menuContribution>
+		<menuContribution locationURI="menu:System?after=PrivacyAdditions">
+			<command commandId="AnonymizeHandler">
+			</command>
+		</menuContribution>
+		<menuContribution locationURI="menu:System?after=ExportAdditions">
+			<command commandId="EditPushSettingsCommand">
+			</command>
+		</menuContribution>
+		<menuContribution locationURI="menu:Document?after=DocumentAdditions">
+			<command commandId="de.regasus.common.document.command.GlobalImprintCommand">
+			</command>
+		</menuContribution>
+		<menuContribution locationURI="menu:Document?after=DocumentAdditions">
+			<command commandId="de.regasus.common.document.command.GlobalPrivacyPolicyCommand">
+			</command>
+		</menuContribution>
+		<menuContribution locationURI="menu:Document?after=DocumentAdditions">
+			<command commandId="de.regasus.common.document.command.GlobalTermsAndConditionsCommand">
+			</command>
+		</menuContribution>
+		<menuContribution locationURI="menu:org.eclipse.ui.main.menu">
+			<menu id="com.lambdalogic.mi.event.ui.menu.event" label="%EventMenu.name">
+				<visibleWhen>
+					<with variable="de.regasus.core.ui.var.loginState">
+						<equals value="loggedIn">
+						</equals>
+					</with>
+				</visibleWhen>
+				<command commandId="de.regasus.participant.command.CreateParticipantCommand">
+					<parameter name="withEventSelection" value="yes">
+					</parameter>
+				</command>
+				<separator name="com.lambdalogic.mi.event.ui.separator1" visible="true">
+				</separator>
+				<command commandId="de.regasus.exhib.CreateExhibitorCommand">
+					<visibleWhen>
+						<with variable="configuration.event.exhibitor">
+							<equals value="yes">
+							</equals>
+						</with>
+					</visibleWhen>
+				</command>
+			</menu>
+			<menu id="com.lambdalogic.mi.event.ui.menu.editor.participant" label="%Participant.name">
+				<visibleWhen>
+					<and>
+						<with variable="de.regasus.core.ui.var.loginState">
+							<equals value="loggedIn">
+							</equals>
+						</with>
+						<with variable="activePart">
+							<instanceof value="de.regasus.participant.editor.ParticipantEditor">
+							</instanceof>
+						</with>
+					</and>
+				</visibleWhen>
+				<command commandId="de.regasus.participant.command.CreateParticipantCommand">
+					<parameter name="withEventSelection" value="yes">
+					</parameter>
+				</command>
+				<command commandId="de.regasus.participant.command.AutoCorrectionCommand">
+				</command>
+				<separator name="com.lambdalogic.mi.event.ui.ParticipantEditor.GroupCompanionSeparator" visible="true">
+				</separator>
+				<menu label="%Group.name" tooltip="%Group.tooltip">
+					<command commandId="de.regasus.participant.command.CreateGroupManagerCommand">
+						<parameter name="withEventSelection" value="yes">
+						</parameter>
+					</command>
+					<command commandId="de.regasus.participant.command.CreateGroupMemberCommand">
+					</command>
+					<command commandId="de.regasus.participant.command.CreateAnonymousParticipantCommand">
+					</command>
+					<command commandId="de.regasus.participant.command.MakeGroupManagerCommand">
+					</command>
+					<command commandId="de.regasus.participant.command.UngroupCommand">
+					</command>
+					<command commandId="de.regasus.participant.command.AssignGroupManagerCommand">
+					</command>
+					<command commandId="de.regasus.participant.command.AssignGroupMemberCommand">
+					</command>
+					<command commandId="de.regasus.participant.command.RemoveFromGroupCommand">
+					</command>
+				</menu>
+				<menu label="%Companions.name" tooltip="%Companions.tooltip">
+					<command commandId="de.regasus.participant.command.CreateCompanionCommand">
+					</command>
+					<command commandId="de.regasus.participant.command.AssignCompanionsCommand">
+					</command>
+					<command commandId="de.regasus.participant.command.UncompanionCommand">
+					</command>
+				</menu>
+				<separator name="com.lambdalogic.mi.event.ui.ParticipantEditor.CancelDeleteSeparator" visible="true">
+				</separator>
+				<command commandId="de.regasus.participant.command.CancelParticipantByParticipantCommand">
+				</command>
+				<command commandId="de.regasus.participant.command.CancelParticipantByOrganiserCommand">
+				</command>
+				<command commandId="de.regasus.participant.command.DeleteParticipantCommand">
+				</command>
+				<separator name="com.lambdalogic.mi.event.ui.ParticipantEditor.BookingSeparator" visible="true">
+				</separator>
+				<command commandId="de.regasus.participant.command.CreateProgrammeBookingsCommand">
+					<visibleWhen>
+						<with variable="configuration.event.programme">
+							<equals value="yes">
+							</equals>
+						</with>
+					</visibleWhen>
+				</command>
+				<command commandId="de.regasus.participant.command.CreateHotelBookingsCommand">
+					<visibleWhen>
+						<with variable="configuration.event.hotel">
+							<equals value="yes">
+							</equals>
+						</with>
+					</visibleWhen>
+				</command>
+				<separator name="com.lambdalogic.mi.event.ui.ParticipantEditor.CopySeparator" visible="true">
+				</separator>
+				<command commandId="de.regasus.participant.command.CopyParticipantsCommand">
+				</command>
+				<separator name="com.lambdalogic.mi.event.ui.ParticipantEditor.LeadSeparator" visible="true">
+				</separator>
+				<command commandId="de.regasus.participant.command.ForceExitForParticipantCommand">
+					<visibleWhen>
+						<with variable="configuration.lead">
+							<equals value="yes">
+							</equals>
+						</with>
+					</visibleWhen>
+				</command>
+				<separator name="com.lambdalogic.mi.event.ui.ParticipantEditor.ProfileSeparator" visible="true">
+				</separator>
+				<menu label="%Profile.name" tooltip="%Profile.tooltip">
+					<visibleWhen>
+						<with variable="configuration.profile">
+							<equals value="yes">
+							</equals>
+						</with>
+					</visibleWhen>
+					<command commandId="de.regasus.participant.command.CreateProfileFromParticipantCommand">
+					</command>
+					<command commandId="de.regasus.participant.command.AssignParticipantToProfileCommand">
+					</command>
+					<command commandId="de.regasus.participant.command.UnlinkParticipantCommand">
+					</command>
+					<command commandId="de.regasus.participant.command.ParticipantCopyToProfileCommand">
+					</command>
+					<command commandId="de.regasus.participant.command.ParticipantCopyFromProfileCommand">
+					</command>
+				</menu>
+				<separator name="com.lambdalogic.mi.event.ui.ParticipantEditor.NoteSeparator" visible="true">
+				</separator>
+				<command commandId="de.regasus.participant.command.PrintNotificationsCommand">
+				</command>
+				<separator name="com.lambdalogic.mi.event.ui.ParticipantEditor.BadgeSeparator" visible="true">
+				</separator>
+				<command commandId="de.regasus.participant.command.PrintCertificateCommand">
+					<visibleWhen>
+						<with variable="configuration.certificatePrint">
+							<equals value="yes">
+							</equals>
+						</with>
+					</visibleWhen>
+				</command>
+				<command commandId="de.regasus.participant.command.OpenCertificateCommand">
+					<visibleWhen>
+						<with variable="configuration.certificatePrint">
+							<equals value="yes">
+							</equals>
+						</with>
+					</visibleWhen>
+				</command>
+				<command commandId="de.regasus.participant.command.PrintBadgeCommand">
+					<visibleWhen>
+						<with variable="configuration.badge">
+							<equals value="yes">
+							</equals>
+						</with>
+					</visibleWhen>
+				</command>
+				<command commandId="de.regasus.participant.command.OpenBadgeCommand">
+					<visibleWhen>
+						<with variable="configuration.badge">
+							<equals value="yes">
+							</equals>
+						</with>
+					</visibleWhen>
+				</command>
+				<command commandId="de.regasus.participant.badge.EnableDisableBadgeCommand">
+					<visibleWhen>
+						<with variable="configuration.badge">
+							<equals value="yes">
+							</equals>
+						</with>
+					</visibleWhen>
+				</command>
+				<command commandId="de.regasus.participant.badge.AssignBadgeCommand">
+					<visibleWhen>
+						<with variable="configuration.badge">
+							<equals value="yes"/>
+						</with>
+					</visibleWhen>
+				</command>
+				<command commandId="de.regasus.participant.command.ShowParticipantBarcodesCommand"/>
+				<command commandId="ShowParticipantWebTokenCommand"/>
+				<command commandId="de.regasus.participant.command.DownloadPrintDocumentsCommand"/>
+
+				<separator name="com.lambdalogic.mi.event.ui.menu.editor.participant.emailSeparator1" visible="true"/>
+				<command commandId="SendEmailCommand"/>
+
+				<separator name="additions" visible="false"/>
+			</menu>
+			<menu id="com.lambdalogic.mi.event.ui.menu.editor.participant.finance" label="%Finance.name">
+				<visibleWhen>
+					<and>
+						<with variable="de.regasus.core.ui.var.loginState">
+							<equals value="loggedIn">
+							</equals>
+						</with>
+						<with variable="configuration.event.invoice">
+							<equals value="yes">
+							</equals>
+						</with>
+						<with variable="activePart">
+							<instanceof value="de.regasus.participant.editor.ParticipantEditor">
+							</instanceof>
+						</with>
+					</and>
+				</visibleWhen>
+				<command commandId="ShowInvoiceCommand"/>
+				<command commandId="ShowSampleInvoiceCommand"/>
+				<command commandId="CloseInvoiceCommand"/>
+				<command commandId="RefreshAddressCommand"/>
+
+				<separator name="com.lambdalogic.mi.event.ui.menu.editor.participant.finance.separator1" visible="true"/>
+				<command commandId="CreatePaymentCommand"/>
+				<command commandId="ChargePaymentCommand"/>
+				<command commandId="EditPaymentCommand"/>
+				<command commandId="CancelPaymentCommand"/>
+				<command commandId="PayEngineHistoryCommand"/>
+				<command commandId="EasyCheckoutHistoryCommand"/>
+
+				<separator name="com.lambdalogic.mi.event.ui.menu.editor.participant.finance.separator2" visible="true"/>
+				<command commandId="CancelClearingCommand"/>
+				<command commandId="CreateAutomaticClearingCommand"/>
+				<command commandId="SetInvoicePositionsOffAgainstEachOtherCommand"/>
+
+				<separator name="com.lambdalogic.mi.event.ui.menu.editor.participant.finance.separator3" visible="true"/>
+				<command commandId="IncreaseReminderLevelCommand"/>
+				<command commandId="ShowReminderCommand"/>
+				<command commandId="StopReminderCommand"/>
+				<command commandId="RestartReminderCommand"/>
+
+				<separator name="com.lambdalogic.mi.event.ui.menu.editor.participant.finance.separator4" visible="true"/>
+				<command commandId="ShowPaymentReceiptCommand"/>
+				<command commandId="SendPaymentConfirmationEmailCommand"/>
+
+				<separator name="additions" visible="false"/>
+			</menu>
+
+			<menu id="com.lambdalogic.mi.event.ui.menu.editor.profile" label="%Profile.name">
+				<visibleWhen>
+					<and>
+						<with variable="de.regasus.core.ui.var.loginState">
+							<equals value="loggedIn">
+							</equals>
+						</with>
+						<with variable="activePart">
+							<or>
+								<instanceof value="de.regasus.profile.editor.ProfileEditor">
+								</instanceof>
+								<instanceof value="de.regasus.profile.search.ProfileSearchView">
+								</instanceof>
+							</or>
+						</with>
+					</and>
+				</visibleWhen>
+				<command commandId="de.regasus.profile.CreateProfileCommand">
+				</command>
+				<command commandId="de.regasus.profile.relation.CreateProfileRelationCommand">
+					<visibleWhen>
+						<with variable="configuration.profileRelation">
+							<equals value="yes">
+							</equals>
+						</with>
+					</visibleWhen>
+				</command>
+				<command commandId="de.regasus.profile.CopyProfileCommand">
+				</command>
+				<command commandId="de.regasus.profile.DeleteProfileCommand">
+				</command>
+				<command commandId="de.regasus.participant.command.AutoCorrectionCommand">
+				</command>
+				<separator name="com.lambdalogic.mi.event.ui.ProfileEditor.CollectiveChangesSeparator" visible="true">
+				</separator>
+				<menu label="%CollectiveChanges.name" tooltip="%CollectiveChanges.tooltip">
+					<command commandId="de.regasus.profile.customfield.CollectiveChangeProfileCustomFieldsCommand">
+					</command>
+				</menu>
+				<separator name="com.lambdalogic.mi.event.ui.menu.editor.profile.PersonLinkSeparator" visible="true">
+				</separator>
+				<command commandId="de.regasus.profile.AssignProfileToParticipantCommand">
+					<visibleWhen>
+						<with variable="configuration.event">
+							<equals value="yes">
+							</equals>
+						</with>
+					</visibleWhen>
+				</command>
+				<command commandId="de.regasus.profile.UnlinkProfileCommand">
+					<visibleWhen>
+						<with variable="configuration.event">
+							<equals value="yes">
+							</equals>
+						</with>
+					</visibleWhen>
+				</command>
+				<command commandId="de.regasus.participant.CreateParticipantsFromProfilesCommand">
+					<visibleWhen>
+						<with variable="configuration.event">
+							<equals value="yes">
+							</equals>
+						</with>
+					</visibleWhen>
+				</command>
+				<separator name="com.lambdalogic.mi.event.ui.menu.editor.profile.EmailSeparator" visible="true">
+				</separator>
+				<command commandId="SendEmailCommand">
+				</command>
+			</menu>
+			<menu id="com.lambdalogic.mi.event.ui.menu.view.profileRelation" label="%ProfileRelation.name">
+				<visibleWhen>
+					<and>
+						<with variable="de.regasus.core.ui.var.loginState">
+							<equals value="loggedIn">
+							</equals>
+						</with>
+						<with variable="activePart">
+							<instanceof value="de.regasus.profile.relation.view.ProfileRelationView">
+							</instanceof>
+						</with>
+					</and>
+				</visibleWhen>
+				<command commandId="de.regasus.profile.relation.DeleteProfileRelationCommand">
+				</command>
+			</menu>
+		</menuContribution>
+		<menuContribution locationURI="popup:ParticipantSearchView">
+			<command commandId="de.regasus.participant.command.EditParticipantCommand">
+			</command>
+			<command commandId="de.regasus.participant.command.CreateParticipantCommand">
+				<parameter name="withEventSelection" value="no">
+				</parameter>
+			</command>
+			<command commandId="de.regasus.participant.command.CopyParticipantsCommand">
+			</command>
+			<separator name="com.lambdalogic.mi.event.ui.ParticipantSearchView.GroupCompanionSeparator" visible="true">
+			</separator>
+			<menu label="%Group.name" tooltip="%Group.tooltip">
+				<command commandId="de.regasus.participant.command.CreateGroupManagerCommand">
+					<parameter name="withEventSelection" value="no">
+					</parameter>
+				</command>
+				<command commandId="de.regasus.participant.command.CreateGroupMemberCommand">
+				</command>
+				<command commandId="de.regasus.participant.command.CreateAnonymousParticipantCommand">
+				</command>
+				<command commandId="de.regasus.participant.command.MakeGroupManagerCommand">
+				</command>
+				<command commandId="de.regasus.participant.command.UngroupCommand">
+				</command>
+				<command commandId="de.regasus.participant.command.AssignGroupManagerCommand">
+				</command>
+				<command commandId="de.regasus.participant.command.AssignGroupMemberCommand">
+				</command>
+				<command commandId="de.regasus.participant.command.RemoveFromGroupCommand">
+				</command>
+			</menu>
+			<menu label="%Companions.name" tooltip="%Companions.tooltip">
+				<command commandId="de.regasus.participant.command.CreateCompanionCommand">
+				</command>
+				<command commandId="de.regasus.participant.command.AssignCompanionsCommand">
+				</command>
+				<command commandId="de.regasus.participant.command.UncompanionCommand">
+				</command>
+			</menu>
+			<separator name="com.lambdalogic.mi.event.ui.ParticipantEditor.CollectiveChangesSeparator" visible="true">
+			</separator>
+			<menu label="%CollectiveChanges.name" tooltip="%CollectiveChanges.tooltip">
+				<command commandId="de.regasus.participant.command.CollectiveChangeParticipantStateCommand">
+				</command>
+				<command commandId="de.regasus.participant.command.CollectiveChangeParticipantTypeCommand">
+				</command>
+				<command commandId="de.regasus.participant.command.CollectiveChangeRegistrationDateCommand">
+					<visibleWhen>
+						<with variable="configuration.registerDate">
+							<equals value="yes">
+							</equals>
+						</with>
+					</visibleWhen>
+				</command>
+				<command commandId="de.regasus.participant.command.CollectiveChangeCertificatePrintCommand">
+					<visibleWhen>
+						<with variable="configuration.certificatePrint">
+							<equals value="yes">
+							</equals>
+						</with>
+					</visibleWhen>
+				</command>
+				<command commandId="de.regasus.participant.command.CollectiveChangeNotificationTimesCommand">
+					<visibleWhen>
+						<or>
+							<with variable="configuration.programmeNoteTime">
+								<equals value="yes">
+								</equals>
+							</with>
+							<with variable="configuration.hotelNoteTime">
+								<equals value="yes">
+								</equals>
+							</with>
+						</or>
+					</visibleWhen>
+				</command>
+				<command commandId="de.regasus.participant.command.CollectiveChangeParticipantCustomFieldsCommand">
+					<visibleWhen>
+						<with variable="configuration.event.participant.customField">
+							<equals value="yes">
+							</equals>
+						</with>
+					</visibleWhen>
+				</command>
+				<command commandId="de.regasus.participant.command.CollectiveChangeCustomFieldsCommand">
+					<visibleWhen>
+						<with variable="configuration.event.participant.simpleCustomField">
+							<equals value="yes">
+							</equals>
+						</with>
+					</visibleWhen>
+				</command>
+			</menu>
+			<separator name="com.lambdalogic.mi.event.ui.ParticipantSearchView.CancelDeleteSeparator" visible="true">
+			</separator>
+			<command commandId="de.regasus.participant.command.CancelParticipantByParticipantCommand">
+			</command>
+			<command commandId="de.regasus.participant.command.CancelParticipantByOrganiserCommand">
+			</command>
+			<command commandId="de.regasus.participant.command.DeleteParticipantCommand">
+			</command>
+			<separator name="com.lambdalogic.mi.event.ui.ParticipantSearchView.BookingSeparator" visible="true">
+			</separator>
+			<command commandId="de.regasus.participant.command.CreateProgrammeBookingsCommand">
+				<visibleWhen>
+					<with variable="configuration.event.programme">
+						<equals value="yes">
+						</equals>
+					</with>
+				</visibleWhen>
+			</command>
+			<command commandId="de.regasus.participant.command.CreateHotelBookingsCommand">
+				<visibleWhen>
+					<with variable="configuration.event.hotel">
+						<equals value="yes">
+						</equals>
+					</with>
+				</visibleWhen>
+			</command>
+
+			<separator name="com.lambdalogic.mi.event.ui.ParticipantSearchView.FinanceSeparator" visible="true"/>
+			<command commandId="CreateAutomaticClearingCommand"/>
+			<command commandId="PayEngineRefundCommand">
+				<visibleWhen>
+					<and>
+						<with variable="configuration.event.invoice">
+							<equals value="yes"/>
+						</with>
+						<with variable="user">
+							<equals value="admin"/>
+						</with>
+					</and>
+				</visibleWhen>
+			</command>
+
+			<separator name="com.lambdalogic.mi.event.ui.ParticipantSearchView.LeadSeparator" visible="true"/>
+			<command commandId="de.regasus.participant.command.ForceExitForParticipantCommand">
+				<visibleWhen>
+					<with variable="configuration.lead">
+						<equals value="yes">
+						</equals>
+					</with>
+				</visibleWhen>
+			</command>
+			<separator name="com.lambdalogic.mi.event.ui.ParticipantSearchView.ProfileSeparator" visible="true">
+			</separator>
+			<menu label="%Profile.name" tooltip="%Profile.tooltip">
+				<visibleWhen>
+					<with variable="configuration.profile">
+						<equals value="yes">
+						</equals>
+					</with>
+				</visibleWhen>
+				<command commandId="de.regasus.participant.command.CreateProfileFromParticipantCommand">
+				</command>
+				<command commandId="de.regasus.participant.command.AssignParticipantToProfileCommand">
+				</command>
+				<command commandId="de.regasus.participant.command.UnlinkParticipantCommand">
+				</command>
+				<command commandId="de.regasus.participant.command.ParticipantCopyToProfileCommand">
+				</command>
+				<command commandId="de.regasus.participant.command.ParticipantCopyFromProfileCommand">
+				</command>
+			</menu>
+			<separator name="com.lambdalogic.mi.event.ui.ParticipantSearchView.NoteSeparator" visible="true">
+			</separator>
+			<command commandId="de.regasus.participant.command.PrintNotificationsCommand">
+			</command>
+			<separator name="com.lambdalogic.mi.event.ui.ParticipantSearchView.BadgeSeparator" visible="true">
+			</separator>
+			<command commandId="de.regasus.participant.command.PrintCertificateCommand">
+				<visibleWhen>
+					<with variable="configuration.certificatePrint">
+						<equals value="yes">
+						</equals>
+					</with>
+				</visibleWhen>
+			</command>
+			<command commandId="de.regasus.participant.command.OpenCertificateCommand">
+				<visibleWhen>
+					<with variable="configuration.certificatePrint">
+						<equals value="yes">
+						</equals>
+					</with>
+				</visibleWhen>
+			</command>
+			<command commandId="de.regasus.participant.command.PrintBadgeCommand">
+				<visibleWhen>
+					<with variable="configuration.badge">
+						<equals value="yes">
+						</equals>
+					</with>
+				</visibleWhen>
+			</command>
+			<command commandId="de.regasus.participant.command.OpenBadgeCommand">
+				<visibleWhen>
+					<with variable="configuration.badge">
+						<equals value="yes">
+						</equals>
+					</with>
+				</visibleWhen>
+			</command>
+			<command commandId="de.regasus.participant.command.ShowParticipantBarcodesCommand"/>
+			<command commandId="ShowParticipantWebTokenCommand"/>
+			<command commandId="de.regasus.participant.command.DownloadPrintDocumentsCommand"/>
+
+			<separator name="com.lambdalogic.mi.participant.ui.view.ParticipantSearchView.EmailSeparator" visible="true"/>
+			<command commandId="SendEmailCommand"/>
+			<separator name="additions" visible="false"/>
+		</menuContribution>
+
+		<menuContribution locationURI="menu:Template?after=TemplateAdditions">
+			<command commandId="OpenPaymentReceiptTemplateEditorCommand"/>
+		</menuContribution>
+
+
+		<menuContribution locationURI="popup:ParticipantTreeView">
+			<command commandId="de.regasus.participant.command.EditParticipantCommand">
+			</command>
+			<command commandId="de.regasus.participant.command.CreateParticipantCommand">
+				<parameter name="withEventSelection" value="no">
+				</parameter>
+			</command>
+			<command commandId="de.regasus.participant.command.CopyParticipantsCommand">
+			</command>
+			<separator name="com.lambdalogic.mi.event.ui.ParticipantTreeView.GroupCompanionSeparator" visible="true">
+			</separator>
+			<menu label="%Group.name" tooltip="%Group.tooltip">
+				<command commandId="de.regasus.participant.command.CreateGroupManagerCommand">
+					<parameter name="withEventSelection" value="no">
+					</parameter>
+				</command>
+				<command commandId="de.regasus.participant.command.CreateGroupMemberCommand">
+				</command>
+				<command commandId="de.regasus.participant.command.CreateAnonymousParticipantCommand">
+				</command>
+				<command commandId="de.regasus.participant.command.MakeGroupManagerCommand">
+				</command>
+				<command commandId="de.regasus.participant.command.UngroupCommand">
+				</command>
+				<command commandId="de.regasus.participant.command.AssignGroupManagerCommand">
+				</command>
+				<command commandId="de.regasus.participant.command.AssignGroupMemberCommand">
+				</command>
+				<command commandId="de.regasus.participant.command.RemoveFromGroupCommand">
+				</command>
+			</menu>
+			<menu label="%Companions.name" tooltip="%Companions.tooltip">
+				<command commandId="de.regasus.participant.command.CreateCompanionCommand">
+				</command>
+				<command commandId="de.regasus.participant.command.AssignCompanionsCommand">
+				</command>
+				<command commandId="de.regasus.participant.command.UncompanionCommand">
+				</command>
+			</menu>
+			<separator name="com.lambdalogic.mi.event.ui.ParticipantEditor.CollectiveChangesSeparator" visible="true">
+			</separator>
+			<menu label="%CollectiveChanges.name" tooltip="%CollectiveChanges.tooltip">
+				<command commandId="de.regasus.participant.command.CollectiveChangeParticipantStateCommand">
+				</command>
+				<command commandId="de.regasus.participant.command.CollectiveChangeParticipantTypeCommand">
+				</command>
+				<command commandId="de.regasus.participant.command.CollectiveChangeRegistrationDateCommand">
+					<visibleWhen>
+						<with variable="configuration.registerDate">
+							<equals value="yes">
+							</equals>
+						</with>
+					</visibleWhen>
+				</command>
+				<command commandId="de.regasus.participant.command.CollectiveChangeCertificatePrintCommand">
+					<visibleWhen>
+						<with variable="configuration.certificatePrint">
+							<equals value="yes">
+							</equals>
+						</with>
+					</visibleWhen>
+				</command>
+				<command commandId="de.regasus.participant.command.CollectiveChangeNotificationTimesCommand">
+				</command>
+				<command commandId="de.regasus.participant.command.CollectiveChangeParticipantCustomFieldsCommand">
+					<visibleWhen>
+						<with variable="configuration.event.participant.customField">
+							<equals value="yes">
+							</equals>
+						</with>
+					</visibleWhen>
+				</command>
+				<command commandId="de.regasus.participant.command.CollectiveChangeCustomFieldsCommand">
+					<visibleWhen>
+						<with variable="configuration.event.participant.simpleCustomField">
+							<equals value="yes">
+							</equals>
+						</with>
+					</visibleWhen>
+				</command>
+				<separator name="email" visible="true">
+				</separator>
+				<command commandId="SendEmailCommand">
+				</command>
+			</menu>
+			<separator name="com.lambdalogic.mi.event.ui.ParticipantTreeView.CancelDeleteSeparator" visible="true">
+			</separator>
+			<command commandId="de.regasus.participant.command.CancelParticipantByParticipantCommand">
+			</command>
+			<command commandId="de.regasus.participant.command.CancelParticipantByOrganiserCommand">
+			</command>
+			<command commandId="de.regasus.participant.command.DeleteParticipantCommand">
+			</command>
+			<separator name="com.lambdalogic.mi.event.ui.ParticipantTreeView.BookingSeparator" visible="true">
+			</separator>
+			<command commandId="de.regasus.participant.command.CreateProgrammeBookingsCommand">
+				<visibleWhen>
+					<with variable="configuration.event.programme">
+						<equals value="yes">
+						</equals>
+					</with>
+				</visibleWhen>
+			</command>
+			<command commandId="de.regasus.participant.command.CreateHotelBookingsCommand">
+				<visibleWhen>
+					<with variable="configuration.event.hotel">
+						<equals value="yes">
+						</equals>
+					</with>
+				</visibleWhen>
+			</command>
+
+			<separator name="com.lambdalogic.mi.event.ui.ParticipantTreeView.FinanceSeparator" visible="true"/>
+			<command commandId="CreateAutomaticClearingCommand"/>
+			<command commandId="PayEngineRefundCommand">
+				<visibleWhen>
+					<and>
+						<with variable="configuration.event.invoice">
+							<equals value="yes"/>
+						</with>
+						<with variable="user">
+							<equals value="admin"/>
+						</with>
+					</and>
+				</visibleWhen>
+			</command>
+
+			<separator name="com.lambdalogic.mi.event.ui.ParticipantTreeView.LeadSeparator" visible="true"/>
+			<command commandId="de.regasus.participant.command.ForceExitForParticipantCommand">
+				<visibleWhen>
+					<with variable="configuration.lead">
+						<equals value="yes">
+						</equals>
+					</with>
+				</visibleWhen>
+			</command>
+			<separator name="com.lambdalogic.mi.event.ui.ParticipantTreeView.ProfileSeparator" visible="true">
+			</separator>
+			<menu label="%Profile.name" tooltip="%Profile.tooltip">
+				<visibleWhen>
+					<with variable="configuration.profile">
+						<equals value="yes">
+						</equals>
+					</with>
+				</visibleWhen>
+				<command commandId="de.regasus.participant.command.CreateProfileFromParticipantCommand">
+				</command>
+				<command commandId="de.regasus.participant.command.AssignParticipantToProfileCommand">
+				</command>
+				<command commandId="de.regasus.participant.command.UnlinkParticipantCommand">
+				</command>
+				<command commandId="de.regasus.participant.command.ParticipantCopyToProfileCommand">
+				</command>
+				<command commandId="de.regasus.participant.command.ParticipantCopyFromProfileCommand">
+				</command>
+			</menu>
+			<separator name="com.lambdalogic.mi.event.ui.ParticipantTreeView.NoteSeparator" visible="true">
+			</separator>
+			<command commandId="de.regasus.participant.command.PrintNotificationsCommand">
+			</command>
+			<separator name="com.lambdalogic.mi.event.ui.ParticipantTreeView.BadgeSeparator" visible="true">
+			</separator>
+			<command commandId="de.regasus.participant.command.PrintCertificateCommand">
+				<visibleWhen>
+					<with variable="configuration.certificatePrint">
+						<equals value="yes">
+						</equals>
+					</with>
+				</visibleWhen>
+			</command>
+			<command commandId="de.regasus.participant.command.OpenCertificateCommand">
+				<visibleWhen>
+					<with variable="configuration.certificatePrint">
+						<equals value="yes">
+						</equals>
+					</with>
+				</visibleWhen>
+			</command>
+			<command commandId="de.regasus.participant.command.PrintBadgeCommand">
+				<visibleWhen>
+					<with variable="configuration.badge">
+						<equals value="yes">
+						</equals>
+					</with>
+				</visibleWhen>
+			</command>
+			<command commandId="de.regasus.participant.command.OpenBadgeCommand">
+				<visibleWhen>
+					<with variable="configuration.badge">
+						<equals value="yes">
+						</equals>
+					</with>
+				</visibleWhen>
+			</command>
+
+			<separator name="com.lambdalogic.mi.participant.ui.view.ParticipantSearchView.EmailSeparator"
+				visible="true"
+			>
+			</separator>
+
+			<command commandId="SendEmailCommand">
+			</command>
+
+			<separator name="additions" visible="false">
+			</separator>
+		</menuContribution>
+
+
+		<menuContribution locationURI="toolbar:ParticipantSearchView">
+			<command commandId="de.regasus.participant.command.CreateParticipantCommand">
+				<parameter name="withEventSelection" value="no">
+				</parameter>
+			</command>
+			<command commandId="de.regasus.participant.command.EditParticipantCommand">
+			</command>
+			<command commandId="de.regasus.participant.command.DeleteParticipantCommand">
+			</command>
+		</menuContribution>
+		<menuContribution locationURI="popup:ParticipantToProfileView">
+			<command commandId="de.regasus.participant.command.EditParticipantCommand">
+			</command>
+			<separator name="com.lambdalogic.mi.event.ui.ParticipantSearchView.ProfileSeparator" visible="true">
+			</separator>
+			<command commandId="de.regasus.participant.command.CreateProfileFromParticipantCommand">
+			</command>
+			<separator name="additions" visible="false">
+			</separator>
+		</menuContribution>
+
+		<menuContribution locationURI="popup:finance">
+			<command commandId="ShowInvoiceCommand"/>
+			<command commandId="ShowSampleInvoiceCommand"/>
+			<command commandId="CloseInvoiceCommand"/>
+			<command commandId="RefreshAddressCommand"/>
+
+			<separator name="com.lambdalogic.mi.event.ui.menu.editor.participant.finance.separator1" visible="true"/>
+			<command commandId="CreatePaymentCommand"/>
+			<command commandId="ChargePaymentCommand"/>
+			<command commandId="EditPaymentCommand"/>
+			<command commandId="CancelPaymentCommand"/>
+			<command commandId="PayEngineHistoryCommand"/>
+			<command commandId="EasyCheckoutHistoryCommand"/>
+			<command commandId="CancelClearingCommand"/>
+			<command commandId="CreateAutomaticClearingCommand"/>
+			<command commandId="SetInvoicePositionsOffAgainstEachOtherCommand"/>
+
+			<separator name="com.lambdalogic.mi.event.ui.menu.editor.participant.finance.separator2" visible="true"/>
+			<command commandId="IncreaseReminderLevelCommand"/>
+			<command commandId="ShowReminderCommand"/>
+			<command commandId="StopReminderCommand"/>
+			<command commandId="RestartReminderCommand"/>
+
+			<separator name="com.lambdalogic.mi.event.ui.menu.editor.participant.finance.separator3" visible="true"/>
+			<command commandId="ShowPaymentReceiptCommand"/>
+			<command commandId="SendPaymentConfirmationEmailCommand"/>
+			<command commandId="SendPaymentLinkEmailCommand"/>
+		</menuContribution>
+
+		<menuContribution locationURI="popup:InvoiceSearchView">
+			<command commandId="de.regasus.participant.command.EditParticipantCommand"/>
+
+			<separator name="com.lambdalogic.mi.event.ui.menu.editor.participant.finance.InvoiceSearchView.separator1" visible="true"/>
+			<command commandId="ShowInvoiceCommand"/>
+			<command commandId="CloseInvoiceCommand"/>
+			<command commandId="RefreshAddressCommand"/>
+
+			<separator name="com.lambdalogic.mi.event.ui.menu.editor.participant.finance.InvoiceSearchView.separator2" visible="true"/>
+			<command commandId="IncreaseReminderLevelCommand"/>
+			<command commandId="ShowReminderCommand"/>
+			<command commandId="StopReminderCommand"/>
+			<command commandId="RestartReminderCommand"/>
+		</menuContribution>
+
+		<menuContribution locationURI="popup:ProfileSearchView">
+			<command commandId="de.regasus.profile.EditProfileCommand">
+			</command>
+			<command commandId="de.regasus.profile.CreateProfileCommand">
+			</command>
+			<command commandId="de.regasus.profile.relation.CreateProfileRelationCommand">
+				<visibleWhen>
+					<with variable="configuration.profileRelation">
+						<equals value="yes"/>
+					</with>
+				</visibleWhen>
+			</command>
+			<command commandId="de.regasus.profile.CopyProfileCommand">
+			</command>
+			<command commandId="de.regasus.profile.DeleteProfileCommand">
+			</command>
+			<separator name="com.lambdalogic.mi.profile.ui.view.popup.PersonLinkSeparator" visible="true">
+			</separator>
+			<command commandId="de.regasus.profile.AssignProfileToParticipantCommand">
+				<visibleWhen>
+					<with variable="configuration.event">
+						<equals value="yes">
+						</equals>
+					</with>
+				</visibleWhen>
+			</command>
+			<command commandId="de.regasus.profile.UnlinkProfileCommand">
+				<visibleWhen>
+					<with variable="configuration.event">
+						<equals value="yes">
+						</equals>
+					</with>
+				</visibleWhen>
+			</command>
+			<command commandId="de.regasus.participant.CreateParticipantsFromProfilesCommand">
+				<visibleWhen>
+					<with variable="configuration.event">
+						<equals value="yes">
+						</equals>
+					</with>
+				</visibleWhen>
+			</command>
+			<separator name="com.lambdalogic.mi.event.ui.ProfileEditor.CollectiveChangesSeparator" visible="true">
+			</separator>
+			<menu label="%CollectiveChanges.name" tooltip="%CollectiveChanges.tooltip">
+				<command commandId="de.regasus.profile.customfield.CollectiveChangeProfileCustomFieldsCommand">
+				</command>
+				<command commandId="de.regasus.profile.role.CollectiveChangeProfileRolesCommand">
+				</command>
+			</menu>
+			<separator name="com.lambdalogic.mi.profile.ui.view.popup.emailseparator1" visible="true">
+			</separator>
+			<command commandId="SendEmailCommand">
+			</command>
+			<separator name="additions" visible="false">
+			</separator>
+		</menuContribution>
+		<menuContribution locationURI="toolbar:ProfileSearchView">
+			<command commandId="de.regasus.profile.CreateProfileCommand">
+			</command>
+			<command commandId="de.regasus.profile.EditProfileCommand">
+			</command>
+			<command commandId="de.regasus.profile.DeleteProfileCommand">
+			</command>
+		</menuContribution>
+		<menuContribution locationURI="toolbar:ProfileRelationView">
+			<command commandId="de.regasus.profile.relation.DeleteProfileRelationCommand">
+			</command>
+		</menuContribution>
+		<menuContribution locationURI="menu:ProfileRelationView">
+			<command commandId="de.regasus.profile.relation.DeleteProfileRelationCommand">
+			</command>
+		</menuContribution>
+		<menuContribution locationURI="popup:ProfileRelationView">
+			<command commandId="de.regasus.profile.relation.DeleteProfileRelationCommand">
+			</command>
+		</menuContribution>
+		<menuContribution locationURI="toolbar:EventView">
+			<command commandId="de.regasus.participant.command.CreateParticipantCommand">
+				<parameter name="withEventSelection" value="no" />
+			</command>
+		</menuContribution>
+
+		<menuContribution locationURI="toolbar:ExhibitorSearchView">
+			<command commandId="de.regasus.exhib.CreateExhibitorCommand"/>
+			<command commandId="de.regasus.exhib.EditExhibitorCommand"/>
+			<command commandId="org.eclipse.ui.edit.delete" label="%DeleteCommand.name"/>
+		</menuContribution>
+
+		<menuContribution locationURI="popup:ExhibitorSearchView">
+			<command commandId="de.regasus.exhib.EditExhibitorCommand" />
+			<command commandId="de.regasus.exhib.CreateExhibitorCommand" />
+			<command commandId="org.eclipse.ui.edit.delete" label="%DeleteCommand.name" />
+
+			<separator name="com.lambdalogic.mi.event.ui.exhib.view.somethingunique.toolbar.separator1" visible="true" />
+
+			<command commandId="de.regasus.participant.command.CreateGroupMemberCommand">
+				<visibleWhen>
+					<with variable="configuration.event">
+						<equals value="yes" />
+					</with>
+				</visibleWhen>
+			</command>
+			<command commandId="de.regasus.participant.command.CreateAnonymousParticipantCommand">
+				<visibleWhen>
+					<with variable="configuration.event">
+						<equals value="yes" />
+					</with>
+				</visibleWhen>
+			</command>
+			<command commandId="de.regasus.participant.command.AssignGroupMemberCommand">
+				<visibleWhen>
+					<with variable="configuration.event">
+						<equals value="yes" />
+					</with>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+
+
+		<menuContribution locationURI="popup:PortalView">
+			<command commandId="OpenPortalCommand">
+				<visibleWhen checkEnabled="true"/>
+			</command>
+			<command commandId="CopyPortalUrlCommand">
+				<visibleWhen checkEnabled="true"/>
+			</command>
+			<command commandId="CopyPortalCommand">
+				<visibleWhen checkEnabled="true"/>
+			</command>
+
+			<separator name="PortalView.separator" visible="true"/>
+
+			<command commandId="CreatePortalCommand">
+				<visibleWhen checkEnabled="true"/>
+			</command>
+			<command commandId="CreatePageLayoutCommand">
+				<visibleWhen checkEnabled="true"/>
+			</command>
+
+			<command commandId="EditPortalCommand">
+				<visibleWhen checkEnabled="true"/>
+			</command>
+			<command commandId="EditPageCommand">
+				<visibleWhen checkEnabled="true"/>
+			</command>
+			<command commandId="EditPageLayoutCommand">
+				<visibleWhen checkEnabled="true"/>
+			</command>
+
+
+			<separator name="de.regasus.event.edit.top" visible="true"/>
+
+			<command commandId="org.eclipse.ui.edit.copy" label="%CopyCommand.name" />
+			<command commandId="org.eclipse.ui.edit.paste" label="%PasteCommand.name" />
+			<command commandId="org.eclipse.ui.edit.delete" label="%DeleteCommand.name" tooltip="%DeleteCommand.tooltip" />
+
+			<separator name="de.regasus.event.edit.bottom" visible="true"/>
+
+
+			<command commandId="RefreshTreeNodeCommand">
+				<visibleWhen checkEnabled="true"/>
+			</command>
+		</menuContribution>
+
+
+		<menuContribution locationURI="toolbar:PortalView">
+			<command commandId="CreatePortalCommand">
+				<visibleWhen checkEnabled="true"/>
+			</command>
+			<command commandId="CreatePageLayoutCommand">
+				<visibleWhen checkEnabled="true"/>
+			</command>
+
+			<command commandId="EditPortalCommand">
+				<visibleWhen checkEnabled="true"/>
+			</command>
+			<command commandId="EditPageCommand">
+				<visibleWhen checkEnabled="true"/>
+			</command>
+			<command commandId="EditPageLayoutCommand">
+				<visibleWhen checkEnabled="true"/>
+			</command>
+
+			<command commandId="org.eclipse.ui.edit.delete" label="%DeleteCommand.name">
+				<visibleWhen checkEnabled="true"/>
+			</command>
+
+			<command commandId="RefreshTreeNodeCommand">
+				<visibleWhen checkEnabled="true"/>
+			</command>
+		</menuContribution>
+
+
+		<menuContribution locationURI="popup:EventMasterDataView?after=CreateAdditions">
+			<separator name="EventMasterDataView.separator.Event" visible="true" />
+			<command commandId="CreateEventGroupCommand">
+				<visibleWhen checkEnabled="true"/>
+			</command>
+			<command commandId="CreateEventCommand">
+				<visibleWhen checkEnabled="true"/>
+			</command>
+			<command commandId="AssignEventGroupCommand">
+				<visibleWhen checkEnabled="true"/>
+			</command>
+			<command commandId="CopyEventCommand">
+				<visibleWhen checkEnabled="true"/>
+			</command>
+			<command commandId="CloseEventCommand">
+				<visibleWhen checkEnabled="true"/>
+			</command>
+			<command commandId="OpenEventCommand">
+				<visibleWhen checkEnabled="true"/>
+			</command>
+			<command commandId="ShowClosedEventsCommand" style="toggle">
+				<visibleWhen checkEnabled="true"/>
+			</command>
+			<command commandId="ResetEventCommand">
+				<visibleWhen checkEnabled="true"/>
+			</command>
+			<command commandId="ForceExitForEventCommand">
+				<visibleWhen checkEnabled="true"/>
+			</command>
+
+			<separator name="EventMasterDataView.separator.Create" visible="true"/>
+
+			<command commandId="CreateProgrammePointCommand">
+				<visibleWhen checkEnabled="true" />
+			</command>
+			<command commandId="CreateWorkGroupCommand">
+				<visibleWhen>
+					<with variable="programmePoint.selection">
+						<equals value="one" />
+					</with>
+				</visibleWhen>
+			</command>
+			<command commandId="CreateProgrammeOfferingCommand">
+				<visibleWhen>
+					<with variable="programmePoint.selection">
+						<equals value="one" />
+					</with>
+				</visibleWhen>
+			</command>
+			<command commandId="CreateProgrammeCancelationTermCommand">
+				<visibleWhen>
+					<or>
+						<with variable="programmePoint.event.selection">
+							<equals value="one" />
+						</with>
+						<with variable="programmePoint.selection">
+							<equals value="one" />
+						</with>
+						<with variable="programmeOffering.selection">
+							<equals value="one" />
+						</with>
+					</or>
+				</visibleWhen>
+			</command>
+			<command commandId="CreateHotelContingent">
+				<visibleWhen checkEnabled="true"/>
+			</command>
+			<command commandId="CreateHotelOffering">
+				<visibleWhen checkEnabled="true"/>
+			</command>
+			<command commandId="CreateHotelCancelationTerm">
+				<visibleWhen checkEnabled="true"/>
+			</command>
+			<command commandId="CreateInvoiceNoRangeCommand">
+				<visibleWhen checkEnabled="true"/>
+			</command>
+			<command commandId="OpenPortalCommand">
+				<visibleWhen checkEnabled="true"/>
+			</command>
+			<command commandId="CopyPortalUrlCommand">
+				<visibleWhen checkEnabled="true"/>
+			</command>
+			<command commandId="CopyPortalCommand">
+				<visibleWhen checkEnabled="true"/>
+			</command>
+
+			<command commandId="CreatePortalCommand">
+				<visibleWhen checkEnabled="true"/>
+			</command>
+
+			<command commandId="CreatePageLayoutCommand">
+				<visibleWhen checkEnabled="true"/>
+			</command>
+
+			<separator name="EventMasterDataView.separator.Show" visible="true"/>
+
+			<command commandId="ShowOptionalHotelBookingOverviewHandler">
+				<visibleWhen checkEnabled="true"/>
+			</command>
+
+			<separator name="EventMasterDataView.separator.CustomField" visible="true"/>
+
+			<command commandId="CreateParticipantCustomFieldGroupCommand">
+				<visibleWhen checkEnabled="true"/>
+			</command>
+			<command commandId="CreateParticipantCustomFieldCommand">
+				<visibleWhen checkEnabled="true"/>
+			</command>
+
+			<separator name="EventMasterDataView.separator.Exhibitor" visible="true"/>
+
+			<command commandId="CreateLocationCommand">
+				<visibleWhen checkEnabled="true">
+				</visibleWhen>
+			</command>
+			<command commandId="CreateGateCommand">
+				<visibleWhen checkEnabled="true">
+				</visibleWhen>
+			</command>
+			<separator name="EventMasterDataView.separator.WorkGroup" visible="true">
+			</separator>
+			<command commandId="AssignWorkGroupCommand">
+				<visibleWhen>
+					<or>
+						<with variable="programmePoint.event.selection">
+							<equals value="one">
+							</equals>
+						</with>
+						<with variable="programmePoint.selection">
+							<equals value="one">
+							</equals>
+						</with>
+					</or>
+				</visibleWhen>
+			</command>
+			<command commandId="RemoveWorkGroupAssociationCommand">
+				<visibleWhen>
+					<or>
+						<with variable="programmePoint.event.selection">
+							<equals value="one">
+							</equals>
+						</with>
+						<with variable="programmePoint.selection">
+							<equals value="one">
+							</equals>
+						</with>
+					</or>
+				</visibleWhen>
+			</command>
+			<command commandId="FixWorkGroupCommand">
+				<visibleWhen>
+					<or>
+						<with variable="programmePoint.event.selection">
+							<equals value="one">
+							</equals>
+						</with>
+						<with variable="programmePoint.selection">
+							<equals value="one">
+							</equals>
+						</with>
+					</or>
+				</visibleWhen>
+			</command>
+			<command commandId="UnfixWorkGroupCommand">
+				<visibleWhen>
+					<or>
+						<with variable="programmePoint.event.selection">
+							<equals value="one">
+							</equals>
+						</with>
+						<with variable="programmePoint.selection">
+							<equals value="one">
+							</equals>
+						</with>
+					</or>
+				</visibleWhen>
+			</command>
+			<separator name="EventMasterDataView.separator.Cancel" visible="true">
+			</separator>
+			<command commandId="CancelProgrammePointCommand">
+				<visibleWhen>
+					<with variable="programmePoint.selection">
+						<equals value="one">
+						</equals>
+					</with>
+				</visibleWhen>
+			</command>
+			<separator name="EventMasterDataView.separator.Configuration" visible="true">
+			</separator>
+			<command commandId="EditEventAdminConfigCommand">
+				<visibleWhen checkEnabled="true">
+				</visibleWhen>
+			</command>
+			<command commandId="EditEventCustomerConfigCommand">
+				<visibleWhen checkEnabled="true">
+				</visibleWhen>
+			</command>
+			<separator name="additions" visible="false">
+			</separator>
+		</menuContribution>
+
+
+		<menuContribution locationURI="popup:EventMasterDataView?after=EditAdditions">
+			<separator name="de.regasus.event.edit.top" visible="true"/>
+
+			<command commandId="org.eclipse.ui.edit.copy" label="%CopyCommand.name" />
+			<command commandId="org.eclipse.ui.edit.paste" label="%PasteCommand.name" />
+			<command commandId="org.eclipse.ui.edit.delete" label="%DeleteCommand.name" tooltip="%DeleteCommand.tooltip" />
+
+			<separator name="de.regasus.event.edit.bottom" visible="true"/>
+		</menuContribution>
+
+
+		<menuContribution locationURI="popup:HotelTreeView">
+			<separator name="de.regasus.event.separator1" visible="true" />
+			<command commandId="org.eclipse.ui.edit.copy" label="%CopyCommand.name" />
+			<command commandId="org.eclipse.ui.edit.paste" label="%PasteCommand.name" />
+			<separator name="de.regasus.event.separator2" visible="true" />
+		</menuContribution>
+		<menuContribution locationURI="toolbar:ProfileCustomFieldTreeView">
+			<command commandId="org.eclipse.ui.edit.delete" label="%DeleteCommand.name" tooltip="%DeleteCommand.tooltip" />
+		</menuContribution>
+		<menuContribution locationURI="popup:ProfileCustomFieldTreeView">
+			<command commandId="org.eclipse.ui.edit.copy" label="%CopyCommand.name">
+				<visibleWhen checkEnabled="false">
+					<iterate ifEmpty="false" operator="and">
+						<or>
+							<instanceof value="de.regasus.profile.customfield.view.ProfileCustomFieldTreeNode">
+							</instanceof>
+							<instanceof value="de.regasus.profile.customfield.view.ProfileCustomFieldGroupTreeNode">
+							</instanceof>
+						</or>
+					</iterate>
+				</visibleWhen>
+			</command>
+			<command commandId="org.eclipse.ui.edit.paste" label="%PasteCommand.name">
+				<visibleWhen checkEnabled="false">
+					<iterate ifEmpty="false" operator="and">
+						<or>
+							<instanceof value="de.regasus.profile.customfield.view.ProfileCustomFieldTreeNode">
+							</instanceof>
+							<instanceof value="de.regasus.profile.customfield.view.ProfileCustomFieldGroupTreeNode">
+							</instanceof>
+						</or>
+					</iterate>
+				</visibleWhen>
+			</command>
+			<command commandId="org.eclipse.ui.edit.delete" label="%DeleteCommand.name" tooltip="%DeleteCommand.tooltip">
+				<visibleWhen checkEnabled="false">
+					<iterate ifEmpty="false" operator="and">
+						<or>
+							<instanceof value="de.regasus.profile.customfield.view.ProfileCustomFieldTreeNode">
+							</instanceof>
+							<instanceof value="de.regasus.profile.customfield.view.ProfileCustomFieldGroupTreeNode">
+							</instanceof>
+						</or>
+					</iterate>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+		<menuContribution locationURI="popup:EmailTemplateSearchView">
+			<command commandId="SendEmailCommand"/>
+		</menuContribution>
+	</extension>
+
+
+	<extension point="org.eclipse.ui.bindings">
+		<key
+			commandId="org.eclipse.ui.edit.copy"
+			contextId="org.eclipse.ui.contexts.window"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			sequence="M1+C"
+		/>
+		<key
+			commandId="org.eclipse.ui.edit.paste"
+			contextId="org.eclipse.ui.contexts.window"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			sequence="M1+V"
+		/>
+		<key
+			commandId="org.eclipse.ui.edit.selectAll"
+			contextId="org.eclipse.ui.contexts.window"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			sequence="M1+A"
+		/>
+	</extension>
+
+</plugin>

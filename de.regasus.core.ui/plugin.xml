@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+	<extension-point id="statusLineContribution" name="Status Line Contribution"
+		schema="schema/statusLineContribution.exsd"/>
+
+	<extension point="org.eclipse.ui.perspectives">
+		<perspective class="de.regasus.core.ui.DebugPerspective" id="de.regasus.core.ui.DebugPerspective"
+			name="Debug" icon="icons/console_view.gif"
+		>
+		</perspective>
+	</extension>
+
+	<extension point="org.eclipse.core.runtime.preferences">
+		<initializer class="de.regasus.core.ui.login.pref.LoginPreferenceInitializer"/>
+		<initializer class="de.regasus.core.ui.openoffice.pref.OpenOfficePreferenceInitializer"/>
+		<initializer class="de.regasus.core.ui.impex.pref.ExportPreferenceInitializer"/>
+	</extension>
+
+	<extension point="org.eclipse.ui.preferencePages">
+		<page
+			class="de.regasus.core.ui.login.pref.LoginPreferencePage"
+			id="de.regasus.core.ui.preferences.LoginPreferencePage"
+			name="%LoginPreferencePage.name"
+		/>
+		<page
+			category="de.regasus.core.ui.preferences.LoginPreferencePage"
+			class="de.regasus.core.ui.login.pref.ProxyPreferencePage"
+			id="ProxyPreferencePage"
+			name="%ProxyPreferencePage.name"
+		/>
+		<page
+			class="de.regasus.core.ui.openoffice.pref.OpenOfficePreferencePage"
+			id="ag.ion.noa.preferences.OpenOfficePreferencePage"
+			name="%OpenOfficePreferencePage.Name"
+		/>
+	</extension>
+
+	<extension point="org.eclipse.ui.views">
+		<view id="TimerBeanView" class="de.regasus.core.ui.view.TimerBeanView" icon="icons/clock.png" name="Timer Beans"/>
+	</extension>
+
+
+	<extension point="org.eclipse.ui.commands">
+
+		<command
+			id="de.regasus.core.ui.RefreshAllCommand"
+			name="%RefreshAllCommand.name"
+			description="%RefreshAllCommand.tooltip"
+		/>
+
+		<command
+			id="ShowCacheStatisticsCommand"
+			name="%ShowCacheStatisticsCommand.name"
+		/>
+
+		<command
+			id="ClearServerCacheCommand"
+			name="%ClearServerCacheCommand.name"
+			description="%ClearServerCacheCommand.tooltip"
+		/>
+
+		<command
+			id="RunDatabaseUpdateBeansCommand"
+			name="%RunDatabaseUpdateBeansCommand.name"
+		/>
+
+		<command
+			id="de.regasus.core.ui.EnterLicenceKeyCommand"
+			name="%EnterLicenceKeyCommand.name"
+		/>
+
+		<command
+			id="de.regasus.core.ui.ViewCurrentlyUsedLicencesCommand"
+			name="%ViewCurrentlyUsedLicencesCommand.name"
+		/>
+
+		<command
+			id="de.regasus.core.ui.EditGlobalAdminConfigCommand"
+			name="%EditGlobalAdminConfigCommand.name"
+			description="%EditGlobalAdminConfigCommand.desc"
+		/>
+
+		<command
+			id="de.regasus.core.ui.EditGlobalCustomerConfigCommand"
+			name="%EditGlobalCustomerConfigCommand.name"
+			description="%EditGlobalCustomerConfigCommand.desc"
+		/>
+
+		<command
+			id="CompleteConfigsCommand"
+			name="%CompleteConfigsCommand.name"
+			description="%CompleteConfigsCommand.desc"
+		/>
+	</extension>
+
+
+	<extension point="org.eclipse.ui.commandImages">
+		<image commandId="ShowCacheStatisticsCommand" icon="icons/cache-statistics-16.png"/>
+		<image commandId="de.regasus.core.ui.RefreshAllCommand" icon="icons/refresh_all.png"/>
+		<image commandId="org.eclipse.ui.file.refresh" icon="icons/refresh_file.gif"/>
+		<image commandId="de.regasus.core.ui.EditGlobalAdminConfigCommand" icon="icons/cog_edit.png"/>
+		<image commandId="de.regasus.core.ui.EditGlobalCustomerConfigCommand" icon="icons/cog_edit.png"/>
+	</extension>
+
+
+	<extension point="org.eclipse.ui.editors">
+		<editor
+			id="FileCacheStatisticsEditor"
+			class="de.regasus.core.ui.editor.cache.FileCacheStatisticsEditor"
+			icon="icons/cache-statistics-16.png"
+			name="%FileCacheStatisticsEditor.name"
+		/>
+
+		<editor
+			id="PortalCacheStatisticsEditor"
+			class="de.regasus.core.ui.editor.cache.PortalCacheStatisticsEditor"
+			icon="icons/cache-statistics-16.png"
+			name="%PortalCacheStatisticsEditor.name"
+		/>
+
+		<editor
+			id="ConfigEditor"
+			class="de.regasus.core.ui.editor.config.ConfigEditor"
+			icon="icons/cog_edit.png"
+			name="%ConfigEditor.name"
+		/>
+
+		<editor
+			id="OpenOfficeEditor"
+			class="de.regasus.core.ui.openoffice.OpenOfficeEditor"
+			icon="icons/ooffice.png"
+			name="%OpenOfficeEditor.name"
+		/>
+
+		<editor
+			id="PropertiesEditor"
+			class="de.regasus.core.ui.editor.property.PropertiesEditor"
+			icon="icons/database_edit.png"
+			name="%PropertiesEditor.name"
+		/>
+	</extension>
+
+
+	<extension point="org.eclipse.ui.menus">
+		<menuContribution locationURI="menu:help?before=additions">
+			<command commandId="de.regasus.core.ui.EnterLicenceKeyCommand"></command>
+			<command commandId="de.regasus.core.ui.ViewCurrentlyUsedLicencesCommand"></command>
+		</menuContribution>
+
+		<menuContribution locationURI="menu:System">
+			<separator name="de.regasus.core.ui.separator1" visible="true"/>
+
+			<command commandId="de.regasus.core.ui.RefreshAllCommand">
+				<visibleWhen>
+					<with variable="de.regasus.core.ui.var.loginState">
+						<equals value="loggedIn"/>
+					</with>
+				</visibleWhen>
+			</command>
+
+			<command commandId="ShowCacheStatisticsCommand">
+				<visibleWhen>
+					<with variable="user">
+						<equals value="admin"/>
+					</with>
+				</visibleWhen>
+			</command>
+
+			<command commandId="ClearServerCacheCommand">
+				<visibleWhen>
+					<with variable="user">
+						<equals value="admin"/>
+					</with>
+				</visibleWhen>
+			</command>
+
+			<command commandId="RunDatabaseUpdateBeansCommand">
+				<visibleWhen>
+					<with variable="user">
+						<equals value="admin"/>
+					</with>
+				</visibleWhen>
+			</command>
+
+			<separator name="de.regasus.core.ui.separator2" visible="true"/>
+		</menuContribution>
+
+		<menuContribution locationURI="menu:System?after=ConfigAdditions">
+			<command commandId="de.regasus.core.ui.EditGlobalAdminConfigCommand">
+				<visibleWhen>
+					<with variable="user">
+						<equals value="admin"/>
+					</with>
+				</visibleWhen>
+			</command>
+
+			<command commandId="de.regasus.core.ui.EditGlobalCustomerConfigCommand">
+				<visibleWhen>
+					<with variable="configuration.allowCustomerConfig">
+						<equals value="yes"/>
+					</with>
+				</visibleWhen>
+			</command>
+
+			<command commandId="CompleteConfigsCommand">
+				<visibleWhen>
+					<with variable="user">
+						<equals value="admin"/>
+					</with>
+				</visibleWhen>
+			</command>
+
+		</menuContribution>
+
+
+		<menuContribution locationURI="toolbar:org.eclipse.ui.main.toolbar">
+			<toolbar id="com.lambdalogic.mi.core.toolbars.mainToolBar">
+				<command commandId="org.eclipse.ui.file.save" tooltip="%Save.tooltip"/>
+			</toolbar>
+		</menuContribution>
+
+		<menuContribution locationURI="toolbar:org.eclipse.ui.main.toolbar">
+			<toolbar id="com.lambdalogic.mi.core.toolbars.mainToolBar">
+				<command commandId="org.eclipse.ui.file.saveAll" tooltip="%SaveAll.tooltip"/>
+			</toolbar>
+		</menuContribution>
+
+		<menuContribution locationURI="toolbar:org.eclipse.ui.main.toolbar">
+			<toolbar id="com.lambdalogic.mi.core.toolbars.mainToolBar">
+				<command commandId="org.eclipse.ui.file.refresh" tooltip="%RefreshEditor.tooltip">
+					<visibleWhen>
+						<with variable="de.regasus.core.ui.var.loginState">
+							<equals value="loggedIn"/>
+						</with>
+					</visibleWhen>
+				</command>
+			</toolbar>
+		</menuContribution>
+
+	</extension>
+
+
+
+	<extension point="org.eclipse.ui.handlers">
+		<handler class="de.regasus.core.ui.command.RefreshEditorHandler" commandId="org.eclipse.ui.file.refresh">
+			<activeWhen>
+				<with variable="activeEditor">
+					<instanceof value="de.regasus.core.ui.editor.IRefreshableEditorPart">
+					</instanceof>
+				</with>
+			</activeWhen>
+		</handler>
+
+		<handler
+			commandId="de.regasus.core.ui.RefreshAllCommand"
+			class="de.regasus.core.ui.command.RefreshAllHandler"
+		/>
+
+		<handler
+			commandId="ShowCacheStatisticsCommand"
+			class="de.regasus.core.ui.command.ShowCacheStatisticsHandler"
+		/>
+
+		<handler
+			commandId="ClearServerCacheCommand"
+			class="de.regasus.core.ui.command.ClearServerCacheHandler"
+		/>
+
+		<handler
+			commandId="RunDatabaseUpdateBeansCommand"
+			class="de.regasus.core.ui.command.RunDatabaseUpdateBeansHandler"
+		/>
+
+		<handler
+			commandId="de.regasus.core.ui.EnterLicenceKeyCommand"
+			class="de.regasus.core.ui.command.EnterLicenceKeyCommandHandler"
+		/>
+
+		<handler
+			commandId="de.regasus.core.ui.ViewCurrentlyUsedLicencesCommand"
+			class="de.regasus.core.ui.command.ViewCurrentlyUsedLicencesCommandHandler"
+		/>
+
+		<handler
+			commandId="de.regasus.core.ui.EditGlobalAdminConfigCommand"
+			class="de.regasus.core.ui.command.EditGlobalAdminConfigCommandHandler"
+		/>
+
+		<handler
+			commandId="de.regasus.core.ui.EditGlobalCustomerConfigCommand"
+			class="de.regasus.core.ui.command.EditGlobalCustomerConfigCommandHandler"
+		/>
+
+		<handler
+			commandId="CompleteConfigsCommand"
+			class="de.regasus.core.ui.command.CompleteConfigsHandler"
+		/>
+	</extension>
+
+	<!-- We want to make commands and/or menus disappear when the user is not logged in. To achieve this, we need to define
+		a state variable that can be set programmatically (within LoginAction and LogoutAction) and used in expressions (like activeWhen
+		and visibleWhen). See http://blog.eclipse-tips.com/search/label/RCP -->
+	<extension point="org.eclipse.ui.services">
+		<sourceProvider provider="de.regasus.core.ui.LoginStateSourceProvider">
+			<variable name="de.regasus.core.ui.var.loginState" priorityLevel="workbench">
+			</variable>
+		</sourceProvider>
+	</extension>
+
+	<extension id="product" point="org.eclipse.core.runtime.products">
+		<product application="org.eclipse.e4.ui.workbench.swt.E4Application" name="de.regasus.core.ui">
+		</product>
+	</extension>
+
+	<!-- Since I made the welcome pages with the CSS-StyleSheets of LambdaLogic, I thought greenish view tabs would fit better...
+		NB: The theme gets activated programmatically in the ApplicationWorkbenchWindowAdvisor -->
+	<!-- <extension point="org.eclipse.ui.themes"> <theme id="de.regasus.core.ui.theme" name="MesseInfo Theme"> <colorOverride
+		id="org.eclipse.ui.workbench.ACTIVE_TAB_BG_END" value="127,193,205"> </colorOverride> <colorOverride id="org.eclipse.ui.workbench.ACTIVE_TAB_BG_START"
+		value="238,238,238"> </colorOverride> </theme> </extension> -->
+
+</plugin>

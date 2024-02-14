@@ -1,0 +1,43 @@
+Stichworte: Eclipse RCP Preferences Update
+
+Ziel: Aktualisierung einer RCP-Anwendung mit Hilfe der Plug-Ins *org.eclipse.update.core* und *org.eclipse.update.configurator*. Sollen die Update-Actions von Eclipse zum Einsatz kommen, ist dar�ber hinaus das Plug-In *org.eclipse.update.ui* vonn�ten.
+
+Um das Standardverhalten der Update-Plug-Ins bewirkt, dass Features nur dann aktualisiertwerden können, wenn sich lediglich die Micro-Version-Number, also die nach dem zweiten Punkt ver�ndert hat. Au�erdem werden standardm��ig die Signaturen der zu aktualisierenden Features gepr�ft. Um dies zu �ndern, m�ssen die Standardwerte einiger Preferences �berschrieben werden. Dies kann auf zweierlei Weise erfolgen:
+
+1. per Java-Code
+
+{code}
+IEclipsePreferences coreDefaults = new DefaultScope().getNode("org.eclipse.update.core");
+coreDefaults.put("org.eclipse.update.core.updateVersions", "compatible");
+coreDefaults.putBoolean("org.eclipse.update.core.checkSignature", false);
+coreDefaults.putInt("org.eclipse.update.core.historySize", 2);
+{code}
+
+2. per Konfigurationsdatei
+
+Die Einstellung erfolgt im Projekt, das die Application beherbergt. In dessen plugin.xml sind folglich die Extension-Points org.eclipse.core.runtime.applications und org.eclipse.core.runtime.products definiert. Letzterer wird um das Property preferenceCustomization erweitert, in dem die Datei festgelegt wird, in der die Standardeinstellungen anderer Plug-Ins festgelegt bzw. �berschrieben werden k�nnen.
+
+{code}
+<extension
+	id="product"
+	point="org.eclipse.core.runtime.products">
+	<product
+		application="de.regasus.app.main.application"
+		name="MesseInfo 1.0.8">
+		<property
+			name="preferenceCustomization"
+			value="plugin_customization.ini">
+		</property>
+	</product>
+</extension>
+{code}
+
+Die Datei plugin_customization.ini enth�lt folgende Zeilen
+
+{code}
+org.eclipse.update.core/org.eclipse.update.core.updateVersions=compatible
+org.eclipse.update.core/org.eclipse.update.core.checkSignature=false
+org.eclipse.update.core/org.eclipse.update.core.historySize=2
+{code}
+
+Literatur:

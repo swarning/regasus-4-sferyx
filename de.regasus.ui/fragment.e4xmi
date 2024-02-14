@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ASCII"?>
+<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:commands="http://www.eclipse.org/ui/2010/UIModel/application/commands" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_MtrqMMz6EeuFf4VKuo_D8A">
+  <imports xsi:type="commands:BindingContext" xmi:id="_QL2R0M0IEeuFf4VKuo_D8A" elementId="org.eclipse.ui.contexts.dialogAndWindow"/>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_Wjh4gMz7EeuFf4VKuo_D8A" featurename="commands" parentElementId="org.eclipse.e4.legacy.ide.application">
+    <elements xsi:type="commands:Command" xmi:id="_nOFxUMz7EeuFf4VKuo_D8A" elementId="de.regasus.ui.command.QuickParticipantSearch" commandName="Quick Participant Search"/>
+    <elements xsi:type="commands:Command" xmi:id="_7-N84M9iEeu4etNLjlaAIg" elementId="de.regasus.ui.command.QuickProfileSearch" commandName="Quick Profile Search"/>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_8vLUMMz7EeuFf4VKuo_D8A" featurename="handlers" parentElementId="org.eclipse.e4.legacy.ide.application">
+    <elements xsi:type="commands:Handler" xmi:id="_--BKUMz7EeuFf4VKuo_D8A" elementId="de.regasus.ui.handler.QuickParticipantSearch" contributionURI="bundleclass://de.regasus.ui/de.regasus.event.search.QuickParticipantSearchCommandHandler" command="_nOFxUMz7EeuFf4VKuo_D8A"/>
+    <elements xsi:type="commands:Handler" xmi:id="_BvvPkM9jEeu4etNLjlaAIg" elementId="de.regasus.ui.handler.QuickProfileSearch" contributionURI="bundleclass://de.regasus.ui/de.regasus.event.search.QuickProfileSearchCommandHandler" command="_7-N84M9iEeu4etNLjlaAIg"/>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_qTgMoM0HEeuFf4VKuo_D8A" featurename="bindingTables" parentElementId="org.eclipse.e4.legacy.ide.application">
+    <elements xsi:type="commands:BindingTable" xmi:id="_NEthwM0IEeuFf4VKuo_D8A" elementId="de.regasus.ui.bindingtable.0" bindingContext="_QL2R0M0IEeuFf4VKuo_D8A">
+      <bindings xmi:id="_VVMxQM0IEeuFf4VKuo_D8A" elementId="de.regasus.ui.keybinding.participantSearch" keySequence="F3" command="_nOFxUMz7EeuFf4VKuo_D8A"/>
+      <bindings xmi:id="_0VSnMM9jEeu4etNLjlaAIg" elementId="de.regasus.ui.keybinding.profileSearch" keySequence="F4" command="_7-N84M9iEeu4etNLjlaAIg"/>
+    </elements>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_6TtZQM2pEeuFf4VKuo_D8A" featurename="toolBarContributions" parentElementId="org.eclipse.e4.legacy.ide.application">
+    <elements xsi:type="menu:ToolBarContribution" xmi:id="_uTA7oM22EeuFf4VKuo_D8A" elementId="de.regasus.ui.toolbarcontribution.search" parentId="de.regasus.event.toolbar">
+      <children xsi:type="menu:ToolControl" xmi:id="_nwP2kM3UEeuFf4VKuo_D8A" elementId="de.regasus.event.search.QuickSearchField" contributionURI="bundleclass://de.regasus.ui/de.regasus.event.search.QuickSearchField"/>
+    </elements>
+  </fragments>
+</fragment:ModelFragments>

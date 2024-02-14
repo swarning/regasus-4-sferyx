@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?eclipse version="3.2"?>
+
+<plugin>
+
+	<extension point="org.eclipse.core.runtime.applications" id="application">
+		<application>
+			<run class="de.regasus.app.main.Application">
+			</run>
+		</application>
+	</extension>
+	
+
+	<extension point="org.eclipse.core.runtime.products" id="product">
+		<product application="de.regasus.app.main.application" name="Regasus 0.0.0">
+			Regasus 0.0.0
+			<property 
+				name="windowImages" 
+				value="icons/Regasus-Logo-16.png,icons/Regasus-Logo-32.png,icons/Regasus-Logo-48.png,icons/Regasus-Logo-64.png,icons/Regasus-Logo-128.png">
+			</property>
+			<property
+         name="aboutText"
+         value="Regasus&#x0A;Copyright LambdaLogic Informationssysteme GmbH,&#x0A;Berlin, Germany, 2022">
+			</property>
+		   <property
+		         name="appName"
+		         value="Regasus 0.0.0">
+		   </property>
+			<!--
+				<property name="preferenceCustomization"
+				value="plugin_customization.ini"> </property>
+			-->
+		</product>
+	</extension>
+
+
+	<extension point="org.eclipse.ui.bindings">
+		<!--
+			This is the definition of a key-binding scheme based on Eclipse's
+			default key-binding scheme. It became necessary at the time we wanted
+			the key F2 execute the CreateParticipantCommand; however, if we just
+			added that binding there would be TWO commands bound to F2, and on
+			the right lower corner of the window, there would appear a yellow box
+			asking whether we want to Create a Participant or Rename!!! With this
+			own scheme mechanism, our F2 binding OVERRODE the already defined F2
+			binding for Rename. See also
+			http://cwd.dhemery.com/2008/06/rcp-keybindings/ - The "Multiple
+			Choice" Problem ATTENTION: In order to make this scheme active, there
+			you need an entry in plugin_customization.ini:
+			org.eclipse.ui/KEY_CONFIGURATION_ID=com.lambdalogic.mi.binding see
+			also and also
+			http://book.javanb.com/eclipse-rich-client-platform-designing-coding-and-packaging-java-applications-oct-2005/ch12lev1sec4.html
+		-->
+		<scheme id="com.lambdalogic.mi.binding" name="binding" parentId="org.eclipse.ui.defaultAcceleratorConfiguration">
+		</scheme>
+		
+		<!--
+		Deactivate ctrl+n which opens a dialog for creating new objects by default.
+		This makes no sense for Regasus cause there's no wizard to create new objects.
+		-->
+		<key schemeId="org.eclipse.ui.defaultAcceleratorConfiguration" sequence="M1+N">
+		</key>
+	</extension>
+
+</plugin>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension-point id="statusChecker" name="statusChecker" schema="schema/statusChecker.exsd"/>
+	
+	<extension point="org.eclipse.ui.services">
+	
+		<sourceProvider provider="de.regasus.core.UserSourceProvider">
+			<variable priorityLevel="workbench" name="user" />
+		</sourceProvider>
+
+	</extension>
+
+</plugin>

@@ -1,0 +1,16 @@
+#Fri, 28 Sep 2012 17:32:36 +0200
+
+#
+# This is the version file of the project:
+#
+# de.regasus.app.main.feature
+#
+# If this is a file named version.txt then it has been generated from a file named VERSION.TXT.
+# So you should not change it.
+# To change the version number of this project, change the file VERSION.TXT in the projects root directory.
+#
+
+main=3
+major=3
+minor=5
+build=0

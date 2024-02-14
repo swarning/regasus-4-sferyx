@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+	<extension-point id="reportWizard" name="Report Wizard" schema="schema/reportWizard.exsd"/>
+   
+   
+	<extension point="org.eclipse.ui.perspectives">
+		<perspective
+			id="com.lambdalogic.mi.reporting.ui.ReportingPerspective"
+			class="de.regasus.report.ReportingPerspective"
+			icon="icons/report.png"
+			name="%ReportingPerspective.name">
+		</perspective>
+	</extension>
+
+   
+	<extension point="org.eclipse.ui.views">
+		<view
+			id="UserReportTableView"
+			class="de.regasus.report.view.UserReportTableView"
+			icon="icons/report_table.png"
+			name="User Report Table"
+		/>
+		<view
+			id="UserReportTreeView"
+			class="de.regasus.report.view.UserReportTreeView"
+			icon="icons/report.png"
+			name="%UserReportTreeView.name"
+		/>
+	</extension>
+   
+   
+	<extension point="org.eclipse.ui.perspectiveExtensions">
+		<perspectiveExtension targetID="*">
+			<perspectiveShortcut id="com.lambdalogic.mi.reporting.ui.ReportingPerspective" />
+         
+			<viewShortcut id="UserReportTableView" />
+			<viewShortcut id="UserReportTreeView" />
+			</perspectiveExtension>
+	</extension>
+   
+   
+	<extension point="org.eclipse.ui.editors">
+		<editor 
+			id="UserReportEditor"
+			class="de.regasus.report.editor.UserReportEditor"
+			icon="icons/report.png"
+			name="%UserReportEditor.name">
+		</editor>
+	</extension>
+
+
+	<extension point="de.regasus.report.ui.reportWizard">
+		<wizard class="de.regasus.report.dialog.DefaultReportWizard" />
+	</extension>
+
+</plugin>

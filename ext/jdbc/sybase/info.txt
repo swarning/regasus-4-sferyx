@@ -1,0 +1,6 @@
+Sacha:
+
+Die Datei jconn3.jar entstammt der ASA 9 Distribution.
+In ASA 12 heißt sie ebenfalls jconn3.jar, ist aber etwas größer, woraus ich schließe, dass sie sich verändert hat.
+Um sie zu ersetzen, habe ich jconn3.jar in blacklist.txt eingefügt. Die neue jconn3.jar habe ich nach jconn3-12.jar 
+umbenannt und whitelist.txt hinzugefügt (und dort jconn3.jar entfernt).
