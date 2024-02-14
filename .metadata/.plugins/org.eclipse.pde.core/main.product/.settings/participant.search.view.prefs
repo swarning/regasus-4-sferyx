@@ -1,5 +1,0 @@
-columnOrder=0;1;2;3;4;5;6;7;8
-columnWidths=60;100;120;100;140;140;100;80;80
-eclipse.preferences.version=1
-resultCount=500
-searchFields=<searchViewMemento><where key\="lastName" operator\="fuzzyLowerAscii" active\="false" /><where key\="firstName" operator\="fuzzyLowerAscii" active\="false" /><where key\="participantNo" operator\="equal" active\="false" /></searchViewMemento>\r\n

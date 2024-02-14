@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring accessors="true" comment="Delete element from project &apos;com.lambdalogic.util&apos;&#x0A;- Original project: &apos;com.lambdalogic.util&apos;&#x0A;- Original element: &apos;lalo-util-2023-12-12-08-24.jar&apos;" description="Delete element" element1="lalo-util-2023-12-12-08-24.jar" elements="0" flags="589830" id="org.eclipse.jdt.ui.delete" resources="1" stamp="1707895134521" subPackages="false" version="1.0"/>
-</session>
