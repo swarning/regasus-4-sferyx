@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workingSetManager>
+<workingSet editPageId="org.eclipse.jdt.internal.ui.DynamicSourcesWorkingSet" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1702470430801_0" label="Java Main Sources" name="Java Main Sources"/>
+<workingSet editPageId="org.eclipse.jdt.internal.ui.DynamicSourcesWorkingSet" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1702470430808_1" label="Java Test Sources" name="Java Test Sources"/>
+<workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1702470536053_3" label="rcp-lib" name="rcp-lib">
+<item elementID="=ag.ion.noa" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=com.auth0.jwt" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=com.fasterxml.jackson" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=com.google.zxing" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=com.idautomation.pdf417" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=com.idautomation.util" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=com.lambdalogic.webpos" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=com.Ostermiller.util" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=com.sferyx" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/de.regasus.jre.feature" type="4"/>
+<item elementID="=jakarta.activation" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=jakarta.json" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=jakarta.xml" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=javax.xml" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.apache.commons.beanutils" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.apache.commons.codec" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.apache.commons.email" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.apache.commons.fileupload" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.apache.commons.jexl" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.apache.commons.lang" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.apache.httpclient" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.apache.pdfbox" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.codehaus.groovy" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.jboss" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.jdom" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.json.simple" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.openoffice" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.postgresql.jdbc" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.slf4j" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1702470917794_5" label="regasus-rcp-core" name="regasus-rcp-core">
+<item elementID="=com.lambdalogic.util.rcp" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=de.regasus.core.error" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/de.regasus.core.feature" type="4"/>
+<item elementID="=de.regasus.core.model" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=de.regasus.core.ui" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1702471123226_7" label="regasus-srv" name="regasus-srv">
+<item elementID="=de.regasus.entity" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=de.regasus.ejb.intf" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1702471136749_8" label="util" name="util">
+<item elementID="=com.lambdalogic.util" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1702471144417_9" label="report" name="report">
+<item elementID="=com.lambdalogic.report" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1702471155604_10" label="regasus-auth" name="regasus-auth">
+<item elementID="=de.regasus.auth.intf" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1702471179390_11" label="lib" name="lib">
+<item elementID="=com.caucho.hessian" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/ext" type="4"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1702472864712_19" label="rcp-target-platform" name="rcp-target-platform">
+<item elementID="=org.eclipse.jface.nl1" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.eclipse.swt.nebula" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.eclipse.swt.nl1" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.eclipse.ui.workbench.nl1" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1702478226882_23" label="regasus-rcp" name="regasus-rcp">
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/de.regasus.alert.feature" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/de.regasus.app.main.feature" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/de.regasus.app.main.product" type="4"/>
+<item elementID="=de.regasus.app.main" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/de.regasus.eclipse.feature" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/de.regasus.finance.export.feature" type="4"/>
+<item elementID="=de.regasus.finance.export.ui" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=de.regasus.impex.ui" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=de.regasus.intro" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=de.regasus.model" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=de.regasus.onlineform.admin.ui" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/de.regasus.report.feature" type="4"/>
+<item elementID="=de.regasus.report.model" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=de.regasus.report.ui" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=de.regasus.report.wizard" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/de.regasus.ui.feature" type="4"/>
+<item elementID="=de.regasus.ui" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/de.regasus.users.ui.feature" type="4"/>
+<item elementID="=de.regasus.users.ui" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+</workingSet>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1702470430993_2" label="Window Working Set" name="Aggregate for window 1702470430993"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1702470952629_6" label="Multiple Working Sets" name="Aggregate:rcp-lib:regasus-rcp-core:">
+<workingSet IMemento.internal.id="rcp-lib"/>
+<workingSet IMemento.internal.id="regasus-rcp-core"/>
+</workingSet>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1702471242188_18" label="Multiple Working Sets" name="Aggregate:lib:rcp-lib:regasus-auth:regasus-rcp-core:regasus-srv:report:util:">
+<workingSet IMemento.internal.id="lib"/>
+<workingSet IMemento.internal.id="rcp-lib"/>
+<workingSet IMemento.internal.id="regasus-auth"/>
+<workingSet IMemento.internal.id="regasus-rcp-core"/>
+<workingSet IMemento.internal.id="regasus-srv"/>
+<workingSet IMemento.internal.id="report"/>
+<workingSet IMemento.internal.id="util"/>
+</workingSet>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1702472889493_22" label="Multiple Working Sets" name="Aggregate:lib:rcp-lib:rcp-target-platform:regasus-auth:regasus-rcp-core:regasus-srv:report:util:">
+<workingSet IMemento.internal.id="lib"/>
+<workingSet IMemento.internal.id="rcp-lib"/>
+<workingSet IMemento.internal.id="rcp-target-platform"/>
+<workingSet IMemento.internal.id="regasus-auth"/>
+<workingSet IMemento.internal.id="regasus-rcp-core"/>
+<workingSet IMemento.internal.id="regasus-srv"/>
+<workingSet IMemento.internal.id="report"/>
+<workingSet IMemento.internal.id="util"/>
+</workingSet>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1702478236234_25" label="Multiple Working Sets" name="Aggregate:lib:rcp-lib:rcp-target-platform:regasus-auth:regasus-rcp:regasus-rcp-core:regasus-srv:report:util:">
+<workingSet IMemento.internal.id="lib"/>
+<workingSet IMemento.internal.id="rcp-lib"/>
+<workingSet IMemento.internal.id="rcp-target-platform"/>
+<workingSet IMemento.internal.id="regasus-auth"/>
+<workingSet IMemento.internal.id="regasus-rcp"/>
+<workingSet IMemento.internal.id="regasus-rcp-core"/>
+<workingSet IMemento.internal.id="regasus-srv"/>
+<workingSet IMemento.internal.id="report"/>
+<workingSet IMemento.internal.id="util"/>
+</workingSet>
+<mruList name="regasus-rcp-core"/>
+<mruList name="rcp-lib"/>
+</workingSetManager>
